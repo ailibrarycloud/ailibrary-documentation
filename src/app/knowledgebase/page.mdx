@@ -1,0 +1,122 @@
+export const metadata = {
+  title: 'Knowledge Base',
+  description:
+    'Learn how to build and use knowledge base to use with AI Models.',
+}
+
+# Knowledge Base
+
+Generate response from models by leading providers. Add Knowledge Base ID for Retrieval Augmented Generation. {{ className: 'lead' }}
+
+### Properties
+
+<Properties>
+  <Property name="modelId" type="string" required="true">
+    Unique identifier of the model in the format model@provider. Check the list
+    of available models, [here](#)
+  </Property>
+  <Property name="prompt" type="string" required="true">
+    Your prompt
+  </Property>
+  <Property name="knowledgeId" type="string">
+    Add the [knowledge id](#) for knowledge retrieval.
+  </Property>
+</Properties>
+
+---
+
+## List all knowledge bases {{ tag: 'GET', label: '/knowledgebases' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of all your contacts. By default, a maximum of ten contacts are shown per page.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of contacts returned.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/contacts">
+
+    ```bash {{ title: 'cURL' }}
+    curl -G https://api.protocol.chat/v1/contacts \
+      -H "Authorization: Bearer {token}" \
+      -d active=true \
+      -d limit=10
+    ```
+
+    ```js
+    import ApiClient from '@example/protocol-api'
+
+    const client = new ApiClient(token)
+
+    await client.contacts.list()
+    ```
+
+    ```python
+    from protocol_api import ApiClient
+
+    client = ApiClient(token)
+
+    client.contacts.list()
+    ```
+
+    ```php
+    $client = new \Protocol\ApiClient($token);
+
+    $client->contacts->list();
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "has_more": false,
+      "data": [
+        {
+          "id": "WAz8eIbvDR60rouK",
+          "username": "FrankMcCallister",
+          "phone_number": "1-800-759-3000",
+          "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+          "display_name": null,
+          "conversation_id": "xgQQXg3hrtjh7AvZ",
+          "last_active_at": 705103200,
+          "created_at": 692233200
+        },
+        {
+          "id": "hSIhXBhNe8X1d8Et"
+          // ...
+        }
+      ]
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Create a Knowledge Base {{ tag: 'POST', label: '/knowledgebase' }}
+
+---
+
+## Add data in a Knowledge Base {{ tag: 'POST', label: '/knowledgebase/:knowledgeId/files' }}
+
+---
+
+## List all data in a Knowledge Base {{ tag: 'GET', label: '/knowledgebase/files' }}
+
+---
+
+## View data in a Knowledge Base {{ tag: 'GET', label: '/knowledgebase/files/:id' }}
+
+---
+
+## Delete data in a Knowledge Base {{ tag: 'DELETE', label: '/knowledgebase/files/:id' }}
