@@ -1,0 +1,20 @@
+import { Guides } from '@/components/Guides'
+import { Resources } from '@/components/Resources'
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+  title: 'RAG (Retrieval Augmented Generation)',
+  description:
+    'Learn the basics of RAG (Retrieval Augmented Generation)',
+}
+
+
+
+# Retrieval Augmented Generation
+
+RAG (Retrieval Augmented Generation) involve providing the data in the context window rather than using it to fine tune the LLM directly. Fine tuning is expensive and previous attempts at fine tuning the LLM were only partly successful. Our approach involves providing the knowledge base (both structured and unstructured databases) in the context window and re-prompting the model (RAG). This method has been shown to be more adept at capturing insights from the data. We also use prompt engineering techniques for optimising the model and returning the required output. These prompt engineering techniques include augmenting the unstructured data that is passed as vector embeddings to the context window to generate the desired output. In the case of structured data we make use of our no-code capabilities to convert the natural language query to an sql or python code, then we execute this code to give us the answer to the query. 
+
+The user can also use news as a knowledge source or use our platform to summarise results from their favourite search engine. In the latest version you can also use Youtube videos as a knowledge source and generate insights using our cutting edge algorithms.
+
+Besides this the user can add their own knowledge sources in formats that are listed below. She/he can query the available models which will be focussed on these knowledge sources to provide insights.
+

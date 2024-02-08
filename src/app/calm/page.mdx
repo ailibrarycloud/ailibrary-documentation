@@ -1,0 +1,19 @@
+import { Guides } from '@/components/Guides'
+import { Resources } from '@/components/Resources'
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+  title: 'Composition to Augment Language Models (CALM)',
+  description:
+    'Learn the basics of CALM',
+}
+
+
+# CALM or Composition to Augment Language Models
+
+CALM is a framework for composing LLM’s. If you have LLM’s specialised for two different tasks, and you have a composite task that you want the LLMs to perform then CALM gives you a way to combine the LLMs rather than train a new LLM for this composite task. 
+
+CALM introduces a small number of trainable parameters over an intermediate layer of representations between the two LLM’s. A case in point is an LLM that chats with the user and an LLM that outputs code given formal language to give a composite model that outputs code given an informal natural language query. The two specialised LLMs can be augmented to learn this composite task.
+Document processing solutions can benefit from this because there is usually a model that scans documents for tables, key value pairs etc and another that is a routine LLM for processing natural language queries. The two models can be composed to give a solution for intelligent document processing. 
+
+Note that this is different from RAG which only superficially fine-tunes the model. This is an act of augmenting representations of two models, to perform tasks that are composite, like intelligent document processing.

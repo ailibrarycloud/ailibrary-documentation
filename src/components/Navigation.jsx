@@ -213,16 +213,13 @@ export const navigation = [
       { title: 'Utilities', href: '/utilities' },
     ],
   },
-  // {
-  //   title: 'API REFERENCE',
-  //   links: [
-  //     { title: 'Contacts', href: '/contacts' },
-  //     { title: 'Conversations', href: '/conversations' },
-  //     { title: 'Messages', href: '/messages' },
-  //     { title: 'Groups', href: '/groups' },
-  //     { title: 'Attachments', href: '/attachments' },
-  //   ],
-  // },
+  {
+    title: 'KEY CONCEPTS',
+    links: [
+      { title: 'RAG', href: '/rag' },
+      { title: 'CALM', href: '/calm' },
+    ],
+  },
 ]
 
 export function Navigation(props) {
