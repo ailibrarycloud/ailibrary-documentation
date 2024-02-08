@@ -210,6 +210,7 @@ export const navigation = [
       { title: 'Multi Modal Generation', href: '/generate' },
       { title: 'Models', href: '/models' },
       { title: 'Knowledge Base', href: '/knowledgebase' },
+      { title: 'Utilities', href: '/utilities' },
     ],
   },
   // {
