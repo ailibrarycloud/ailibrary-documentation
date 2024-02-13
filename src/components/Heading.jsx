@@ -27,6 +27,8 @@ function Eyebrow({ tag, label }) {
     return null
   }
 
+  const domain = 'https://api.ailibrary.ai'
+
   return (
     <div className="flex items-center gap-x-3">
       {tag && <Tag>{tag}</Tag>}
@@ -34,7 +36,7 @@ function Eyebrow({ tag, label }) {
         <span className="h-0.5 w-0.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
       )}
       {label && (
-        <span className="font-mono text-xs text-zinc-400">{label}</span>
+        <span className="font-mono text-xs text-zinc-400">{domain}{label}</span>
       )}
     </div>
   )

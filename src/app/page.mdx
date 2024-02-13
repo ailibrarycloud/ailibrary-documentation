@@ -9,36 +9,43 @@ export const metadata = {
 }
 
 export const sections = [
-  { title: 'Guides', id: 'guides' },
-  { title: 'Resources', id: 'resources' },
+  // { title: 'Guides', id: 'guides' },
+  // { title: 'Using this guide', id: 'guides' },
+  // { title: 'Resources', id: 'resources' },
 ]
 
 <HeroPattern />
 
-# API Documentation
+# AI Library API Documentation
 
-AI Library API can be used to seamlessly add AI capabilities into any product. You can use [generate](#) to switch any model or create a [knowledge base](#) and add to it from a variety of [connections](#) to inject relevant information into your prompts. {{ className: 'lead' }}
+AI Library APIs can be used to add AI capabilities into any product. You can use the APIs to {{ className: 'lead' }}
+- [generate](/generate) responses from any [AI model](/models) in multiple formats {{ className: 'lead' }}
+- create [knowledge base](/knowledgebase) to ground LLMs to your content and generate relevant responses {{ className: 'lead' }}
+- use [RAG utilities and connectors](/utilities/) to add data to knowledge base from a variety of sources to inject relevant information into your prompts. {{ className: 'lead' }}
 
-<div className="not-prose mb-16 mt-6 flex gap-3">
-  <Button href="/quickstart" arrow="right">
-    <>Generate API Key</>
-  </Button>
-  
-  <Button href="/sdks" variant="outline">
-    <>Explore SDKs</>
-  </Button>
-</div>
+
 
 ## Getting started {{ anchor: false }}
 
-To get started, create a new application in your [developer settings](#), then read about how to make requests for the resources you need to access using our HTTP APIs or dedicated client SDKs. When your integration is ready to go live, publish it to our [integrations directory](#) to reach the Protocol community. {{ className: 'lead' }}
+To get started, you need an API Key. You will find yours in <a href="https://corbett.ailibrary.ai" target="_blank"> Corbett</a> profile page. Include it in your request header as ``X-Library-Key``  {{ className: 'lead' }}
 
-<div className="not-prose">
-  <Button href="/sdks" variant="text" arrow="right">
-    <>Get your API key</>
+But first, you need to request an API key first. Head to <a href="https://corbett.ailibrary.ai" target="_blank"> Corbett</a> to request one. We are currently offering a complimentary 30-minute office hours to help you get started. It's done by developers (not salespersons!). It's helpful. Book a slot. Email us at hello@ailibrary.ai {{ className: 'lead' }}
+
+<div className="not-prose mb-16 mt-6 flex gap-3">
+  <Button href="/quickstart" arrow="right">
+    <>Get your API Key</>
   </Button>
+  
+  <Button href="/sdks" variant="outline">
+    <>Book AI Library Office Hours</>
+  </Button>
+
+    {/* <Button href="/sdks" variant="text" arrow="right">
+    <>Get your API key</>
+  </Button> */}
 </div>
 
-<Guides />
+
+{/* <Guides /> */}
 
 <Resources />
