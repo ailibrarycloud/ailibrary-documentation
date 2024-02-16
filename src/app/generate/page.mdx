@@ -59,14 +59,14 @@ This document shows you how to generate responses and manage the generations. {{
     <CodeGroup title="Request" tag="POST" label="/v1/generate">
 {/*
     ```bash {{ title: 'cURL' }}
-    curl -G https://api.protocol.chat/v1/contacts \
+    curl -G https://api.AI Library.chat/v1/contacts \
       -H "Authorization: Bearer {token}" \
       -d active=true \
       -d limit=10
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
@@ -165,14 +165,14 @@ This document shows you how to generate responses and manage the generations. {{
     <CodeGroup title="Request" tag="GET" label="/v1/contacts">
 {/*
     ```bash {{ title: 'cURL' }}
-    curl -G https://api.protocol.chat/v1/contacts \
+    curl -G https://api.AI Library.chat/v1/contacts \
       -H "Authorization: Bearer {token}" \
       -d active=true \
       -d limit=10
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
@@ -180,7 +180,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 */}
     ```python
-    from protocol_api import ApiClient
+    from AI Library_api import ApiClient
 
     client = ApiClient(token)
 
@@ -188,7 +188,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```php
-    $client = new \Protocol\ApiClient($token);
+    $client = new \AI Library\ApiClient($token);
 
     $client->contacts->list();
     ```
@@ -203,7 +203,7 @@ This document shows you how to generate responses and manage the generations. {{
           "id": "WAz8eIbvDR60rouK",
           "username": "FrankMcCallister",
           "phone_number": "1-800-759-3000",
-          "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+          "avatar_url": "https://assets.AI Library.chat/avatars/frank.jpg",
           "display_name": null,
           "conversation_id": "xgQQXg3hrtjh7AvZ",
           "last_active_at": 705103200,
@@ -227,7 +227,7 @@ This document shows you how to generate responses and manage the generations. {{
 <Row>
   <Col>
 
-    This endpoint allows you to retrieve a contact by providing their Protocol id. Refer to [the list](#the-contact-model) at the top of this page to see which properties are included with contact objects.
+    This endpoint allows you to retrieve a contact by providing their AI Library id. Refer to [the list](#the-contact-model) at the top of this page to see which properties are included with contact objects.
 
   </Col>
   <Col sticky>
@@ -235,12 +235,12 @@ This document shows you how to generate responses and manage the generations. {{
     <CodeGroup title="Request" tag="GET" label="/v1/contacts/WAz8eIbvDR60rouK">
 
     ```bash {{ title: 'cURL' }}
-    curl https://api.protocol.chat/v1/contacts/WAz8eIbvDR60rouK \
+    curl https://api.AI Library.chat/v1/contacts/WAz8eIbvDR60rouK \
       -H "Authorization: Bearer {token}"
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
@@ -248,7 +248,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```python
-    from protocol_api import ApiClient
+    from AI Library_api import ApiClient
 
     client = ApiClient(token)
 
@@ -256,7 +256,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```php
-    $client = new \Protocol\ApiClient($token);
+    $client = new \AI Library\ApiClient($token);
 
     $client->contacts->get('WAz8eIbvDR60rouK');
     ```
@@ -268,7 +268,7 @@ This document shows you how to generate responses and manage the generations. {{
       "id": "WAz8eIbvDR60rouK",
       "username": "FrankMcCallister",
       "phone_number": "1-800-759-3000",
-      "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+      "avatar_url": "https://assets.AI Library.chat/avatars/frank.jpg",
       "display_name": null,
       "conversation_id": "xgQQXg3hrtjh7AvZ",
       "last_active_at": 705103200,
@@ -286,7 +286,7 @@ This document shows you how to generate responses and manage the generations. {{
 <Row>
   <Col>
 
-    This endpoint allows you to perform an update on a contact. Currently, the only attribute that can be updated on contacts is the `display_name` attribute which controls how a contact appears in your contact list in Protocol.
+    This endpoint allows you to perform an update on a contact. Currently, the only attribute that can be updated on contacts is the `display_name` attribute which controls how a contact appears in your contact list in AI Library.
 
     ### Optional attributes
 
@@ -302,13 +302,13 @@ This document shows you how to generate responses and manage the generations. {{
     <CodeGroup title="Request" tag="PUT" label="/v1/contacts/WAz8eIbvDR60rouK">
 
     ```bash {{ title: 'cURL' }}
-    curl -X PUT https://api.protocol.chat/v1/contacts/WAz8eIbvDR60rouK \
+    curl -X PUT https://api.AI Library.chat/v1/contacts/WAz8eIbvDR60rouK \
       -H "Authorization: Bearer {token}" \
       -d display_name="UncleFrank"
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
@@ -318,7 +318,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```python
-    from protocol_api import ApiClient
+    from AI Library_api import ApiClient
 
     client = ApiClient(token)
 
@@ -326,7 +326,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```php
-    $client = new \Protocol\ApiClient($token);
+    $client = new \AI Library\ApiClient($token);
 
     $client->contacts->update('WAz8eIbvDR60rouK', [
       'display_name' => 'UncleFrank',
@@ -340,7 +340,7 @@ This document shows you how to generate responses and manage the generations. {{
       "id": "WAz8eIbvDR60rouK",
       "username": "FrankMcCallister",
       "phone_number": "1-800-759-3000",
-      "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+      "avatar_url": "https://assets.AI Library.chat/avatars/frank.jpg",
       "display_name": "UncleFrank",
       "conversation_id": "xgQQXg3hrtjh7AvZ",
       "last_active_at": 705103200,
@@ -358,7 +358,7 @@ This document shows you how to generate responses and manage the generations. {{
 <Row>
   <Col>
 
-    This endpoint allows you to delete contacts from your contact list in Protocol. Note: This will also delete your conversation with the given contact.
+    This endpoint allows you to delete contacts from your contact list in AI Library. Note: This will also delete your conversation with the given contact.
 
   </Col>
   <Col sticky>
@@ -366,12 +366,12 @@ This document shows you how to generate responses and manage the generations. {{
     <CodeGroup title="Request" tag="DELETE" label="/v1/contacts/WAz8eIbvDR60rouK">
 
     ```bash {{ title: 'cURL' }}
-    curl -X DELETE https://api.protocol.chat/v1/contacts/WAz8eIbvDR60rouK \
+    curl -X DELETE https://api.AI Library.chat/v1/contacts/WAz8eIbvDR60rouK \
       -H "Authorization: Bearer {token}"
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
@@ -379,7 +379,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```python
-    from protocol_api import ApiClient
+    from AI Library_api import ApiClient
 
     client = ApiClient(token)
 
@@ -387,7 +387,7 @@ This document shows you how to generate responses and manage the generations. {{
     ```
 
     ```php
-    $client = new \Protocol\ApiClient($token);
+    $client = new \AI Library\ApiClient($token);
 
     $client->contacts->delete('WAz8eIbvDR60rouK');
     ```

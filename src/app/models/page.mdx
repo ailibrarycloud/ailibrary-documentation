@@ -31,7 +31,7 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
 <Row>
   <Col>
 
-    This endpoint allows you to add a new contact to your contact list in Protocol. To add a contact, you must provide their Protocol username and phone number.
+    This endpoint allows you to add a new contact to your contact list in AI Library. To add a contact, you must provide their AI Library username and phone number.
 
     ### Required attributes
 
@@ -61,44 +61,44 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
     <CodeGroup title="Request" tag="POST" label="/v1/contacts">
 
     ```bash {{ title: 'cURL' }}
-    curl https://api.protocol.chat/v1/contacts \
+    curl https://api.AI Library.chat/v1/contacts \
       -H "Authorization: Bearer {token}" \
       -d username="FrankMcCallister" \
       -d phone_number="1-800-759-3000" \
-      -d avatar_url="https://assets.protocol.chat/avatars/frank.jpg"
+      -d avatar_url="https://assets.AI Library.chat/avatars/frank.jpg"
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
     await client.contacts.create({
       username: 'FrankMcCallister',
       phone_number: '1-800-759-3000',
-      avatar_url: 'https://assets.protocol.chat/avatars/frank.jpg',
+      avatar_url: 'https://assets.AI Library.chat/avatars/frank.jpg',
     })
     ```
 
     ```python
-    from protocol_api import ApiClient
+    from AI Library_api import ApiClient
 
     client = ApiClient(token)
 
     client.contacts.create(
       username="FrankMcCallister",
       phone_number="1-800-759-3000",
-      avatar_url="https://assets.protocol.chat/avatars/frank.jpg",
+      avatar_url="https://assets.AI Library.chat/avatars/frank.jpg",
     )
     ```
 
     ```php
-    $client = new \Protocol\ApiClient($token);
+    $client = new \AI Library\ApiClient($token);
 
     $client->contacts->create([
       'username' => 'FrankMcCallister',
       'phone_number' => '1-800-759-3000',
-      'avatar_url' => 'https://assets.protocol.chat/avatars/frank.jpg',
+      'avatar_url' => 'https://assets.AI Library.chat/avatars/frank.jpg',
     ]);
     ```
 
@@ -109,7 +109,7 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
       "id": "WAz8eIbvDR60rouK",
       "username": "FrankMcCallister",
       "phone_number": "1-800-759-3000",
-      "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+      "avatar_url": "https://assets.AI Library.chat/avatars/frank.jpg",
       "display_name": null,
       "conversation_id": "xgQQXg3hrtjh7AvZ",
       "last_active_at": null,
@@ -127,7 +127,7 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
 <Row>
   <Col>
 
-    This endpoint allows you to retrieve a contact by providing their Protocol id. Refer to [the list](#the-contact-model) at the top of this page to see which properties are included with contact objects.
+    This endpoint allows you to retrieve a contact by providing their AI Library id. Refer to [the list](#the-contact-model) at the top of this page to see which properties are included with contact objects.
 
   </Col>
   <Col sticky>
@@ -135,12 +135,12 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
     <CodeGroup title="Request" tag="GET" label="/v1/contacts/WAz8eIbvDR60rouK">
 
     ```bash {{ title: 'cURL' }}
-    curl https://api.protocol.chat/v1/contacts/WAz8eIbvDR60rouK \
+    curl https://api.AI Library.chat/v1/contacts/WAz8eIbvDR60rouK \
       -H "Authorization: Bearer {token}"
     ```
 
     ```js
-    import ApiClient from '@example/protocol-api'
+    import ApiClient from '@example/AI Library-api'
 
     const client = new ApiClient(token)
 
@@ -148,7 +148,7 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
     ```
 
     ```python
-    from protocol_api import ApiClient
+    from AI Library_api import ApiClient
 
     client = ApiClient(token)
 
@@ -156,7 +156,7 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
     ```
 
     ```php
-    $client = new \Protocol\ApiClient($token);
+    $client = new \AI Library\ApiClient($token);
 
     $client->contacts->get('WAz8eIbvDR60rouK');
     ```
@@ -168,7 +168,7 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
       "id": "WAz8eIbvDR60rouK",
       "username": "FrankMcCallister",
       "phone_number": "1-800-759-3000",
-      "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+      "avatar_url": "https://assets.AI Library.chat/avatars/frank.jpg",
       "display_name": null,
       "conversation_id": "xgQQXg3hrtjh7AvZ",
       "last_active_at": 705103200,
