@@ -66,21 +66,25 @@ export const Header = forwardRef(function Header({ className }, ref) {
         </Link>
       </div>
       <div className="flex items-center gap-5">
-        {/* <nav className="hidden md:block">
+        <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
-            <TopLevelNavItem href="/">API</TopLevelNavItem>
-            <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-            <TopLevelNavItem href="#">Support</TopLevelNavItem>
+            <TopLevelNavItem href="http://ailibrary.ai">Homepage</TopLevelNavItem>
+            {/* <TopLevelNavItem href="#">Documentation</TopLevelNavItem> */}
+            <TopLevelNavItem href="https://discord.gg/22jFeSav" target="_blank">
+              Support
+            </TopLevelNavItem>
           </ul>
-        </nav> */}
+        </nav>
         <div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
         <div className="flex gap-4">
           <MobileSearch />
           <ThemeToggle />
         </div>
-        {/* <div className="hidden min-[416px]:contents">
-          <Button href="#">Sign in</Button>
-        </div> */}
+        <div className="hidden min-[416px]:contents">
+          <Button target="_blank" href="https://www.ailibrary.ai/playground">
+            Sign in
+          </Button>
+        </div>
       </div>
     </motion.div>
   )

@@ -208,9 +208,9 @@ export const navigation = [
     title: 'API REFERENCE',
     links: [
       { title: 'Multi Modal Generation', href: '/generate' },
-      { title: 'Models', href: '/models' },
-      { title: 'Knowledge Base', href: '/knowledgebase' },
-      { title: 'Utilities', href: '/utilities' },
+      // { title: 'Models', href: '/models' },
+      // { title: 'Knowledge Base', href: '/knowledgebase' },
+      // { title: 'Utilities', href: '/utilities' },
     ],
   },
   {
@@ -226,9 +226,11 @@ export function Navigation(props) {
   return (
     <nav {...props}>
       <ul role="list">
-        {/* <TopLevelNavItem href="/">API</TopLevelNavItem>
-        <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-        <TopLevelNavItem href="#">Support</TopLevelNavItem> */}
+        <TopLevelNavItem href="http://ailibrary.ai">Homepage</TopLevelNavItem>
+        {/* <TopLevelNavItem href="#">Documentation</TopLevelNavItem> */}
+        <TopLevelNavItem href="https://discord.gg/22jFeSav">
+          Support
+        </TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
             key={group.title}

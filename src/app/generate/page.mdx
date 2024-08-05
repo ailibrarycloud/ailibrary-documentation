@@ -8,16 +8,104 @@ export const metadata = {
 
 This document shows you how to generate responses and manage the generations. {{ className: 'lead' }}
 
+---
 
+## List Available Models {{ tag: 'GET', label: '/v1/models' }}
+
+
+<Row>
+  <Col>
+    This list the models available in the AI Library platform. 
+
+    There are multiple models available in the platform for different types of data - text, image, and speech. The models are provided by different providers like OpenAI, Anthropic, Google, Stability, and AI Library.
+
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="provider" type="string">
+        Filter the models by provider. Available providers are `openai`, `anthropic`, `google`, `stability`, `ailibrary`
+      </Property>
+    </Properties>
+    </Col>
+    <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/generate">
+
+    ```bash {{ title: 'cURL' }}
+    curl -G https://api.ailibrary.ai/v1/models \
+      -H "X-Library-Key: your-api-key"
+    ```
+
+    
+
+    ```python
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/models?limit=20"
+
+    payload = {}
+    headers = {
+      'X-Library-Key': 'your-api-key'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    print(response.text)
+    ```
+
+    ```js
+    const axios = require('axios');
+
+    let config = {
+      method: 'get',
+      url: 'https://api.ailibrary.ai/v1/models?limit=20',
+      headers: { 
+        'X-Library-Key': 'your-api-key'
+      }
+    };
+
+    async function makeRequest() {
+      try {
+        const response = await axios.request(config);
+        console.log(JSON.stringify(response.data));
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+
+    makeRequest();
+
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    [
+       {
+          "modelId": "gpt-4-turbo@openai",
+          "name": "GPT-4 Turbo",
+          "model": "gpt-4-turbo",
+          "provider": "OpenAI",
+          "logo": "https://ailib-public.s3.us-west-2.amazonaws.com/public/openai.png",
+          "type": "text-to-text"
+      },
+      ...
+]
+    ```
+
+  </Col>
+</Row>
 
 ---
 
-## Generate Response {{ tag: 'POST', label: '/v1/generate' }}
+## Generate Response {{ tag: 'POST', label: '/v2/generate' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to generate responses from multiple AI models and specify knowledge base for Retrieval Augmented Generation (RAG). 
+    This endpoint allows you to generate responses from multiple AI models and specify knowledge base for Retrieval Augmented Generation (RAG). All responses are in markdown format. In case of image and audio, the format of the response is `![Alt-text](https://example-link.com)`.
     
     <Button href="https://www.postman.com/ailibrary/workspace/ai-library-apis/request/32852595-8375cba0-061f-4692-a713-5159efcd4ea1" variant="text" arrow="right" target="_blank">
     <>Try in Postman</>
@@ -56,57 +144,75 @@ This document shows you how to generate responses and manage the generations. {{
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/v1/generate">
-{/*
-    ```bash {{ title: 'cURL' }}
-    curl -G https://api.AI Library.chat/v1/contacts \
-      -H "Authorization: Bearer {token}" \
-      -d active=true \
-      -d limit=10
-    ```
+    <CodeGroup title="Request" tag="POST" label="/v2/generate">
 
-    ```js
-    import ApiClient from '@example/AI Library-api'
-
-    const client = new ApiClient(token)
-
-    await client.contacts.list()
-    ```
-*/}
     ```python
     import requests
+    import json
 
-    url = "https://api.ailibrary.ai/v1/generations?page=1"
+    url = "https://api.ailibrary.ai/v2/generate"
 
-    payload = {}
+    payload = json.dumps({
+      "modelId": "model@provider",
+      "prompt": "your-prompt",
+      "urls": [
+          "file-id" // optional
+      ],
+      "knowledge": [
+        {
+          "id": "knowledge-id"
+        }
+      ]
+    })
     headers = {
-      'X-Library-Key': '••••••'
+        'X-Library-Key': '••••••',
+        'Content-Type': 'application/json'
     }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.request("POST", url, headers=headers, data=payload)
 
     print(response.text)
+
     ```
 
     ```javascript
     const axios = require('axios');
+    let data = JSON.stringify({
+      "modelId": "model@provider",
+      "prompt": "your-prompt",
+      "urls": [
+          "file-id" // optional
+      ],
+      "knowledge": [
+        {
+          "id": "knowledge-id"
+        }
+      ]
+    });
 
     let config = {
-      method: 'get',
+      method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://api.ailibrary.ai/v1/generations?page=1',
+      url: 'https://api.ailibrary.ai/v2/generate',
       headers: { 
-        'X-Library-Key': '••••••'
-      }
+        'X-Library-Key': 'd4qgdcs2lgUBvwWDFjC6NeOIrLS87cpoDHlwPL5a', 
+        'Content-Type': 'application/json'
+      },
+      data : data
     };
 
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    async function makeRequest() {
+      try {
+        const response = await axios.request(config);
+        console.log(JSON.stringify(response.data));
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+
+    makeRequest();
+
     ```
 
     </CodeGroup>
@@ -131,7 +237,7 @@ This document shows you how to generate responses and manage the generations. {{
   </Col>
 </Row>
 
----
+{/* ---
 
 ## List generations {{ tag: 'POST', label: '/v1/generations?page=1' }}
 
@@ -163,7 +269,7 @@ This document shows you how to generate responses and manage the generations. {{
   <Col sticky>
 
     <CodeGroup title="Request" tag="GET" label="/v1/contacts">
-{/*
+
     ```bash {{ title: 'cURL' }}
     curl -G https://api.AI Library.chat/v1/contacts \
       -H "Authorization: Bearer {token}" \
@@ -178,7 +284,7 @@ This document shows you how to generate responses and manage the generations. {{
 
     await client.contacts.list()
     ```
-*/}
+
     ```python
     from AI Library_api import ApiClient
 
@@ -395,4 +501,4 @@ This document shows you how to generate responses and manage the generations. {{
     </CodeGroup>
 
   </Col>
-</Row>
+</Row> */}

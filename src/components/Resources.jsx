@@ -25,20 +25,20 @@ const resources = [
       ],
     },
   },
-  {
-    href: '/models',
-    name: 'Models',
-    description:
-      'Learn about the available text, image, audio and vision models.',
-    icon: ChatBubbleIcon,
-    pattern: {
-      y: -6,
-      squares: [
-        [-1, 2],
-        [1, 3],
-      ],
-    },
-  },
+  // {
+  //   href: '/models',
+  //   name: 'Models',
+  //   description:
+  //     'Learn about the available text, image, audio and vision models.',
+  //   icon: ChatBubbleIcon,
+  //   pattern: {
+  //     y: -6,
+  //     squares: [
+  //       [-1, 2],
+  //       [1, 3],
+  //     ],
+  //   },
+  // },
   {
     href: '/knowledgebase',
     name: 'Knowledge Base',
@@ -55,7 +55,7 @@ const resources = [
   },
   {
     href: '/utilities',
-    name: 'RAG Utilities & Connectors',
+    name: 'Utilities',
     description:
       'Learn how to add to your knowledge bases from data various sources.',
     icon: UsersIcon,
@@ -147,7 +147,7 @@ export function Resources() {
   return (
     <div className="my-16 xl:max-w-none">
       <Heading level={2} id="resources">
-        Modules
+        Documentation
       </Heading>
       <div className="not-prose mt-4 grid grid-cols-1 gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-4 dark:border-white/5">
         {resources.map((resource) => (
