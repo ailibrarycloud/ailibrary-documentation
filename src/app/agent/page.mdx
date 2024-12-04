@@ -1,12 +1,12 @@
 export const metadata = {
-    title: 'Agents',
-    description:
-        'Learn how to build and manage AI agents.',
+  title: 'Agents',
+  description:
+    'Learn how to build and manage AI agents.',
 }
 
 # Agents
 
-Use these endpoints to create and manage agents. {{ className: 'lead' }}
+Create, manage and invoke conversation with agents. {{ className: 'lead' }}
 
 Agents have three main components {{ className: 'lead' }}
 
@@ -24,22 +24,55 @@ Agents have three main components {{ className: 'lead' }}
 
 <Row>
   <Col>
+    Creates an agent. You can simply create an agent with the type of agent you want to create and then update the agent with more details.
 
-    Creates an agent from a template. 
 
     <Properties>
-      <Property name="template" type="integer" required="true">
+     <Property name="type" type="integer" required="true">
+        Specify the type of agent you want to create.
+
         Options - `notebook`, `chat`, `voice`
       </Property>
-    </Properties>
-
-    <Properties>
+      <Property name="title" type="string">
+        Give your agent a user friendly name. This information is not used for training the agent and is only for display purposes.
+      </Property>
       <Property name="instructions" type="string">
-        eg. You are a useful agent.
+        This is the most important part of the agent. It tells the agent what it is supposed to do. For example, you can tell the agent that it is a sales agent and it should help the user with their purchase. Make it as specific as possible. Edit this later if you want to make changes and improve responses.
+
+        Default: "You are a helpful assistant."
+      </Property>
+      <Property name="description" type="string">
+        Give a short description of the agent. This information is not used for training the agent and is only for display purposes.
+      </Property>
+      <Property name="coverimage" type="string">
+        URL of the cover image for the agent. Recommended size is 512px x 512px.
+      </Property>
+      <Property name="intromessage" type="string">
+        This is the first message that the agent will send to the user. You can use this to greet the user and set the context for the conversation. In voice agents, this message is adapted to the first response received from the user.
+      </Property>
+      <Property name="knowledge_search" type="boolean">
+        Enable knowledge base search.
       </Property>
       <Property name="knowledge_id" type="string">
-        Limit the number of contacts returned.
+        Knowledge Base ID to be used by the agent for answering queries.
       </Property>
+      <Property name="form_filling" type="boolean">
+        Enable form filling.
+      </Property>
+      <Property name="form_id" type="string">
+        Form ID to be used by the agent for collecting structured information.
+      </Property>
+      <Property name="languages" type="string">
+        Set the default language for the agent. This is used for voice agents.
+        
+        Options - `en-US`, `hi-IN`, `es-ES`, `fr-FR`, `de-DE`, `it-IT`, `ja-JP`, `ko-KR`, `pt-BR`, `zh-CN`
+      </Property>
+      <Property name="voice_id" type="string">
+        Voice ID to be used by the agent for voice responses.
+        
+        Options - cgSgspJ2msm6clMCkdW9
+      </Property>
+      
     </Properties>
 
   </Col>
@@ -50,7 +83,7 @@ Agents have three main components {{ className: 'lead' }}
 
     ```json {{'title': 'Body'}}
     {
-        "template": "chat"
+        "type": "chat"
     }
     ```
     ```python
@@ -59,7 +92,7 @@ Agents have three main components {{ className: 'lead' }}
     url = "https://api.ailibrary.ai/v1/agent/create"
 
     payload = {
-        "template": "chat"
+        "type": "chat"
     }
 
     headers = {
@@ -102,16 +135,61 @@ Agents have three main components {{ className: 'lead' }}
 
 <Row>
   <Col>
-    Updates an agent.
+    Updates an agent. You can specify only the properties you want to update.
+
+    ### Path parameters
+    
     <Properties>
-      <Property name="template" type="integer" required="true">
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
+
+    ### Request body
+    <Properties>
+      <Property name="type" type="integer" required="true">
+        Specify the type of agent you want to create.
+
         Options - `notebook`, `chat`, `voice`
       </Property>
+      <Property name="title" type="string">
+        Give your agent a user friendly name. This information is not used for training the agent and is only for display purposes.
+      </Property>
       <Property name="instructions" type="string">
-        eg. You are a useful agent.
+        This is the most important part of the agent. It tells the agent what it is supposed to do. For example, you can tell the agent that it is a sales agent and it should help the user with their purchase. Make it as specific as possible. Edit this later if you want to make changes and improve responses.
+
+        Default: "You are a helpful assistant."
+      </Property>
+      <Property name="description" type="string">
+        Give a short description of the agent. This information is not used for training the agent and is only for display purposes.
+      </Property>
+      <Property name="coverimage" type="string">
+        URL of the cover image for the agent. Recommended size is 512px x 512px.
+      </Property>
+      <Property name="intromessage" type="string">
+        This is the first message that the agent will send to the user. You can use this to greet the user and set the context for the conversation. In voice agents, this message is adapted to the first response received from the user.
+      </Property>
+      <Property name="knowledge_search" type="boolean">
+        Enable knowledge base search.
       </Property>
       <Property name="knowledge_id" type="string">
-        Limit the number of contacts returned.
+        Knowledge Base ID to be used by the agent for answering queries.
+      </Property>
+      <Property name="form_filling" type="boolean">
+        Enable form filling.
+      </Property>
+      <Property name="form_id" type="string">
+        Form ID to be used by the agent for collecting structured information.
+      </Property>
+      <Property name="languages" type="string">
+        Set the default language for the agent. This is used for voice agents.
+        
+        Options - `en-US`, `hi-IN`, `es-ES`, `fr-FR`, `de-DE`, `it-IT`, `ja-JP`, `ko-KR`, `pt-BR`, `zh-CN`
+      </Property>
+      <Property name="voice_id" type="string">
+        Voice ID to be used by the agent for voice responses.
+        
+        Options - cgSgspJ2msm6clMCkdW9
       </Property>
     </Properties>
 
@@ -153,11 +231,19 @@ Agents have three main components {{ className: 'lead' }}
 
 ---
 
-## Agent Details {{ tag: 'GET', label: '/v1/agent/{namespace}' }}
+## Retrieve Agent {{ tag: 'GET', label: '/v1/agent/{namespace}' }}
 
 <Row>
   <Col>
-    Get agent details.
+    Return information about an agent.
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
 
     
 
@@ -189,13 +275,21 @@ Agents have three main components {{ className: 'lead' }}
 
 <Row>
   <Col>
-    Deletes agent details. 
+    Deletes an agent. 
 
     **What's deleted?** 
     Logs, admins, and other settings are deleted.
 
     **What's not deleted?**
     Connected knowledge base, forms and contacts are not deleted. 
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
 
   </Col>
   <Col sticky>
@@ -216,6 +310,16 @@ Agents have three main components {{ className: 'lead' }}
     Chat with the agent. 
 
     This is a streaming API. Responses are sent as they are generated.
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
+
+    ### Request body
     
     <Properties>
         <Property name="session_id" type="string">
@@ -237,7 +341,7 @@ Agents have three main components {{ className: 'lead' }}
   </Col>
   <Col sticky>
 
-  <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}">
+  <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/chat">
 
   ```json {{'title': 'Body'}}
     {
@@ -272,12 +376,42 @@ Agents have three main components {{ className: 'lead' }}
   <Col>
     Connects a user to the agent via a call.
 
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
+
+    ### Request body
+
+    <Properties>
+        <Property name="phone" type="string" required="true">
+            Phone number of the user with country code.
+        </Property>
+        <Property name="name" type="string">
+            Name of the user.
+        </Property>
+    </Properties>
+
   </Col>
   <Col sticky>
 
+  <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/call">
+
+  ```json {{'title': 'Body'}}
+    {
+        "phone": "+919876543210",
+        "name": "John Doe"
+    }
+    ```
+
+    </CodeGroup>
+
     ```json {{ title: 'Response' }}
     {
-        "response": "successfully deleted"
+        "response": "call initiated"
     }
     ```
     </Col>

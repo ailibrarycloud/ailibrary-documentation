@@ -21,7 +21,7 @@ export function wrapper({ children }) {
 }
 
 export const h2 = function H2(props) {
-  return <Heading level={2} {...props} />
+  return <Heading level={2} {...props} className="mt-6 text-2xl" />
 }
 
 function InfoIcon(props) {

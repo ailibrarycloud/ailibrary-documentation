@@ -202,9 +202,9 @@ export const navigation = [
   {
     title: 'API REFERENCE',
     links: [
-      { title: 'Agents', href: '/agents' },
+      { title: 'Agent', href: '/agent' },
       { title: 'Knowledge Base', href: '/knowledgebase' },
-      { title: 'Forms', href: '/forms' },
+      { title: 'Form', href: '/form' },
       { title: 'Utilities', href: '/utilities' },
       { title: 'Integrations', href: '/integrations' },
     ],
