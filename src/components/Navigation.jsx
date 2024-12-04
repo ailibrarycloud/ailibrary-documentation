@@ -196,28 +196,25 @@ export const navigation = [
     title: 'GETTING STARTED',
     links: [
       { title: 'Introduction', href: '/' },
-      // { title: 'Quickstart', href: '/quickstart' },
-      // { title: 'SDKs', href: '/sdks' },
       { title: 'Authentication', href: '/authentication' },
-      // { title: 'Pagination', href: '/pagination' },
-      // { title: 'Errors', href: '/errors' },
-      // { title: 'Webhooks', href: '/webhooks' },
     ],
   },
   {
     title: 'API REFERENCE',
     links: [
-      { title: 'Multi Modal Generation', href: '/generate' },
-      // { title: 'Models', href: '/models' },
-      // { title: 'Knowledge Base', href: '/knowledgebase' },
-      // { title: 'Utilities', href: '/utilities' },
+      { title: 'Agents', href: '/agents' },
+      { title: 'Knowledge Base', href: '/knowledgebase' },
+      { title: 'Forms', href: '/forms' },
+      { title: 'Utilities', href: '/utilities' },
+      { title: 'Integrations', href: '/integrations' },
     ],
   },
   {
-    title: 'KEY CONCEPTS',
+    title: 'AGENTS',
     links: [
-      { title: 'RAG', href: '/rag' },
-      { title: 'CALM', href: '/calm' },
+      { title: 'Notebook', href: '/rag' },
+      // { title: 'Voice Agent', href: '/knowledgebase' },
+      // { title: 'Chat Agent', href: '/forms' },
     ],
   },
 ]

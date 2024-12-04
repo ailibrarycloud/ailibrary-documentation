@@ -12,8 +12,8 @@ import { UsersIcon } from '@/components/icons/UsersIcon'
 
 const resources = [
   {
-    href: '/generate',
-    name: 'Multi Modal Generation',
+    href: '/agents',
+    name: 'Agents',
     description:
       'Learn how to call multiple AI models with a single API endpoint and inject relevant knowledge into the context window.',
     icon: UserIcon,
@@ -25,23 +25,23 @@ const resources = [
       ],
     },
   },
-  // {
-  //   href: '/models',
-  //   name: 'Models',
-  //   description:
-  //     'Learn about the available text, image, audio and vision models.',
-  //   icon: ChatBubbleIcon,
-  //   pattern: {
-  //     y: -6,
-  //     squares: [
-  //       [-1, 2],
-  //       [1, 3],
-  //     ],
-  //   },
-  // },
   {
     href: '/knowledgebase',
     name: 'Knowledge Base',
+    description:
+      'Learn how to create and manage knowledge bases.',
+    icon: EnvelopeIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+  {
+    href: '/knowledgebase',
+    name: 'Forms',
     description:
       'Learn how to create and manage knowledge bases.',
     icon: EnvelopeIcon,

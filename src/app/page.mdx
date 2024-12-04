@@ -18,47 +18,36 @@ export const sections = [
 
 # AI Library Developer Platform
 
-Hi there! 👋 {{ className: 'lead' }}
+Hi there! 👋 We are excited to have you here. {{ className: 'lead' }}
 
-We are excited to have you here.  {{ className: 'lead' }}
-
-AI Library is on mission to democratize AI. The platform is the first step to provide a level playing field for the community to build and grow together without the complexities surrounding generative AI. It drastically reduces the effort to build full stack applications but offloanding  {{ className: 'lead' }}
-
-With AI Library, you can: {{ className: 'lead' }}
-- build your own AI Agents using [AI models](/models) and [RAG](/knowledgebase) models. {{ className: 'lead' }}
-- [generate](/generate) responses from [AI models](/models) by multiple providers (like OpenAI, Anthropic, Google) with a single API endpoint. We call this the model router. {{ className: 'lead' }}
-- use [RAG](/knowledgebase) to ground LLMs and build agents and use any model. We provide multiple ways to fetch information for your RAG model. {{ className: 'lead' }}
-- use [utilities](/utilities/) to connect to your AI solutions to other applications. {{ className: 'lead' }}
-
+AI Library is a platform to create AI Agents that can autonomously achieve tasks.  {{ className: 'lead' }}
 
 ### Get your API Key
-Login to your  [AI Library](https://www.ailibrary.ai/) account and visit the profile page. 
+Login to your  [AI Library Platform](https://ailibrary.ai/platform) and visit your profile page. You will find your API key there. 
 Include the key in request header as **X-Library-Key** to authenticate your requests. To read more on authentication, visit the [authentication](/authentication) page.
 
-
-### Get help
-- Join the AI Library [Discord Community](https://discord.gg/3Zt8V7ZQ) to get help from the community
-{/* - We do office hours. Visit here for the schedule [here](https://ailibrary.ai/schedule) */}
-- Email us at [hello@ailibrary.ai](mailto:hello@ailibrary.ai). We try our best to get back to every question.
-
-{/* ### 4. Follow updates
-Use the channel <#1266314070408171530> to get updates from the team */}
-
-Welcome aboard! Let's create amazing AI applications together! ✨
-
 <div className="not-prose mb-16 mt-6 flex gap-3">
-  <Button href="/quickstart" arrow="right">
+  <Button href="https://ailibrary.ai/platform" arrow="right">
     <>Get your API Key</>
   </Button>
-  
-  {/* <Button href="/sdks" variant="outline">
-    <>Book AI Library Office Hours</>
-  </Button> */}
-
-    {/* <Button href="/sdks" variant="text" arrow="right">
-    <>Get your API key</>
-  </Button> */}
 </div>
+
+## Understanding AI Agents
+
+AI Library Platform APIs are organised into entities.
+
+1. **Agent** - The highest level is an agent. Unique identifier of an agent is `namespace` A conversation with an agent can be triggered as a text chat or a voice chat. Agents require instructions (eg. you are a sales agent). By default they pick on the LLM's knowledge.
+    
+2. **Knowledge Base** - If you want to train your agent with custom data, you need to create a knowledge base. You can feed knowledge base from various sources - documents you upload, files on the internet, your database.
+    
+3. **Forms** - Agents by default can converse on general topics, on knowledge base you specify and follow instructions you provide. However, if you want them to collect structured information, you can use forms. This opens a plethora of new opportunities. You can trigger follow up tasks based on responses you get.
+    
+4. **Utilities** - Sometimes your agents need special skills, utilities can help you build _super agents_ 💪. You can enable your agent to search the web or news, scrape a web page or access data otherwise unavailable by parsing a PDF or handwritten text.
+    
+5. **Integrations** - If you want to connect your agent to a 3rd party application, you can use AI Library native integrations. There are bidirectional integrations with CRMs, Telephony Providers, Payment Gateways, Messaging Platforms and more.
+    
+
+Welcome aboard! Let's create amazing AI applications together! ✨
 
 {/* <Guides /> */}
 

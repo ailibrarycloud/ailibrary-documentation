@@ -1,0 +1,284 @@
+export const metadata = {
+    title: 'Agents',
+    description:
+        'Learn how to build and manage AI agents.',
+}
+
+# Agents
+
+Use these endpoints to create and manage agents. {{ className: 'lead' }}
+
+Agents have three main components {{ className: 'lead' }}
+
+1. Instruction - This is very important as it tells the agent what it is supposed to do. For example, you can tell the agent that it is a sales agent and it should help the user with their purchase. {{ className: 'lead' }}
+    
+2. Knowledge Base - Agents can be trained on a knowledge base. This is a collection of data that the agent can use to respond to queries. {{ className: 'lead' }}
+
+3. Forms - If you want to collect structured information from the user, you can use forms. {{ className: 'lead' }}
+
+
+
+---
+
+## Create an Agent {{ tag: 'POST', label: '/v1/agent/create' }}
+
+<Row>
+  <Col>
+
+    Creates an agent from a template. 
+
+    <Properties>
+      <Property name="template" type="integer" required="true">
+        Options - `notebook`, `chat`, `voice`
+      </Property>
+    </Properties>
+
+    <Properties>
+      <Property name="instructions" type="string">
+        eg. You are a useful agent.
+      </Property>
+      <Property name="knowledge_id" type="string">
+        Limit the number of contacts returned.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/agent/create">
+
+
+    ```json {{'title': 'Body'}}
+    {
+        "template": "chat"
+    }
+    ```
+    ```python
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/agent/create"
+
+    payload = {
+        "template": "chat"
+    }
+
+    headers = {
+        "X-Library-Key": "<your-api-key>",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.request("POST", url, headers=headers, json=payload)
+    
+    
+    ```
+    
+
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "type": "notebook",
+        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
+        "title": "Burger Singh Franchise",
+        "description": "Ask me how to start a Burger Singh Franchise",
+        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
+        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
+        "company": "Burger Singh",
+        "knowledge_search": true,
+        "knowledge_id": "BurgerSing_1733206677149149",
+        "form_filling": true,
+        "languages": ["en-US"],
+        "voice_id": "cgSgspJ2msm6clMCkdW9"
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Update Agent {{ tag: 'PUT', label: '/v1/agent/{namespace}' }}
+
+<Row>
+  <Col>
+    Updates an agent.
+    <Properties>
+      <Property name="template" type="integer" required="true">
+        Options - `notebook`, `chat`, `voice`
+      </Property>
+      <Property name="instructions" type="string">
+        eg. You are a useful agent.
+      </Property>
+      <Property name="knowledge_id" type="string">
+        Limit the number of contacts returned.
+      </Property>
+    </Properties>
+
+    
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}">
+
+
+    ```json {{'title': 'Body'}}
+    {
+        "type": "notebook",
+        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
+        "title": "Burger Singh Franchise",
+        "description": "Ask me how to start a Burger Singh Franchise",
+        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
+        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
+        "company": "Burger Singh",
+        "knowledge_search": true,
+        "knowledge_id": "BurgerSing_1733206677149149",
+        "form_filling": true,
+        "languages": ["en-US"],
+        "voice_id": "cgSgspJ2msm6clMCkdW9"
+    }
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "response": "success"
+    }
+    ```
+    </Col>
+</Row>
+
+
+---
+
+## Agent Details {{ tag: 'GET', label: '/v1/agent/{namespace}' }}
+
+<Row>
+  <Col>
+    Get agent details.
+
+    
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+        "type": "notebook",
+        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
+        "title": "Burger Singh Franchise",
+        "description": "Ask me how to start a Burger Singh Franchise",
+        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
+        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
+        "company": "Burger Singh",
+        "knowledge_search": true,
+        "knowledge_id": "BurgerSing_1733206677149149",
+        "form_filling": true,
+        "languages": ["en-US"],
+        "voice_id": "cgSgspJ2msm6clMCkdW9"
+    }
+    ```
+    </Col>
+</Row>
+
+---
+
+## Delete Agent {{ tag: 'DELETE', label: '/v1/agent/{namespace}' }}
+
+<Row>
+  <Col>
+    Deletes agent details. 
+
+    **What's deleted?** 
+    Logs, admins, and other settings are deleted.
+
+    **What's not deleted?**
+    Connected knowledge base, forms and contacts are not deleted. 
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+        "response": "successfully deleted"
+    }
+    ```
+    </Col>
+</Row>
+
+---
+
+## Chat {{ tag: 'POST', label: '/v1/agent/{namespace}/chat' }}
+<Row>
+  <Col>
+    Chat with the agent. 
+
+    This is a streaming API. Responses are sent as they are generated.
+    
+    <Properties>
+        <Property name="session_id" type="string">
+            A unique session id.
+        </Property>
+        <Property name="messages" type="array" required="true">
+            A list of messages comprising the conversation so far. 
+        </Property>
+        
+        <Property name="messages > role" type="string" required="true">
+            Options - `assistant`, `user`, `system`
+        </Property>
+        <Property name="messages > content" type="string" required="true">
+            The message content.
+        </Property>
+    
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+  <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}">
+
+  ```json {{'title': 'Body'}}
+    {
+        "session_id": "niusjndckj23",
+        "messages": [
+            {
+                "role": "assistant",
+                "content": "how are you?"
+            },
+            {
+                "role": "user",
+                "content": "doing good. thank you."
+            }
+        ]
+    }
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "response": "successfully deleted"
+    }
+    ```
+    </Col>
+</Row>
+
+---
+
+## Call {{ tag: 'POST', label: '/v1/agent/{namespace}/call' }}
+<Row>
+  <Col>
+    Connects a user to the agent via a call.
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+        "response": "successfully deleted"
+    }
+    ```
+    </Col>
+</Row>

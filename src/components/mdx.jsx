@@ -101,7 +101,7 @@ export function Property({ name, children, type, required = false}) {
             </dd>
             <dt className="sr-only">Required</dt>
             <dd className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
-              {required ? <span className='text-red-600'>required</span> : ''}
+              {required ? <span className='text-red-600'>required</span> : <span className='dark:text-gray-600 text-gray-300'>optional</span>}
             </dd>
           </>
         )}
