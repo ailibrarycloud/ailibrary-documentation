@@ -1,0 +1,116 @@
+import { Guides } from '@/components/Guides'
+import { Resources } from '@/components/Resources'
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+  title: 'RAG (Retrieval Augmented Generation)',
+  description:
+    'Learn the basics of RAG (Retrieval Augmented Generation)',
+}
+
+
+<HeroPattern />
+
+# My First AI Agent
+
+In this guide, we create an agent, add a source document and chat. {{ className: 'lead' }}
+
+## Create an Agent
+
+<CodeGroup title="Create an agent" tag="POST" label="/v1/agent/create">
+
+    ```python
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/knowledgebase"
+
+    payload = json.dumps({
+      "name": "stable-diffusion-xl-1024-v1-0@stability",
+    })
+    headers = {
+      'X-Library-Key': '••••••'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response.text)
+    ```
+
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://api.ailibrary.ai/v1/knowledgebase',
+      headers: { 
+        'X-Library-Key': '••••••'
+      }
+    };
+
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    ```
+
+    </CodeGroup>
+
+
+The second step is to add data to knowledge source, if needed {{ className: 'lead' }}
+
+First, upload files
+
+<CodeGroup title="Add Files to Knowledge Base" tag="POST" label="/v1/files">
+
+    ```python
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/files"
+
+    files=[
+      ('files',('w2-single.png',open('/link/to/local/file.png','rb'),'image/png'))
+    ]
+    headers = {
+      'X-Library-Key': '••••••'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response.text)
+    ```
+
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://api.ailibrary.ai/v1/knowledgebase',
+      headers: { 
+        'X-Library-Key': '••••••'
+      }
+    };
+
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    ```
+
+    </CodeGroup>
+
+Next, process the files and add them to the knowledge source
+
+
+
+The third step is to use the knowledge source to augment your prompt. {{ className: 'lead' }}
+
+
+

@@ -202,17 +202,17 @@ export const navigation = [
   {
     title: 'API REFERENCE',
     links: [
-      { title: 'Agent', href: '/agent' },
-      { title: 'Knowledge Base', href: '/knowledgebase' },
-      { title: 'Form', href: '/form' },
-      { title: 'Utilities', href: '/utilities' },
-      { title: 'Integrations', href: '/integrations' },
+      { title: 'Agent', href: '/api-reference/agent' },
+      { title: 'Knowledge Base', href: '/api-reference/knowledgebase' },
+      // { title: 'Form', href: '/form' },
+      { title: 'Utilities', href: '/api-reference/utilities' },
+      // { title: 'Integrations', href: '/integrations' },
     ],
   },
   {
-    title: 'AGENTS',
+    title: 'GUIDES',
     links: [
-      { title: 'Notebook', href: '/rag' },
+      { title: 'My first agent', href: '/guides/my-first-agent' },
       // { title: 'Voice Agent', href: '/knowledgebase' },
       // { title: 'Chat Agent', href: '/forms' },
     ],

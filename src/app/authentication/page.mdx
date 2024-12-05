@@ -14,10 +14,28 @@ You'll need to authenticate your requests to access any of the endpoints in the 
 
 All API requests should include your API key in an ``X-Library-Key`` HTTP header as follows:
 
-```bash {{ title: 'Example request' }}
+<CodeGroup title="Example Requests">
+```bash {{ title: 'cURL' }}
 curl https://api.ailibrary.ai/v1/generations/771 \
   -H "X-Library-Key: $AILIBRARY_API_KEY"
 ```
+```python {{ title: 'Python' }}
+import requests
+
+headers = {
+    "X-Library-Key": os.environ["AILIBRARY_API_KEY"]
+}
+``` 
+```javascript {{ title: 'Node.js' }}
+const axios = require('axios');
+
+const headers = {
+  "X-Library-Key": process.env.AILIBRARY_API_KEY
+}
+```
+
+
+</CodeGroup>
 
 {/* ## Using an SDK
 

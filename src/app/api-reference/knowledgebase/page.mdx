@@ -1,0 +1,309 @@
+export const metadata = {
+  title: 'Knowledge Base',
+  description:
+    'Learn how to build and use knowledge base to use with AI Models.',
+}
+
+# Knowledge Base
+
+Knowledge Base is used to ground generations by agents using Retrieval Augmented Generation (RAG). AI Library provides vector database out of the box. {{ className: 'lead' }}
+
+---
+
+## Create a Knowledge Base {{ tag: 'POST', label: '/v1/knowledgebase' }}
+
+<Row>
+  <Col>
+
+    Retrieves a list of all knowledge bases.
+
+    ### Request body
+      <Properties>
+      <Property name="name" type="string" required="true">
+          Name of the knowledge base.
+        </Property>
+        <Property name="meta" type="boolean">
+          Meta data of the knowledge base.
+        </Property>
+      </Properties> 
+
+    ### Response
+    Returns the knowledgeId of the created knowledge base.
+
+
+  </Col>
+  <Col sticky>
+  ```json {{'title': 'Body'}}
+    {
+        "name": "portland general electic revenue"  
+    }
+    ```
+    ```json {{ title: 'Response' }}
+    {
+      "knowledgeId": "EmbassyBel_1716198026361802"
+    }
+    ```
+
+  </Col>
+  </Row>
+
+
+
+---
+
+## List all knowledge bases {{ tag: 'GET', label: '/v1/knowledgebase' }}
+
+<Row>
+  <Col>
+    Retrieves a list of all knowledge bases. 
+
+    ### Response
+    Returns a list of knowledge bases and pagination information.
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+    "knowledgebases": [
+        {
+            "title": "Embassy Belgrade - Democracy Commission Small Grants Program (FY2024)",
+            "knowledgeId": "EmbassyBel_1716198026361802",
+            "status": "available",
+            "userName": "Arani Chaudhuri",
+            "visibility": "private",
+            "star": true,
+            "meta": {
+                "description": "The Emergency Management Performance Grant Program focuses on all-hazards emergency preparedness, including the evolving threats and risks associated with climate change. The primary objective is to assist state, local, tribal, and territorial emergency management agencies to implement the National Preparedness System and to support the National Preparedness Goal of a secure and resilient nation. \n  \n\nApplicants can submit applications for this funding opportunity through FEMA Grants Outcomes (GO). Access the system at https://go.fema.gov/.\n",
+                "opportunityid": 353549,
+                "opportunitynumber": "DHS-24-GPD-042-01-99",
+                "source": "grants.gov",
+                "version": "1.0"
+            },
+            "created_timestamp": "2024-05-20 09:40:26",
+            "updated_timestamp": "2024-05-20 09:40:28"
+        },
+        // ...
+    ],
+    "meta": {
+        "page": 1,
+        "total": 66,
+        "next_page": 2,
+        "prev_page": 0,
+        "total_pages": 3,
+        "next": "/v1/knowledgebase?page=2&collection=&status=&limit=25",
+        "prev": ""
+    }
+}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a Knowledge Base {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}' }}
+
+<Row>
+  <Col>
+
+    Retrieves a knowledge base by its ID.
+
+    ### Path parameters
+    <Properties>
+     <Property name="knowledgeId" type="string" required="true">
+        ID of the knowledge base.
+      </Property>
+    </Properties>
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+      "knowledgeId": "EmbassyBel_1716198026361802",
+      "title": "Embassy Belgrade - Democracy Commission Small Grants Program (FY2024)",
+      "status": "available",
+      "userName": "Arani Chaudhuri",
+      "visibility": "private",
+      "star": true,
+      "meta": {
+          "description": "The Emergency Management Performance Grant Program focuses on all-hazards emergency preparedness, including the evolving threats and risks associated with climate change. The primary objective is to assist state, local, tribal, and territorial emergency management agencies to implement the National Preparedness System and to support the National Preparedness Goal of a secure and resilient nation. \n  \n\nApplicants can submit applications for this funding opportunity through FEMA Grants Outcomes (GO). Access the system at https://go.fema.gov/.\n",
+          "opportunityid": 353549,
+          "opportunitynumber": "DHS-24-GPD-042-01-99",
+          "source": "grants.gov",
+          "version": "1.0"
+      },
+      "created_timestamp": "2024-05-20 09:40:26",
+      "updated_timestamp": "2024-05-20 09:40:28"
+  }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/' }}
+
+<Row>
+  <Col>
+
+    Add a list of files to a knowledge base.
+
+    ### Request body
+      <Properties>
+      <Property name="type" type="string" required="true">
+          Options - `docs`
+        </Property>
+        <Property name="meta" type="boolean">
+          Meta data of the knowledge base.
+        </Property>
+        <Property name="options" type="object">
+          Meta data of the knowledge base.
+        </Property>
+        <Property name="options > urls" type="array">
+          List of URLs to add to the knowledge base.
+
+          Accepted file types are PDF, DOCX, PPTX, XLSX, CSV, TXT. 
+          
+          Processing PDF and TXT files are faster than other file types.
+        </Property>
+      </Properties> 
+
+    ### Response
+    Returns the knowledgeId of the created knowledge base.
+
+
+  </Col>
+  <Col sticky>
+  ```json {{'title': 'Body'}}
+    {
+        "type": "docs",
+        "options": {
+            "urls": [
+                "https://assets.ctfassets.net/416ywc1laqmd/7oJfDqN7x2Bjj3bXiP3WHR/5866c87cd89c15987bbb7211bfc3f3cc/Update_11_17_23.pdf"
+            ]
+        },
+        "meta": {
+            "folder": "home"
+        }
+    }
+    ```
+    ```json {{ title: 'Response' }}
+    {
+      "knowledgeId": "EmbassyBel_1716198026361802"
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{sourceId}' }}
+
+<Row>
+  <Col>
+
+  Use this to retrieve the details of a source file including the contents.
+
+  ### Path parameters
+  <Properties>
+  <Property name="knowledgeId" type="string" required="true">
+      ID of the knowledge base.
+    </Property>
+    <Property name="sourceId" type="string" required="true">
+      ID of the source file.
+    </Property>
+  </Properties>
+  </Col>
+    <Col sticky>
+    ```json {{'title': 'Response'}}
+
+    {
+        "knowledgeId": "BurgerSing_1733206677149149",
+        "text": "Burger SinghFranchiseInformation\nBurgerSinghisthequintessential Indiansuccessstory... ",
+        "source": "Burger Singh Franchise Page Knowledge Base .pdf",
+        "userName": "Arani Chaudhuri",
+        "created_date": "2024-12-03"
+    }
+    
+    ```
+  </Col>
+</Row>
+
+
+---
+
+## List Sources {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/sources' }}
+
+<Row>
+  <Col>
+
+  Use this to retrieve the details of a source file including the contents.
+
+  ### Path parameters
+  <Properties>
+  <Property name="knowledgeId" type="string" required="true">
+      ID of the knowledge base.
+    </Property>
+  </Properties>
+
+### Returns
+List of all sources in the knowledge base.
+
+</Col>
+  <Col sticky>
+```json {{'title': 'Response'}}
+[
+    {
+        "created_timestamp": "2024-12-03 06:40:04",
+        "id": 3318,
+        "meta": {
+            "folder": "home",
+            "source_type": "docs"
+        },
+        "source": "Burger Singh Franchise Page Knowledge Base .pdf",
+        "source_type": "docs",
+        "status": "completed",
+        "userName": "Arani Chaudhuri"
+    },
+    //...
+]
+```
+</Col>
+</Row>
+
+
+---
+
+## Delete Sources {{ tag: 'DELETE', label: '/v1/knowledgebase/{knowledgeId}/source' }}
+
+<Row>
+  <Col>
+    Delete sources from a knowledge base.
+    <Properties>
+      <Property name="values" type="array" required="true">
+          List of sources to delete.
+      </Property>
+    </Properties>
+  </Col>
+  <Col sticky>
+  ```json {{'title': 'Body'}}
+    {
+        "values": [
+            "Rules_TOC.pdf",
+            "Rules_TOC_1.pdf",
+            //...
+        ]
+    }
+    ```
+    ```json {{ title: 'Response' }}
+    {
+        "message": "Deleted successfully"
+    }
+    ```
+  </Col>
+</Row>

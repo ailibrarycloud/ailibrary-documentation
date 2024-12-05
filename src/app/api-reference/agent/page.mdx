@@ -131,6 +131,48 @@ Agents have three main components {{ className: 'lead' }}
 
 ---
 
+## Retrieve Agent {{ tag: 'GET', label: '/v1/agent/{namespace}' }}
+
+<Row>
+  <Col>
+    Return information about an agent.
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
+
+    
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+        "type": "notebook",
+        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
+        "title": "Burger Singh Franchise",
+        "description": "Ask me how to start a Burger Singh Franchise",
+        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
+        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
+        "company": "Burger Singh",
+        "knowledge_search": true,
+        "knowledge_id": "BurgerSing_1733206677149149",
+        "form_filling": true,
+        "languages": ["en-US"],
+        "voice_id": "cgSgspJ2msm6clMCkdW9"
+    }
+    ```
+    </Col>
+</Row>
+
+
+
+---
+
 ## Update Agent {{ tag: 'PUT', label: '/v1/agent/{namespace}' }}
 
 <Row>
@@ -231,45 +273,6 @@ Agents have three main components {{ className: 'lead' }}
 
 ---
 
-## Retrieve Agent {{ tag: 'GET', label: '/v1/agent/{namespace}' }}
-
-<Row>
-  <Col>
-    Return information about an agent.
-
-    ### Path parameters
-    
-    <Properties>
-      <Property name="namespace" type="string" required="true">
-          The namespace of the agent.
-      </Property>
-    </Properties>
-
-    
-
-  </Col>
-  <Col sticky>
-
-    ```json {{ title: 'Response' }}
-    {
-        "type": "notebook",
-        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-        "title": "Burger Singh Franchise",
-        "description": "Ask me how to start a Burger Singh Franchise",
-        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
-        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
-        "company": "Burger Singh",
-        "knowledge_search": true,
-        "knowledge_id": "BurgerSing_1733206677149149",
-        "form_filling": true,
-        "languages": ["en-US"],
-        "voice_id": "cgSgspJ2msm6clMCkdW9"
-    }
-    ```
-    </Col>
-</Row>
-
----
 
 ## Delete Agent {{ tag: 'DELETE', label: '/v1/agent/{namespace}' }}
 
