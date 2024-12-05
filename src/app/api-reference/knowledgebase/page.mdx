@@ -202,6 +202,35 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
+## Knowledge Base Status {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/status' }}
+
+<Row>
+  <Col>
+
+    Get the knowledge base status to check if all sources are processed.
+
+    ### Path parameters
+    <Properties>
+     <Property name="knowledgeId" type="string" required="true">
+        ID of the knowledge base.
+      </Property>
+    </Properties>
+
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "processing",
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
 ## Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{sourceId}' }}
 
 <Row>

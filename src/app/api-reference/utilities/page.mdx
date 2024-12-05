@@ -6,96 +6,71 @@ export const metadata = {
 
 # Utilities
 
-Generate response from models by leading providers. Add Knowledge Base ID for Retrieval Augmented Generation. {{ className: 'lead' }}
-
-### Properties
-
-{/* <Properties>
-  <Property name="modelId" type="string" required="true">
-    Unique identifier of the model in the format model@provider. Check the list
-    of available models, [here](#)
-  </Property>
-  <Property name="prompt" type="string" required="true">
-    Your prompt
-  </Property>
-  <Property name="knowledgeId" type="string">
-    Add the [knowledge id](#) for knowledge retrieval.
-  </Property>
-</Properties> */}
+Functions to support your AI Agents. {{ className: 'lead' }}
 
 ---
 
-## Fetch news {{ tag: 'GET', label: '/utilities/news' }}
+## Web Search {{ tag: 'POST', label: '/v1/utilities/websearch' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to retrieve a paginated list of all your contacts. By default, a maximum of ten contacts are shown per page.
+    Searches the web for search terms
 
-    ### Optional attributes
+    ### Request body
 
     <Properties>
-      <Property name="limit" type="integer">
-        Limit the number of contacts returned.
+      <Property name="search_terms" type="array">
+        List of search terms
       </Property>
     </Properties>
 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/contacts">
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/websearch">
 
-    ```bash {{ title: 'cURL' }}
-    curl -G https://api.AI Library.chat/v1/contacts \
-      -H "Authorization: Bearer {token}" \
-      -d active=true \
-      -d limit=10
-    ```
-
-    ```js
-    import ApiClient from '@example/AI Library-api'
-
-    const client = new ApiClient(token)
-
-    await client.contacts.list()
-    ```
-
-    ```python
-    from AI Library_api import ApiClient
-
-    client = ApiClient(token)
-
-    client.contacts.list()
-    ```
-
-    ```php
-    $client = new \AI Library\ApiClient($token);
-
-    $client->contacts->list();
+    ```json {{'title': 'Body'}}
+    {
+      "search_terms": ["artificial intelligence", "retireval augmented generation"]
+    }
     ```
 
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
+    [
     {
-      "has_more": false,
-      "data": [
-        {
-          "id": "WAz8eIbvDR60rouK",
-          "username": "FrankMcCallister",
-          "phone_number": "1-800-759-3000",
-          "avatar_url": "https://assets.AI Library.chat/avatars/frank.jpg",
-          "display_name": null,
-          "conversation_id": "xgQQXg3hrtjh7AvZ",
-          "last_active_at": 705103200,
-          "created_at": 692233200
-        },
-        {
-          "id": "hSIhXBhNe8X1d8Et"
-          // ...
-        }
-      ]
+        "term": "artificial intelligence",
+        "prompt_context": "Artificial intelligence - WikipediaArtificial <b>intelligence</b> (AI), in its broadest sense, ...",
+        "sources": [
+            {
+                "title": "Artificial intelligence - Wikipedia",
+                "description": "Artificial <b>intelligence</b> (AI), in its broadest sense, is <b>intelligence</b> exhibited by machines, particularly computer systems. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and <b>intelligence</b> to take actions that maximize their chances of achieving defined goals. [1]",
+                "url": "https://en.wikipedia.org/wiki/Artificial_intelligence",
+                "isFamilyFriendly": true,
+                "language": "en",
+                "full_text": "Artificial intelligence - WikipediaArtificial <b>intelligence</b> (AI), in its broadest sense, is <b>intelligence</b> exhibited by machines, particularly computer systems. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and <b>intelligence</b> to take actions that maximize their chances of achieving defined goals. [1]"
+            },
+            //...
+        ]
+    },
+    {
+        "term": "retireval augmented generation",
+        "prompt_context": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks<b>Retrieval</b>-<b>augmented</b>...",
+        "sources": [
+            {
+                "title": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks",
+                "description": "<b>Retrieval</b>-<b>augmented</b> <b>generation</b> (RAG) is an innovative approach in the field of natural language processing (NLP) that combines the strengths of <b>retrieval</b>-based and <b>generation</b>-based models to enhance the quality of generated text. This hybrid model aims to leverage the vast amounts of information available in large-scale databases or knowledge bases, making it particularly effective for tasks that require accurate and contextually relevant information. ...",
+                "url": "https://www.geeksforgeeks.org/what-is-retrieval-augmented-generation-rag/",
+                "isFamilyFriendly": true,
+                "language": "en",
+                "full_text": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks<b>Retrieval</b>-<b>augmented</b> <b>generation</b> (RAG) is an innovative approach in the field of natural language processing (NLP) that combines the strengths of <b>retrieval</b>-based and <b>generation</b>-based models to enhance the quality of generated text. This hybrid model aims to leverage the vast amounts of information available in large-scale databases or knowledge bases, making it particularly effective for tasks that require accurate and contextually relevant information. ..."
+            },
+            //...
+        ]
     }
+]
     ```
 
   </Col>
@@ -103,20 +78,69 @@ Generate response from models by leading providers. Add Knowledge Base ID for Re
 
 ---
 
-## Get Web Results {{ tag: 'POST', label: '/knowledgebase' }}
+## Web Parser {{ tag: 'POST', label: '/v1/utilities/webparser' }}
 
----
+<Row>
+  <Col>
 
-## Extract text from a document {{ tag: 'POST', label: '/knowledgebase/:knowledgeId/files' }}
+    Parses a web page for content and returns related links and content
 
----
+    ### Request body
 
-## Extract tables from a document {{ tag: 'GET', label: '/knowledgebase/files' }}
+    <Properties>
+      <Property name="urls" type="array">
+        List of urls
+      </Property>
+    </Properties>
 
----
+  </Col>
+  <Col sticky>
 
-## Extract key value pairs from a form {{ tag: 'GET', label: '/knowledgebase/files/:id' }}
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/webparser">
 
----
+    ```json {{'title': 'Body'}}
+    {
+      "urls": ["https://portlandgeneral.com/about/info/rates-and-regulatory/tariff"]
+    }
+    ```
 
-## Extract text from YouTube video link {{ tag: 'GET', label: '/knowledgebase/files/:id' }}
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    [
+    {
+        "term": "artificial intelligence",
+        "prompt_context": "Artificial intelligence - WikipediaArtificial <b>intelligence</b> (AI), in its broadest sense, ...",
+        "sources": [
+            {
+                "title": "Artificial intelligence - Wikipedia",
+                "description": "Artificial <b>intelligence</b> (AI), in its broadest sense, is <b>intelligence</b> exhibited by machines, particularly computer systems. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and <b>intelligence</b> to take actions that maximize their chances of achieving defined goals. [1]",
+                "url": "https://en.wikipedia.org/wiki/Artificial_intelligence",
+                "isFamilyFriendly": true,
+                "language": "en",
+                "full_text": "Artificial intelligence - WikipediaArtificial <b>intelligence</b> (AI), in its broadest sense, is <b>intelligence</b> exhibited by machines, particularly computer systems. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and <b>intelligence</b> to take actions that maximize their chances of achieving defined goals. [1]"
+            },
+            //...
+        ]
+    },
+    {
+        "term": "retireval augmented generation",
+        "prompt_context": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks<b>Retrieval</b>-<b>augmented</b>...",
+        "sources": [
+            {
+                "title": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks",
+                "description": "<b>Retrieval</b>-<b>augmented</b> <b>generation</b> (RAG) is an innovative approach in the field of natural language processing (NLP) that combines the strengths of <b>retrieval</b>-based and <b>generation</b>-based models to enhance the quality of generated text. This hybrid model aims to leverage the vast amounts of information available in large-scale databases or knowledge bases, making it particularly effective for tasks that require accurate and contextually relevant information. ...",
+                "url": "https://www.geeksforgeeks.org/what-is-retrieval-augmented-generation-rag/",
+                "isFamilyFriendly": true,
+                "language": "en",
+                "full_text": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks<b>Retrieval</b>-<b>augmented</b> <b>generation</b> (RAG) is an innovative approach in the field of natural language processing (NLP) that combines the strengths of <b>retrieval</b>-based and <b>generation</b>-based models to enhance the quality of generated text. This hybrid model aims to leverage the vast amounts of information available in large-scale databases or knowledge bases, making it particularly effective for tasks that require accurate and contextually relevant information. ..."
+            },
+            //...
+        ]
+    }
+]
+    ```
+
+  </Col>
+</Row>
+
