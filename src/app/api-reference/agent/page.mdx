@@ -28,14 +28,14 @@ Agents have three main components {{ className: 'lead' }}
 
 
     <Properties>
-     <Property name="type" type="integer" required="true">
-        Specify the type of agent you want to create.
-
-        Options - `notebook`, `chat`, `voice`
-      </Property>
-      <Property name="title" type="string">
+      <Property name="title" type="string"  required="true">
         Give your agent a user friendly name. This information is not used for training the agent and is only for display purposes.
       </Property>
+     {/* <Property name="type" type="integer">
+        Specify the type of agent you want to create.
+        Options - `chat` `voice`
+        Default - `chat`
+      </Property> */}
       <Property name="instructions" type="string">
         This is the most important part of the agent. It tells the agent what it is supposed to do. For example, you can tell the agent that it is a sales agent and it should help the user with their purchase. Make it as specific as possible. Edit this later if you want to make changes and improve responses.
 
@@ -55,8 +55,10 @@ Agents have three main components {{ className: 'lead' }}
       </Property>
       <Property name="knowledge_id" type="string">
         Knowledge Base ID to be used by the agent for answering queries.
+
+        Leave this blank if you want to create a new knowledge base.
       </Property>
-      <Property name="form_filling" type="boolean">
+      {/* <Property name="form_filling" type="boolean">
         Enable form filling.
       </Property>
       <Property name="form_id" type="string">
@@ -70,8 +72,8 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="voice_id" type="string">
         Voice ID to be used by the agent for voice responses.
         
-        Options - cgSgspJ2msm6clMCkdW9
-      </Property>
+        Options - `cgSgspJ2msm6clMCkdW9`
+      </Property> */}
       
     </Properties>
 
@@ -83,7 +85,8 @@ Agents have three main components {{ className: 'lead' }}
 
     ```json {{'title': 'Body'}}
     {
-        "type": "chat"
+        "title": "My First AI Agent",
+        "knowledge_search": true,
     }
     ```
     ```python
@@ -111,18 +114,15 @@ Agents have three main components {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "type": "notebook",
+        "namespace": "myfirstaiagent_1733206677149149",
+        "type": "chat",
         "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-        "title": "Burger Singh Franchise",
-        "description": "Ask me how to start a Burger Singh Franchise",
-        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
-        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
-        "company": "Burger Singh",
+        "title": "My First AI Agent",
+        "description": "Ask me anything",
+        "intromessage": "How can I help you today?",
+        "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
         "knowledge_search": true,
-        "knowledge_id": "BurgerSing_1733206677149149",
-        "form_filling": true,
-        "languages": ["en-US"],
-        "voice_id": "cgSgspJ2msm6clMCkdW9"
+        "knowledge_id": "myfirstaiagent_1733206677149149"
     }
     ```
 
@@ -152,18 +152,50 @@ Agents have three main components {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "type": "notebook",
+        "namespace": "myfirstaiagent_1733206677149149",
+        "type": "chat",
         "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-        "title": "Burger Singh Franchise",
-        "description": "Ask me how to start a Burger Singh Franchise",
-        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
-        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
-        "company": "Burger Singh",
+        "title": "My First AI Agent",
+        "description": "Ask me anything",
+        "intromessage": "How can I help you today?",
+        "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
         "knowledge_search": true,
-        "knowledge_id": "BurgerSing_1733206677149149",
-        "form_filling": true,
-        "languages": ["en-US"],
-        "voice_id": "cgSgspJ2msm6clMCkdW9"
+        "knowledge_id": "myfirstaiagent_1733206677149149"
+    }
+    ```
+    </Col>
+</Row>
+
+---
+
+## List Agents {{ tag: 'GET', label: '/v1/agent/' }}
+
+<Row>
+  <Col>
+   List agents.
+
+    
+
+  </Col>
+  <Col sticky>
+
+    ```json {{ title: 'Response' }}
+    {
+      
+      "agents": [
+        {
+          "namespace": "myfirstaiagent_1733206677149149",
+          "type": "chat",
+          "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
+          "title": "My First AI Agent",
+          "description": "Ask me anything",
+          "intromessage": "How can I help you today?",
+          "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
+          "knowledge_search": true,
+          "knowledge_id": "myfirstaiagent_1733206677149149"
+        },
+        ///...
+      ]
     }
     ```
     </Col>
@@ -189,13 +221,14 @@ Agents have three main components {{ className: 'lead' }}
 
     ### Request body
     <Properties>
-      <Property name="type" type="integer" required="true">
+      
+      <Property name="title" type="string">
+        Give your agent a user friendly name. This information is not used for training the agent and is only for display purposes.
+      </Property>
+      <Property name="type" type="integer">
         Specify the type of agent you want to create.
 
         Options - `notebook`, `chat`, `voice`
-      </Property>
-      <Property name="title" type="string">
-        Give your agent a user friendly name. This information is not used for training the agent and is only for display purposes.
       </Property>
       <Property name="instructions" type="string">
         This is the most important part of the agent. It tells the agent what it is supposed to do. For example, you can tell the agent that it is a sales agent and it should help the user with their purchase. Make it as specific as possible. Edit this later if you want to make changes and improve responses.
@@ -217,7 +250,7 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="knowledge_id" type="string">
         Knowledge Base ID to be used by the agent for answering queries.
       </Property>
-      <Property name="form_filling" type="boolean">
+      {/* <Property name="form_filling" type="boolean">
         Enable form filling.
       </Property>
       <Property name="form_id" type="string">
@@ -231,8 +264,8 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="voice_id" type="string">
         Voice ID to be used by the agent for voice responses.
         
-        Options - cgSgspJ2msm6clMCkdW9
-      </Property>
+        Options - `cgSgspJ2msm6clMCkdW9`
+      </Property> */}
     </Properties>
 
     
@@ -245,18 +278,13 @@ Agents have three main components {{ className: 'lead' }}
 
     ```json {{'title': 'Body'}}
     {
-        "type": "notebook",
         "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-        "title": "Burger Singh Franchise",
-        "description": "Ask me how to start a Burger Singh Franchise",
-        "intromessage": "Hello. Are you looking to open a Burger Singh Franchise?",
-        "instructions": "You are Mr. Singh (he/him) a helpful assistant trying to qualify a lead for franchise request. Answer the questions based on the information you are given. If answer is not available in the context, try to redirect the conversation back to filling the form. Answer in English or Hindi only. ",
-        "company": "Burger Singh",
+        "title": "My First AI Agent",
+        "description": "Ask me anything",
+        "intromessage": "How can I help you today?",
+        "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
         "knowledge_search": true,
-        "knowledge_id": "BurgerSing_1733206677149149",
-        "form_filling": true,
-        "languages": ["en-US"],
-        "voice_id": "cgSgspJ2msm6clMCkdW9"
+        "knowledge_id": "myfirstaiagent_1733206677149149"
     }
     ```
 
@@ -341,6 +369,16 @@ Agents have three main components {{ className: 'lead' }}
     
     </Properties>
 
+    ### Response 
+
+    Chat responses are streaming by default. Three types of objects are returned for each query
+
+    |Object|Description|Type|
+    |---|---|---|
+    |chat.completion.knowledge|this contains the details of source|array|
+    |chat.completion.latency|latency of response|string|
+    |chat.completion.chunk|response chunk|string|
+
   </Col>
   <Col sticky>
 
@@ -364,15 +402,15 @@ Agents have three main components {{ className: 'lead' }}
 
     </CodeGroup>
 
-    ```json {{ title: 'Response' }}
+    {/* ```json {{ title: 'Response' }}
     {
         "response": "successfully deleted"
     }
-    ```
+    ``` */}
     </Col>
 </Row>
 
----
+{/* ---
 
 ## Call {{ tag: 'POST', label: '/v1/agent/{namespace}/call' }}
 <Row>
@@ -418,4 +456,4 @@ Agents have three main components {{ className: 'lead' }}
     }
     ```
     </Col>
-</Row>
+</Row> */}

@@ -35,12 +35,12 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
   <Col sticky>
   ```json {{'title': 'Body'}}
     {
-        "name": "portland general electic revenue"  
+        "name": "my first knowledge base"  
     }
     ```
     ```json {{ title: 'Response' }}
     {
-      "knowledgeId": "EmbassyBel_1716198026361802"
+      "knowledgeId": "myfirstkno_1716198026361802"
     }
     ```
 
@@ -64,36 +64,32 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
   <Col sticky>
 
     ```json {{ title: 'Response' }}
-    {
-    "knowledgebases": [
-        {
-            "title": "Embassy Belgrade - Democracy Commission Small Grants Program (FY2024)",
-            "knowledgeId": "EmbassyBel_1716198026361802",
-            "status": "available",
-            "userName": "Arani Chaudhuri",
-            "visibility": "private",
-            "star": true,
-            "meta": {
-                "description": "The Emergency Management Performance Grant Program focuses on all-hazards emergency preparedness, including the evolving threats and risks associated with climate change. The primary objective is to assist state, local, tribal, and territorial emergency management agencies to implement the National Preparedness System and to support the National Preparedness Goal of a secure and resilient nation. \n  \n\nApplicants can submit applications for this funding opportunity through FEMA Grants Outcomes (GO). Access the system at https://go.fema.gov/.\n",
-                "opportunityid": 353549,
-                "opportunitynumber": "DHS-24-GPD-042-01-99",
-                "source": "grants.gov",
-                "version": "1.0"
-            },
-            "created_timestamp": "2024-05-20 09:40:26",
-            "updated_timestamp": "2024-05-20 09:40:28"
-        },
-        // ...
-    ],
-    "meta": {
-        "page": 1,
-        "total": 66,
-        "next_page": 2,
-        "prev_page": 0,
-        "total_pages": 3,
-        "next": "/v1/knowledgebase?page=2&collection=&status=&limit=25",
-        "prev": ""
-    }
+{
+  "knowledgebases": [
+      {
+          "title": "my first knowledge base",
+          "knowledgeId": "myfirstkno_1716198026361802",
+          "status": "available",
+          "userName": "John Doe",
+          "visibility": "private",
+          "star": true,
+          "meta": {
+              "description": "Create from Google Colab notebook",
+          },
+          "created_timestamp": "2024-05-20 09:40:26",
+          "updated_timestamp": "2024-05-20 09:40:28"
+      },
+      // ...
+  ],
+  "meta": {
+      "page": 1,
+      "total": 66,
+      "next_page": 2,
+      "prev_page": 0,
+      "total_pages": 3,
+      "next": "/v1/knowledgebase?page=2&collection=&status=&limit=25",
+      "prev": ""
+  }
 }
     ```
 
@@ -121,23 +117,19 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
   <Col sticky>
 
     ```json {{ title: 'Response' }}
-    {
-      "knowledgeId": "EmbassyBel_1716198026361802",
-      "title": "Embassy Belgrade - Democracy Commission Small Grants Program (FY2024)",
-      "status": "available",
-      "userName": "Arani Chaudhuri",
-      "visibility": "private",
-      "star": true,
-      "meta": {
-          "description": "The Emergency Management Performance Grant Program focuses on all-hazards emergency preparedness, including the evolving threats and risks associated with climate change. The primary objective is to assist state, local, tribal, and territorial emergency management agencies to implement the National Preparedness System and to support the National Preparedness Goal of a secure and resilient nation. \n  \n\nApplicants can submit applications for this funding opportunity through FEMA Grants Outcomes (GO). Access the system at https://go.fema.gov/.\n",
-          "opportunityid": 353549,
-          "opportunitynumber": "DHS-24-GPD-042-01-99",
-          "source": "grants.gov",
-          "version": "1.0"
-      },
-      "created_timestamp": "2024-05-20 09:40:26",
-      "updated_timestamp": "2024-05-20 09:40:28"
-  }
+{
+    "title": "my first knowledge base",
+    "knowledgeId": "myfirstkno_1716198026361802",
+    "status": "available",
+    "userName": "John Doe",
+    "visibility": "private",
+    "star": true,
+    "meta": {
+        "description": "Create from Google Colab notebook",
+    },
+    "created_timestamp": "2024-05-20 09:40:26",
+    "updated_timestamp": "2024-05-20 09:40:28"
+},
     ```
 
   </Col>
@@ -193,7 +185,7 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
     ```
     ```json {{ title: 'Response' }}
     {
-      "knowledgeId": "EmbassyBel_1716198026361802"
+      "knowledgeId": "myfirstkno_1716198026361802"
     }
     ```
 
@@ -252,10 +244,10 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
     ```json {{'title': 'Response'}}
 
     {
-        "knowledgeId": "BurgerSing_1733206677149149",
-        "text": "Burger SinghFranchiseInformation\nBurgerSinghisthequintessential Indiansuccessstory... ",
-        "source": "Burger Singh Franchise Page Knowledge Base .pdf",
-        "userName": "Arani Chaudhuri",
+        "knowledgeId": "myfirstkno_1716198026361802",
+        "text": "Hello world... ",
+        "source": "my first knowledge Source.pdf",
+        "userName": "John Doe",
         "created_date": "2024-12-03"
     }
     
@@ -294,10 +286,10 @@ List of all sources in the knowledge base.
             "folder": "home",
             "source_type": "docs"
         },
-        "source": "Burger Singh Franchise Page Knowledge Base .pdf",
+        "source": "my first knowledge Source.pdf",
         "source_type": "docs",
         "status": "completed",
-        "userName": "Arani Chaudhuri"
+        "userName": "John Doe"
     },
     //...
 ]
@@ -323,8 +315,7 @@ List of all sources in the knowledge base.
   ```json {{'title': 'Body'}}
     {
         "values": [
-            "Rules_TOC.pdf",
-            "Rules_TOC_1.pdf",
+            "my first knowledge Source.pdf",
             //...
         ]
     }

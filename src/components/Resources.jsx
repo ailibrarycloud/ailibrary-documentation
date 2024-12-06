@@ -39,20 +39,6 @@ const resources = [
       ],
     },
   },
-  // {
-  //   href: '/knowledgebase',
-  //   name: 'Forms',
-  //   description:
-  //     'Learn how to create and manage knowledge bases.',
-  //   icon: EnvelopeIcon,
-  //   pattern: {
-  //     y: 32,
-  //     squares: [
-  //       [0, 2],
-  //       [1, 4],
-  //     ],
-  //   },
-  // },
   {
     href: '/api-reference/utilities',
     name: 'Utilities',

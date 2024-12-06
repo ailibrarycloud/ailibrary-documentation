@@ -43,7 +43,7 @@ import requests
 import json
 
 key = "your-key-here"
-domain = "https://a23c-2409-40d7-5d-cdda-4167-2787-ce09-1a56.ngrok-free.app"
+domain = "https://api.ailibrary.ai"
 headers = {
     'Content-Type': 'application/json',
     'X-Library-Key': key
@@ -53,7 +53,7 @@ headers = {
 ```javascript
 
 const axios = require('axios');
-const domain = "https://a23c-2409-40d7-5d-cdda-4167-2787-ce09-1a56.ngrok-free.app"
+const domain = "https://api.ailibrary.ai"
 const headers = {
     'Content-Type': 'application/json',
     'X-Library-Key': key
@@ -69,8 +69,18 @@ const headers = {
 
 ```python
 
-namespace = "burger-singh-franchise"
-knowledgeId = ""
+url = f"{domain}/v1/agent/create"
+payload = json.dumps({
+  "title": "My First AI Agent",
+  "knowledge_search": "true"
+})
+response = requests.request("POST", url, headers=headers, data=payload)
+knowledge_id = json.loads(response.text)["knowledge_id"]
+namespace = json.loads(response.text)["namespace"]
+print("namespace", namespace)
+print("knowledge_id", knowledge_id)
+print(json.dumps(json.loads(response.text), indent=4))
+
 
 ```
 ```javascript
@@ -84,6 +94,8 @@ let knowledgeId = ""
 </CodeGroup>
 
 ### Add files
+
+Add text or PDF files to share knowledge with your agent. You can use any publicly accessible links. 
 
 <CodeGroup title="Add files">
 ```python
@@ -135,6 +147,12 @@ axios.put(url, payload, { headers })
 
 ### Check Status
 
+Check the status of the files. It can take anywhere between 30 seconds to several hours for processing files - depends on the file type. PDF and text files are the fastest.
+
+If the file is processing, this will return `processing`
+
+Once the file is processed, this will return `available`
+
 <CodeGroup title="Check Status">
 ```python
 
@@ -163,10 +181,17 @@ axios.get(url, { headers })
 
 ### Chat
 
+Chat responses are streaming by default. Three types of objects are returned for each query
+
+|Object|Description|Type|
+|---|---|---|
+|chat.completion.knowledge|this contains the details of source|array|
+|chat.completion.latency|latency of response|string|
+|chat.completion.chunk|response chunk|string|
+
 <CodeGroup title="Chat">
 
 ```python
-
 url = f"{domain}/v1/agent/{namespace}/chat"
 payload = json.dumps({
   "session_id": "niusjndckj23",
@@ -183,24 +208,94 @@ print(response.text)
 ```
 
 ```javascript
+let session_id = "niusjndckj23"
+let messages = [{ role: "assistant", content: "how are you?" }];
+async function makeRequest(prompt) {
+    messages.push({
+        id: Date.now(),
+        role: "user",
+        content: prompt,
+    });
 
-const url = `${domain}/v1/agent/${namespace}/chat`;
+    try {
+        const response = await fetch(`${domain}/v1/agent/${namespace}/chat`, {
+            method: "POST",
+            headers: {
+                "X-Library-Key": key,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                stream: "true",
+                session_id: session_id,
+                messages: messages,
+            }),
+    });
 
-const payload = {
-  session_id: "niusjndckj23",
-    messages: [
-        { role: "assistant", content: "how are you?" },
-        { role: "user", content: "doing good. thank you." }
-    ]
-};
+    if (!response.body) {
+        throw new Error("ReadableStream not supported in this browser.");
+    }
 
-axios.post(url, payload, { headers })
-  .then(response => {
-    console.log(JSON.stringify(response.data, null, 4));
-  })
-  .catch(error => {
-    console.error(error);
-  });
+    const reader = response.body.getReader();
+
+    const decoder = new TextDecoder();
+    let result = "";
+
+    const processChunk = ({ done, value }) => {
+        if (done) {
+        setMessageLoader(false);
+        console.log("Stream complete", latency);
+        messages.push({
+            id: Date.now(),
+            role: "assistant",
+            content: result,
+            latency: latency,
+            knowledge: knowledge.length > 0 ? knowledge : null,
+        });
+        setMessages(messages);
+        setResponse("");
+        return;
+        }
+
+        const chunk = decoder.decode(value, { stream: true });
+        const jsonStrings = chunk.split("\n");
+
+        jsonStrings.forEach((jsonString) => {
+        if (jsonString.trim() !== "") {
+            try {
+            const parsed = JSON.parse(jsonString);
+            console.log("parsed", parsed.content);
+            if (parsed.object === "chat.completion.chunk") {
+                result += parsed.content;
+                setResponse((prevResponse) => prevResponse + parsed.content);
+            }
+            if (parsed.object === "chat.completion.latency") {
+                console.log("latency", parsed.content);
+                latency = parsed.content;
+            }
+            if (parsed.object === "chat.completion.form") {
+                console.log("form", parsed.content);
+                // setForm(parsed.content);
+            }
+            if (parsed.object === "chat.completion.knowledge") {
+                console.log("knowledge", parsed.content);
+                knowledge = parsed.content;
+            }
+            } catch (error) {
+                console.error("Error parsing chunk:", error);
+            }
+        }
+        });
+
+        // Read the next chunk
+        return reader.read().then(processChunk);
+    };
+
+    // Start reading the stream
+    reader.read().then(processChunk);
+} catch (error) {
+    console.log(error);
+}
+}
 
 ```
 
