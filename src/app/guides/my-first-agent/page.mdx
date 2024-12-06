@@ -26,15 +26,15 @@ This notebook will guide you to create your first AI Agent.
   </Button>
 </div>
 
-##### 🔑 **Get your API Keys**
-Login to the AI Library platform and fetch your keys from the API section of your profile page.
+{/* ##### 🔑 **Get your API Keys**
+Login to the AI Library platform and fetch your keys from the API section of your profile page. */}
 
 
-##### 🙋 **Need Help?**
+{/* ##### 🙋 **Need Help?**
 
-You can write to hello@ailibrary.ai
+You can write to hello@ailibrary.ai */}
 
-### Set up your environment
+### Step 1: Set up your environment
 
 <CodeGroup title="Set up Environment">
 
@@ -63,7 +63,7 @@ const headers = {
 </CodeGroup>
 
 
-### Create Agent
+### Step 2: Create Agent
 
 <CodeGroup title="Set up Environment">
 
@@ -93,7 +93,7 @@ let knowledgeId = ""
 
 </CodeGroup>
 
-### Add files
+### Step 3: Add files
 
 Add text or PDF files to share knowledge with your agent. You can use any publicly accessible links. 
 
@@ -145,7 +145,7 @@ axios.put(url, payload, { headers })
 
 </CodeGroup>
 
-### Check Status
+### Step 4: Check Status
 
 Check the status of the files. It can take anywhere between 30 seconds to several hours for processing files - depends on the file type. PDF and text files are the fastest.
 
@@ -179,7 +179,7 @@ axios.get(url, { headers })
 
 </CodeGroup>
 
-### Chat
+### Step 5: Chat
 
 Chat responses are streaming by default. Three types of objects are returned for each query
 
@@ -303,7 +303,7 @@ async function makeRequest(prompt) {
 
 
 
-### Chat UI
+### Step 6: Chat UI
 
 You can also chat with the agent using the chat UI. 
 
@@ -311,6 +311,9 @@ Replace the `namespace` with your agent's namespace.
 
 https://www.ailibrary.ai/agent/namespace/chat
 
+**Add this to your website/ product**
+
+Option 1:
 
 You can embed the chat UI in your website or application using the following code.
 
@@ -318,12 +321,14 @@ You can embed the chat UI in your website or application using the following cod
 <iframe src="https://www.ailibrary.ai/agent/{namespace}/chat" title="My First AI Agent" height="600px" width="100%" ></iframe>
 ```
 
+Option 2:
+
+Clone the [Chat UI GitHub Repo](https://github.com/ailibrarycloud/chat-agent-nextjs) and make it your own.
+
 {/* Here's an example of how it looks:
 
 <iframe src="https://www.ailibrary.ai/agent/burger-singh-franchise/chat" title="My First AI Agent" height="600px" className='max-w-[400px] w-full' /> */}
 
+### Next Steps
 
-
-
-
-
+**Add more files** Repeat Step 3. Remember, you can add multiple files at once.
