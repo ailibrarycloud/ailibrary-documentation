@@ -3,114 +3,232 @@ import { Resources } from '@/components/Resources'
 import { HeroPattern } from '@/components/HeroPattern'
 
 export const metadata = {
-  title: 'RAG (Retrieval Augmented Generation)',
-  description:
-    'Learn the basics of RAG (Retrieval Augmented Generation)',
+    title: 'RAG (Retrieval Augmented Generation)',
+    description:
+        'Learn the basics of RAG (Retrieval Augmented Generation)',
 }
+
+
 
 
 <HeroPattern />
 
-# My First AI Agent
 
-In this guide, we create an agent, add a source document and chat. {{ className: 'lead' }}
+# My first AI Agent
 
-## Create an Agent
+This notebook will guide you to create your first AI Agent.
 
-<CodeGroup title="Create an agent" tag="POST" label="/v1/agent/create">
+[Get your API Key](/authentication) and include the key in the request header as **X-Library-Key** to authenticate your requests.
 
-    ```python
-    import requests
+<div className="not-prose mb-16 mt-6 flex gap-3">
+  <Button href="https://colab.research.google.com/drive/1BCP5qUB695R05YEunKl-ZF_251OZhEOL" arrow="right">
+    <>Try in Google Colab</>
+  </Button>
+</div>
 
-    url = "https://api.ailibrary.ai/v1/knowledgebase"
-
-    payload = json.dumps({
-      "name": "stable-diffusion-xl-1024-v1-0@stability",
-    })
-    headers = {
-      'X-Library-Key': '••••••'
-    }
-
-    response = requests.request("POST", url, headers=headers, data=payload)
-
-    print(response.text)
-    ```
-
-    ```javascript
-    const axios = require('axios');
-
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://api.ailibrary.ai/v1/knowledgebase',
-      headers: { 
-        'X-Library-Key': '••••••'
-      }
-    };
-
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    ```
-
-    </CodeGroup>
+##### 🔑 **Get your API Keys**
+Login to the AI Library platform and fetch your keys from the API section of your profile page.
 
 
-The second step is to add data to knowledge source, if needed {{ className: 'lead' }}
+##### 🙋 **Need Help?**
 
-First, upload files
+You can write to hello@ailibrary.ai
 
-<CodeGroup title="Add Files to Knowledge Base" tag="POST" label="/v1/files">
+### Set up your environment
 
-    ```python
-    import requests
+<CodeGroup title="Set up Environment">
 
-    url = "https://api.ailibrary.ai/v1/files"
+```python
+import requests
+import json
 
-    files=[
-      ('files',('w2-single.png',open('/link/to/local/file.png','rb'),'image/png'))
+key = "your-key-here"
+domain = "https://a23c-2409-40d7-5d-cdda-4167-2787-ce09-1a56.ngrok-free.app"
+headers = {
+    'Content-Type': 'application/json',
+    'X-Library-Key': key
+}
+```
+
+```javascript
+
+const axios = require('axios');
+const domain = "https://a23c-2409-40d7-5d-cdda-4167-2787-ce09-1a56.ngrok-free.app"
+const headers = {
+    'Content-Type': 'application/json',
+    'X-Library-Key': key
+}
+
+```
+</CodeGroup>
+
+
+### Create Agent
+
+<CodeGroup title="Set up Environment">
+
+```python
+
+namespace = "burger-singh-franchise"
+knowledgeId = ""
+
+```
+```javascript
+
+let namespace = "burger-singh-franchise"
+let knowledgeId = ""
+
+```
+
+
+</CodeGroup>
+
+### Add files
+
+<CodeGroup title="Add files">
+```python
+
+url = f"{domain}/v1/knowledgebase/{knowledgeId}"
+payload = json.dumps({
+  "type": "docs",
+  "options": {
+    "urls": [
+      "https://assets.ctfassets.net/416ywc1laqmd/7oJfDqN7x2Bjj3bXiP3WHR/5866c87cd89c15987bbb7211bfc3f3cc/Update_11_17_23.pdf"
     ]
-    headers = {
-      'X-Library-Key': '••••••'
-    }
+  },
+  "meta": {
+    "folder": "home"
+  }
+})
+response = requests.request("PUT", url, headers=headers, data=payload)
+print(json.dumps(json.loads(response.text), indent=4))
+```
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+```javascript
 
-    print(response.text)
-    ```
+const url = `${domain}/v1/knowledgebase/${knowledgeId}`;
 
-    ```javascript
-    const axios = require('axios');
+const payload = {
+  type: "docs",
+  options: {
+    urls: [
+      "https://assets.ctfassets.net/416ywc1laqmd/7oJfDqN7x2Bjj3bXiP3WHR/5866c87cd89c15987bbb7211bfc3f3cc/Update_11_17_23.pdf"
+    ]
+  },
+  meta: {
+    folder: "home"
+  }
+};
 
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://api.ailibrary.ai/v1/knowledgebase',
-      headers: { 
-        'X-Library-Key': '••••••'
-      }
-    };
+axios.put(url, payload, { headers })
+  .then(response => {
+    console.log(JSON.stringify(response.data, null, 4));
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    ```
-
-    </CodeGroup>
-
-Next, process the files and add them to the knowledge source
+```
 
 
+</CodeGroup>
 
-The third step is to use the knowledge source to augment your prompt. {{ className: 'lead' }}
+### Check Status
+
+<CodeGroup title="Check Status">
+```python
+
+url = f"{domain}/v1/knowledgebase/{knowledgeId}/status"
+response = requests.request("GET", url, headers=headers)
+print(json.dumps(json.loads(response.text), indent=4))
+
+```
+
+```javascript
+
+const url = `${domain}/v1/knowledgebase/${knowledgeId}/status`;
+
+axios.get(url, { headers })
+  .then(response => {
+    console.log(JSON.stringify(response.data, null, 4));
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+```
+
+
+</CodeGroup>
+
+### Chat
+
+<CodeGroup title="Chat">
+
+```python
+
+url = f"{domain}/v1/agent/{namespace}/chat"
+payload = json.dumps({
+  "session_id": "niusjndckj23",
+  "messages": [
+    { "role": "assistant", "content": "how are you?" },
+    { "role": "user", "content": "doing good. thank you." }
+  ]
+})
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+```
+
+```javascript
+
+const url = `${domain}/v1/agent/${namespace}/chat`;
+
+const payload = {
+  session_id: "niusjndckj23",
+    messages: [
+        { role: "assistant", content: "how are you?" },
+        { role: "user", content: "doing good. thank you." }
+    ]
+};
+
+axios.post(url, payload, { headers })
+  .then(response => {
+    console.log(JSON.stringify(response.data, null, 4));
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+```
+
+</CodeGroup>
+
+
+
+### Chat UI
+
+You can also chat with the agent using the chat UI. 
+
+Replace the `namespace` with your agent's namespace.
+
+https://www.ailibrary.ai/agent/namespace/chat
+
+
+You can embed the chat UI in your website or application using the following code.
+
+```html
+<iframe src="https://www.ailibrary.ai/agent/{namespace}/chat" title="My First AI Agent" height="600px" width="100%" ></iframe>
+```
+
+{/* Here's an example of how it looks:
+
+<iframe src="https://www.ailibrary.ai/agent/burger-singh-franchise/chat" title="My First AI Agent" height="600px" className='max-w-[400px] w-full' /> */}
+
+
+
 
 
 

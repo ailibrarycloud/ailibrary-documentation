@@ -12,10 +12,10 @@ import { UsersIcon } from '@/components/icons/UsersIcon'
 
 const resources = [
   {
-    href: '/agents',
-    name: 'Agents',
+    href: '/api-reference/agent',
+    name: 'Agent',
     description:
-      'Learn how to call multiple AI models with a single API endpoint and inject relevant knowledge into the context window.',
+      'Build, manage and chat with your AI agents.',
     icon: UserIcon,
     pattern: {
       y: 16,
@@ -26,7 +26,7 @@ const resources = [
     },
   },
   {
-    href: '/knowledgebase',
+    href: '/api-reference/knowledgebase',
     name: 'Knowledge Base',
     description:
       'Learn how to create and manage knowledge bases.',
@@ -39,25 +39,25 @@ const resources = [
       ],
     },
   },
+  // {
+  //   href: '/knowledgebase',
+  //   name: 'Forms',
+  //   description:
+  //     'Learn how to create and manage knowledge bases.',
+  //   icon: EnvelopeIcon,
+  //   pattern: {
+  //     y: 32,
+  //     squares: [
+  //       [0, 2],
+  //       [1, 4],
+  //     ],
+  //   },
+  // },
   {
-    href: '/knowledgebase',
-    name: 'Forms',
-    description:
-      'Learn how to create and manage knowledge bases.',
-    icon: EnvelopeIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
-  },
-  {
-    href: '/utilities',
+    href: '/api-reference/utilities',
     name: 'Utilities',
     description:
-      'Learn how to add to your knowledge bases from data various sources.',
+      'Give special powers to your agents.',
     icon: UsersIcon,
     pattern: {
       y: 22,
