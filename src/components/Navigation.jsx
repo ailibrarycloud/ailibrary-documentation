@@ -205,8 +205,8 @@ export const navigation = [
       { title: 'Agent', href: '/api-reference/agent' },
       { title: 'Knowledge Base', href: '/api-reference/knowledgebase' },
       // { title: 'Form', href: '/form' },
+      { title: 'Files', href: '/api-reference/files' },
       { title: 'Utilities', href: '/api-reference/utilities' },
-      // { title: 'Integrations', href: '/integrations' },
     ],
   },
   {

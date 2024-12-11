@@ -1,0 +1,267 @@
+export const metadata = {
+    title: 'Files',
+    description:
+        'Manage your files and knowledge sources.',
+}
+
+# Files
+
+Functions to support your AI Agents. {{ className: 'lead' }}
+
+---
+
+## Upload Files {{ tag: 'POST', label: '/v1/files' }}
+
+<Row>
+  <Col>
+
+    Searches the web for search terms
+
+    ### Request body
+
+    <Properties>
+      <Property name="search_terms" type="array">
+        List of search terms
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/files">
+
+    ```python 
+    files=[
+        ('files',('file1.pdf',open('/path/to/file1.pdf','rb'),'application/pdf')),
+        ('files',('files2.pdf',open('/path/to/file2.pdf','rb'),'application/pdf'))
+    ]
+
+    response = requests.request("POST", url, headers=headers, files=files)
+    ```
+    ```javascript
+    const axios = require('axios');
+    const FormData = require('form-data');
+    const fs = require('fs');
+    let data = new FormData();
+    data.append('files', fs.createReadStream('/path/to/file1.pdf'));
+    data.append('files', fs.createReadStream('/path/to/file2.pdf'));
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api.ailibrary.ai/v1/files',
+        headers: { 
+            'X-Library-Key': '••••••', 
+            ...data.getHeaders()
+        },
+        data : data
+    };
+
+    async function makeRequest() {
+        try {
+            const response = await axios.request(config);
+            console.log(JSON.stringify(response.data));
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    makeRequest();
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    [
+        {
+            "full_url": "https://ailib-public.s3-us-west-2.amazonaws.com/corbett/arani@ailibrary.ai/output.mp3",
+            "url": "output.mp3"
+        }
+    ]
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## List Files {{ tag: 'GET', label: '/v1/files' }}
+
+<Row>
+  <Col>
+
+    Retrieves a list of all files.
+
+    ### Request parameters
+
+    <Properties>
+      <Property name="page" type="string">
+        Page number
+      </Property>
+      <Property name="limit" type="string">
+        Number of items per page
+        </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/files">
+
+    ```python 
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/files?page=1"
+    headers = {
+        'X-Library-Key': '••••••'
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    ```
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://a23c-2409-40d7-5d-cdda-4167-2787-ce09-1a56.ngrok-free.app/v1/files?page=1',
+        headers: { 
+            'X-Library-Key': '••••••'
+        }
+    };
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "files": [
+            {
+                "created_timestamp": "2024-12-11 02:41:17",
+                "bytes": 601292,
+                "id": 2577,
+                "name": "file1.pdf"
+            },
+            ///...
+    ]}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a file {{ tag: 'GET', label: '/v1/files/{fileId}' }}
+
+<Row>
+  <Col>
+
+    Retrieves a file by ID.
+
+    ### Request parameters
+
+    <Properties>
+      <Property name="fileId" type="string">
+        ID of the file
+      </Property>
+    </Properties>
+
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/files/{fileId}">
+
+    ```python 
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/files/{fileId}"
+    headers = {
+        'X-Library-Key': '••••••'
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    ```
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://api.ailibrary.ai/v1/files/{fileId}',
+        headers: { 
+            'X-Library-Key': '••••••'
+        }
+    };
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "created_timestamp": "2024-12-11 02:41:17",
+        "bytes": 601292,
+        "id": 2577,
+        "name": "file1.pdf"
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a file {{ tag: 'DELETE', label: '/v1/files/{fileId}' }}
+
+<Row>
+  <Col>
+
+    Delete a file by ID.
+
+    ### Path parameters
+
+    <Properties>
+      <Property name="fileId" type="string">
+        ID of the file
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/files/{fileId}">
+
+    ```python 
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/files/{fileId}"
+    headers = {
+        'X-Library-Key': '••••••'
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    ```
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://api.ailibrary.ai/v1/files/{fileId}',
+        headers: { 
+            'X-Library-Key': '••••••'
+        }
+    };
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "response": "Record successfully deleted"
+    }
+    ```
+
+  </Col>
+</Row>
