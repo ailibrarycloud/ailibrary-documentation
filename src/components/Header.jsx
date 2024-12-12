@@ -70,8 +70,8 @@ export const Header = forwardRef(function Header({ className }, ref) {
           <ul role="list" className="flex items-center gap-8">
             <TopLevelNavItem href="http://ailibrary.ai">Homepage</TopLevelNavItem>
             {/* <TopLevelNavItem href="#">Documentation</TopLevelNavItem> */}
-            <TopLevelNavItem href="https://discord.gg/22jFeSav" target="_blank">
-              Support
+            <TopLevelNavItem href="/changelog" target="_blank">
+              Changelog
             </TopLevelNavItem>
           </ul>
         </nav>
@@ -81,7 +81,7 @@ export const Header = forwardRef(function Header({ className }, ref) {
           <ThemeToggle />
         </div>
         <div className="hidden min-[416px]:contents">
-          <Button target="_blank" href="https://www.ailibrary.ai/playground">
+          <Button target="_blank" href="https://www.ailibrary.ai/platform">
             Sign in
           </Button>
         </div>

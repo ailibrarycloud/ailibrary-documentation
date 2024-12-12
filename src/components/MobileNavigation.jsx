@@ -151,7 +151,7 @@ export function MobileNavigation() {
         aria-label="Toggle navigation"
         onClick={toggle}
       >
-        <ToggleIcon className="w-2.5 stroke-zinc-900 dark:stroke-white" />
+        <ToggleIcon className="w-4 stroke-zinc-900 dark:stroke-white" />
       </button>
       {!isInsideMobileNavigation && (
         <Suspense fallback={null}>

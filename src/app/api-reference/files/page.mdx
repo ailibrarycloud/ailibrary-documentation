@@ -1,7 +1,7 @@
 export const metadata = {
-    title: 'Files',
-    description:
-        'Manage your files and knowledge sources.',
+  title: 'Files',
+  description:
+    'Manage your files and knowledge sources.',
 }
 
 # Files
@@ -17,11 +17,14 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     Searches the web for search terms
 
-    ### Request body
+    ### form-data
 
     <Properties>
-      <Property name="search_terms" type="array">
-        List of search terms
+      <Property name="files" type="file" required="true">
+        List of files
+      </Property>
+       <Property name="knowledgeId" type="string">
+        Knowledge base ID to add the files to a knowledge base. The file is uploaded to 'home' folder.
       </Property>
     </Properties>
 
@@ -75,8 +78,8 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ```json {{ title: 'Response' }}
     [
         {
-            "full_url": "https://ailib-public.s3-us-west-2.amazonaws.com/corbett/arani@ailibrary.ai/output.mp3",
-            "url": "output.mp3"
+            "url": "https://ailib-public.s3-us-west-2.amazonaws.com/corbett/arani@ailibrary.ai/file1.pdf",
+            "id": 2345
         }
     ]
     ```
@@ -125,7 +128,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://a23c-2409-40d7-5d-cdda-4167-2787-ce09-1a56.ngrok-free.app/v1/files?page=1',
+        url: 'https://api.ailibrary.ai/v1/files?page=1',
         headers: { 
             'X-Library-Key': '••••••'
         }
@@ -136,15 +139,30 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "files": [
-            {
-                "created_timestamp": "2024-12-11 02:41:17",
-                "bytes": 601292,
-                "id": 2577,
-                "name": "file1.pdf"
-            },
-            ///...
-    ]}
+      "files": [
+          {
+              "bytes": 9505,
+              "created_timestamp": "2024-12-10 05:18:49",
+              "id": 2573,
+              "name": "file_1.csv",
+              "url": "https://ailib-public.s3-us-west-2.amazonaws.com/you@domain.ai/file_1.csv"
+          },
+          {
+              "bytes": 9505,
+              "created_timestamp": "2024-12-10 05:18:49",
+              "id": 2573,
+              "name": "file_2.csv",
+              "url": "https://ailib-public.s3-us-west-2.amazonaws.com/you@domain.ai/file_2.csv"
+          },
+          /// ...
+      ],
+      "meta": {
+          "limit": 10,
+          "next_page": 3,
+          "prev_page": 1,
+          "total_items": 1037
+      }
+    }
     ```
 
   </Col>
@@ -162,7 +180,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ### Request parameters
 
     <Properties>
-      <Property name="fileId" type="string">
+      <Property name="fileId" type="string"  required="true">
         ID of the file
       </Property>
     </Properties>
@@ -200,10 +218,11 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "created_timestamp": "2024-12-11 02:41:17",
-        "bytes": 601292,
-        "id": 2577,
-        "name": "file1.pdf"
+        "bytes": 9505,
+        "created_timestamp": "2024-12-10 05:18:49",
+        "id": 2573,
+        "name": "file_1.csv",
+        "url": "https://ailib-public.s3-us-west-2.amazonaws.com/you@domain.ai/file_1.csv"
     }
     ```
 
@@ -219,10 +238,12 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     Delete a file by ID.
 
-    ### Path parameters
+    Note: Deleting a file does not remove it from knowledge bases. If you want to remove a file from a knowledge base, use the [Delete Sources](/api-reference/knowledgebase#delete-sources) endpoint.
+
+    ### Request parameters
 
     <Properties>
-      <Property name="fileId" type="string">
+      <Property name="fileId" type="string" required="true">
         ID of the file
       </Property>
     </Properties>
@@ -240,13 +261,13 @@ Functions to support your AI Agents. {{ className: 'lead' }}
         'X-Library-Key': '••••••'
     }
 
-    response = requests.request("GET", url, headers=headers)
+    response = requests.request("DELETE", url, headers=headers)
     ```
     ```javascript
     const axios = require('axios');
 
     let config = {
-        method: 'get',
+        method: 'DELETE',
         maxBodyLength: Infinity,
         url: 'https://api.ailibrary.ai/v1/files/{fileId}',
         headers: { 

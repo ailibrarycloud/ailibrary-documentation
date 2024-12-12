@@ -225,8 +225,8 @@ export function Navigation(props) {
       <ul role="list">
         <TopLevelNavItem href="http://ailibrary.ai">Homepage</TopLevelNavItem>
         {/* <TopLevelNavItem href="#">Documentation</TopLevelNavItem> */}
-        <TopLevelNavItem href="https://discord.gg/22jFeSav">
-          Support
+        <TopLevelNavItem href="/changelog">
+          Changelog
         </TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
@@ -235,11 +235,11 @@ export function Navigation(props) {
             className={groupIndex === 0 ? 'md:mt-0' : ''}
           />
         ))}
-        {/* <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
-          <Button href="#" variant="filled" className="w-full">
+        <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
+          <Button href="http://ailibrary.ai/platform" variant="filled" className="w-full">
             Sign in
           </Button>
-        </li> */}
+        </li>
       </ul>
     </nav>
   )

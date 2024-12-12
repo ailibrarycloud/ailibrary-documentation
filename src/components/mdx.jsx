@@ -4,10 +4,27 @@ import clsx from 'clsx'
 import { Feedback } from '@/components/Feedback'
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
+import Image from 'next/image'
+import { FormattedDate } from './FormattedDate'
 
 export const a = Link
 export { Button } from '@/components/Button'
 export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
+
+// export const img = function Img(props) {
+//   return (
+//     <div className="relative mt-8 overflow-hidden rounded-xl bg-gray-50 dark:bg-gray-900 [&+*]:mt-8">
+//       <Image
+//         alt=""
+//         height={1080}
+//         width={1920}
+//         sizes="(min-width: 1280px) 36rem, (min-width: 1024px) 45vw, (min-width: 640px) 32rem, 95vw"
+//         {...props}
+//       />
+//       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10 dark:ring-white/10" />
+//     </div>
+//   )
+// }
 
 export function wrapper({ children }) {
   return (
@@ -51,6 +68,15 @@ export function Note({ children }) {
   )
 }
 
+export function Date({ date }) {
+  return (
+    <FormattedDate
+      // className="hidden xl:pointer-events-auto xl:block xl:text-2xs/4 xl:font-medium xl:text-white/50"
+      date={date}
+    />
+  )
+}
+
 export function Row({ children }) {
   return (
     <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 xl:max-w-none xl:grid-cols-2">
@@ -85,7 +111,7 @@ export function Properties({ children }) {
   )
 }
 
-export function Property({ name, children, type, required = false}) {
+export function Property({ name, children, type, required = false }) {
   return (
     <li className="m-0 px-0 py-4 first:pt-0 last:pb-0">
       <dl className="m-0 flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -101,7 +127,13 @@ export function Property({ name, children, type, required = false}) {
             </dd>
             <dt className="sr-only">Required</dt>
             <dd className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
-              {required ? <span className='text-red-600'>required</span> : <span className='dark:text-gray-600 text-gray-300'>optional</span>}
+              {required ? (
+                <span className="text-red-600">required</span>
+              ) : (
+                <span className="text-gray-300 dark:text-gray-600">
+                  optional
+                </span>
+              )}
             </dd>
           </>
         )}
