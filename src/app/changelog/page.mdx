@@ -12,13 +12,34 @@ import { Timeline } from '@/components/Timeline'
 ## Files API
 <Date date={'2024-12-11T00:00Z'} />
 
-The Files API allows you to upload and manage files in your AI Library instance. {{ className: 'lead' }}
-
-You can upload files from your local machine and add them straight to a knowledge base. {{ className: 'lead' }}
+We have introduced the Files API to streamline file management in the AI Library.
 
 <Button href="/api-reference/files" arrow="right">
-    <>Explore Files API</>
+    <>Files API Documentation</>
   </Button>
+
+**Key Features:**
+
+The Files API now serves as both a storage service and a direct upload interface to a knowledge base, eliminating the need for multiple API calls. This simplifies file handling and reduces management overhead.
+
+**Two Ways to Upload Files to a Knowledge Base:**
+
+1. **Recommended:** Use the `POST /v1/files` endpoint to upload files. Specify the knowledge base ID as a parameter. The API will:
+   - Upload the file to your account.
+   - Add it as a source in the specified knowledge base.
+   
+   Even though the API is asynchronous, the file URL is returned synchronously in the response.
+
+2. Upload files with `POST /v1/files`, then use the `PUT /v1/knowledgebase/{knowledgeId}` endpoint to add the file as a source.
+
+**Additional Notes:**
+
+- Deleting a file does **not** remove it from knowledge bases.
+- Storage capacity depends on your AI Library plan.
+- Files can also be added to a knowledge base from any publicly accessible URL. Using the Files API is optional.
+
+
+
 
 ---
 
