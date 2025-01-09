@@ -14,7 +14,7 @@ Notes can have three roles - `assistant`, `user`, or `system`. This helps in ide
 
 Notes provide a meta field to store custom json data. This can be used to store additional information about the note. {{ className: 'lead' }}
 
-Here are a some possible use cases: {{ className: 'lead' }}
+Possible use cases: {{ className: 'lead' }}
 
 - Save a generation from an AI model, add a comment to it, and then refer to it later {{ className: 'lead' }}
 - Save a generation as an article with a json containing meta data about the article like title, seo description, etc. This can then be used to display the article in a blog or website on your website {{ className: 'lead' }}
@@ -164,14 +164,6 @@ Here are a some possible use cases: {{ className: 'lead' }}
     ```json {{ title: 'Response' }}
     [
         {
-            "meta": {
-                "current_page": 1,
-                "limit": 50,
-                "next_page": "",
-                "prev_page": "",
-                "total_items": 1,
-                "total_pages": 1
-            },
             "notes": [
                 {
                     "content": "hello",
@@ -183,8 +175,17 @@ Here are a some possible use cases: {{ className: 'lead' }}
                     "updated_timestamp": "2025-01-09 13:05:03",
                     "userEmail": "arani@ailibrary.ai",
                     "userName": "Arani Chaudhuri"
-                }
-            ]
+                },
+                //...
+            ],
+            "meta": {
+                "current_page": 1,
+                "limit": 50,
+                "next_page": "",
+                "prev_page": "",
+                "total_items": 1,
+                "total_pages": 1
+            }
         }
     ]
     ```
