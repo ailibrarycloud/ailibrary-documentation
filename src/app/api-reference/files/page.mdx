@@ -42,35 +42,24 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     response = requests.request("POST", url, headers=headers, files=files)
     ```
     ```javascript
-    const axios = require('axios');
-    const FormData = require('form-data');
-    const fs = require('fs');
-    let data = new FormData();
-    data.append('files', fs.createReadStream('/path/to/file1.pdf'));
-    data.append('files', fs.createReadStream('/path/to/file2.pdf'));
+    const myHeaders = new Headers();
+    myHeaders.append("X-Library-Key", "d4qgdcs2lgUBvwWDFjC6NeOIrLS87cpoDHlwPL5a");
 
-    let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://api.ailibrary.ai/v1/files',
-        headers: { 
-            'X-Library-Key': '••••••', 
-            ...data.getHeaders()
-        },
-        data : data
+    const formdata = new FormData();
+    formdata.append("files", fileInput.files[0], "gridcare-logo-v23jpg.jpg");
+    formdata.append("knowledgeId", "MyFirstAIA_1733490311594739");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow"
     };
 
-    async function makeRequest() {
-        try {
-            const response = await axios.request(config);
-            console.log(JSON.stringify(response.data));
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
-
-    makeRequest();
+    fetch("https://api.ailibrary.ai/v1/files", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
     ```
 
     </CodeGroup>

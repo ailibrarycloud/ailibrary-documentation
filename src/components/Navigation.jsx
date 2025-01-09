@@ -204,9 +204,9 @@ export const navigation = [
     links: [
       { title: 'Agent', href: '/api-reference/agent' },
       { title: 'Knowledge Base', href: '/api-reference/knowledgebase' },
-      // { title: 'Form', href: '/form' },
       { title: 'Files', href: '/api-reference/files' },
       { title: 'Utilities', href: '/api-reference/utilities' },
+      { title: 'Notes', href: '/api-reference/notes' },
     ],
   },
   {
@@ -225,9 +225,7 @@ export function Navigation(props) {
       <ul role="list">
         <TopLevelNavItem href="http://ailibrary.ai">Homepage</TopLevelNavItem>
         {/* <TopLevelNavItem href="#">Documentation</TopLevelNavItem> */}
-        <TopLevelNavItem href="/changelog">
-          Changelog
-        </TopLevelNavItem>
+        <TopLevelNavItem href="/changelog">Changelog</TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
             key={group.title}
@@ -236,7 +234,11 @@ export function Navigation(props) {
           />
         ))}
         <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
-          <Button href="http://ailibrary.ai/platform" variant="filled" className="w-full">
+          <Button
+            href="http://ailibrary.ai/platform"
+            variant="filled"
+            className="w-full"
+          >
             Sign in
           </Button>
         </li>
