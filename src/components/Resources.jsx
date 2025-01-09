@@ -50,6 +50,17 @@ const resources = [
       squares: [[0, 1]],
     },
   },
+  {
+    href: '/api-reference/notes',
+    name: 'Notes',
+    description:
+      'Store and retrieve content for your agents.',
+    icon: UsersIcon,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
 ]
 
 function ResourceIcon({ icon: Icon }) {
