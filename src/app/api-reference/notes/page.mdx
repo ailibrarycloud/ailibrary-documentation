@@ -1,7 +1,7 @@
 export const metadata = {
-    title: 'Notes',
-    description:
-        'Add notes to various resources.',
+  title: 'Notes',
+  description:
+    'Add notes to various resources.',
 }
 
 # Notes
@@ -195,64 +195,6 @@ Possible use cases: {{ className: 'lead' }}
 
 ---
 
-## Delete a Note {{ tag: 'DELETE', label: '/v1/notes/{noteId}' }}
-
-<Row>
-  <Col>
-
-    Delete a note.
-
-    ### Request parameters
-
-    <Properties>
-      <Property name="noteId" type="string"  required="true">
-        ID of the note
-      </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-
-    <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{noteId}">
-
-    ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes/my-agent-namespace"
-
-    headers = {
-        "X-Library-Key": "<your-api-key>"
-    }
-
-    response = requests.request("DELETE", url, headers=headers)
-    ```
-
-    ```javascript
-    const axios = require('axios');
-
-    let config = {
-        method: 'delete',
-        maxBodyLength: Infinity,
-        url: 'https://api.ailibrary.ai/v1/notes/my-agent-namespace',
-        headers: { 
-            'X-Library-Key': '<your-api-key>'
-        }
-    };
-    ```
-
-    </CodeGroup>
-
-    ```json {{ title: 'Response' }}
-    {
-        "message": "Note deleted successfully"
-    }
-    ```
-
-  </Col>
-</Row>
-
----
-
 ## Update a Note {{ tag: 'PUT', label: '/v1/notes/{noteId}' }}
 
 <Row>
@@ -390,6 +332,129 @@ Possible use cases: {{ className: 'lead' }}
         "updated_timestamp": "2025-01-09 13:05:03",
         "userEmail": "arani@ailibrary.ai",
         "userName": "Arani Chaudhuri"
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Note {{ tag: 'DELETE', label: '/v1/notes/{noteId}' }}
+
+<Row>
+  <Col>
+
+    Delete a note.
+
+    ### Request parameters
+
+    <Properties>
+      <Property name="noteId" type="string"  required="true">
+        ID of the note
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{noteId}">
+
+    ```python
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/notes/my-agent-namespace"
+
+    headers = {
+        "X-Library-Key": "<your-api-key>"
+    }
+
+    response = requests.request("DELETE", url, headers=headers)
+    ```
+
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: 'https://api.ailibrary.ai/v1/notes/my-agent-namespace',
+        headers: { 
+            'X-Library-Key': '<your-api-key>'
+        }
+    };
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "message": "Note deleted successfully"
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete Notes {{ tag: 'DELETE', label: '/v1/notes/{resource}/{resourceId}' }}
+
+<Row>
+  <Col>
+
+    Delete all notes in a specific resource. For example, detele all notes in an agent, knowledgebase, or file.
+
+    ### Request parameters
+
+    <Properties>
+      <Property name="resource" type="string"  required="true">
+        Resource of the note. Can be `agent`, `knowledgebase` or `file`
+      </Property>
+      <Property name="resourceId" type="string"  required="true">
+        ID of the resource
+        For agent, it is the `namespace`
+        For knowledgebase, it is the `knowledgeId`
+        For file, it is the `fileId`
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{resource}/{resourceId}">
+
+    ```python
+    import requests
+
+    url = "https://api.ailibrary.ai/v1/notes/agent/my-agent-namespace"
+
+    headers = {
+        "X-Library-Key": "<your-api-key>"
+    }
+
+    response = requests.request("DELETE", url, headers=headers)
+    ```
+
+    ```javascript
+    const axios = require('axios');
+
+    let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: 'https://api.ailibrary.ai/v1/notes/agent/my-agent-namespace-2',
+        headers: { 
+            'X-Library-Key': '<your-api-key>'
+        }
+    };
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "status": "success",
+        "message": "Notes deleted successfully"
     }
     ```
 
