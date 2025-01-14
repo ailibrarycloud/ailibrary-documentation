@@ -309,11 +309,15 @@ List of all sources in the knowledge base.
       <Property name="values" type="array" required="true">
           List of sources to delete.
       </Property>
+      <Property name="delete_all" type="boolean">
+          Delete all sources.
+      </Property>
     </Properties>
   </Col>
   <Col sticky>
   ```json {{'title': 'Body'}}
     {
+        "delete_all": false,
         "values": [
             "my first knowledge Source.pdf",
             //...
