@@ -1,0 +1,94 @@
+import { Guides } from '@/components/Guides'
+import { Resources } from '@/components/Resources'
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+    title: 'Deploying AI Library on Azure',
+    description:
+        'This guide will help you host the AI Library Platform on Microsoft Azure.',
+}
+
+<HeroPattern />
+
+
+# Deploy AI Library on Microsoft Azure
+
+This guide will help you deploy the AI Library Platform on Microsoft Azure.
+
+In this guide, you will learn how to:
+- Pull the AI Library Docker image from Docker Hub
+- Create a new Azure Container Registry
+- Push the AI Library Docker image to Azure Container Registry
+- Deploy the AI Library Platform on Azure Container Apps.
+
+## Prerequisites
+- An Azure account with an active subscription.
+- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed.
+- [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) VS Code extensions installed.
+- You need an instance of [Azure Container Registry (ACR)](https://learn.microsoft.com/en-in/azure/container-registry/container-registry-get-started-portal?tabs=azure-cli)
+
+
+## Install the Azure CLI and log in to your Azure account.
+
+You can skip this step if you already have the Azure CLI installed and are logged in.
+
+```bash
+brew update && brew install azure-cli
+az login
+```
+
+## Pull the AI Library core container image. 
+
+Note: You will need access to the ailibrary registry to pull the image.
+
+```bash
+az acr login --name ailibrary
+docker pull ailibrary.azurecr.io/core:latest
+```
+
+## Create a container registry in Azure. 
+
+Note: Skip this step if you already have a container registry that you can use
+
+```bash
+az acr create --resource-group <resource-group-name> --name <your-registry-name> --sku Basic
+```
+
+Alternatively, you can create a container registry using the Azure portal. Follow the steps [here](https://learn.microsoft.com/en-in/azure/container-registry/container-registry-get-started-portal?tabs=azure-cli).
+
+## Tag the image with the Azure Container Registry name.
+
+```bash
+docker tag ailibrary.azurecr.io/core:latest <your-registry-name>.azurecr.io/ai-library:latest
+```
+
+## Push the image to the Azure Container Registry.
+
+```bash
+docker push <your-registry-name>.azurecr.io/ai-library:latest
+```
+
+## Create a Container Apps Environment in Azure.
+
+- Open the Azure tab in Visual Studio Code.
+- Right-click on Container Apps and click on Create Container Apps Environment.
+- Once the environment is created, right-click on the environment and click on Create Container App.
+
+
+## Deploy the AI Library Platform on Azure Container Apps
+
+- Open Docker tab
+- Right click on the image you pushed to the Azure Container Registry and click on Deploy to Container Apps
+- Select the Subscription
+- Select the Container Apps Environment you created in the previous step
+- Select the Container you created in the previous step
+- Enable ingress (HTTP) with public access
+- Select the port 8000
+- Select the environment file. Download the sample file from [here](https://www.ailibrary.ai/env.sample) and update the values.
+- Get the ingress URL from the Azure portal and access the AI Library Platform. You can also right-click on the container and click on properties and get the url from `configuration` > `ingress` > `fqdn`.
+
+
+## Related Resources
+
+1. [Deploy a containerized app to Azure](https://code.visualstudio.com/docs/containers/app-service) from Visual Studio Code.
+2. [Push your first image to your Azure container registry using the Docker CLI](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli?tabs=azure-cli) from Microsoft Azure.

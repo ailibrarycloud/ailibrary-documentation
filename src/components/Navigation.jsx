@@ -213,7 +213,7 @@ export const navigation = [
     title: 'GUIDES',
     links: [
       { title: 'My first agent', href: '/guides/my-first-agent' },
-      // { title: 'Voice Agent', href: '/knowledgebase' },
+      { title: 'Deploying on Azure', href: '/guides/deploying-on-azure' },
       // { title: 'Chat Agent', href: '/forms' },
     ],
   },
