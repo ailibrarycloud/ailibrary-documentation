@@ -13,7 +13,7 @@ export const metadata = {
 
 # Deploy AI Library on Microsoft Azure
 
-This guide will help you deploy the AI Library Platform on Microsoft Azure.
+This guide will help you deploy the AI Library Platform on Microsoft Azure. This guide will use a mix of CLI (Azure and Docker) and VS Code Extensions (Docker, Azure App Service and Azure Containter Apps).
 
 In this guide, you will learn how to:
 - Pull the AI Library Docker image from Docker Hub
@@ -24,26 +24,34 @@ In this guide, you will learn how to:
 ## Prerequisites
 - An Azure account with an active subscription.
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed.
-- [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) VS Code extensions installed.
+- [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker), [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) and [Azure Container Apps](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurecontainerapps) VS Code extensions installed.
 - You need an instance of [Azure Container Registry (ACR)](https://learn.microsoft.com/en-in/azure/container-registry/container-registry-get-started-portal?tabs=azure-cli)
 
 
 ## Install the Azure CLI and log in to your Azure account.
 
+Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) 
 You can skip this step if you already have the Azure CLI installed and are logged in.
 
 ```bash
-brew update && brew install azure-cli
+# Use the command below to install Azure CLI in MacOS or Linux using HomeBrew
+# Get HomeBrew from https://brew.sh/
+# For other OS, check the documentation.
+brew update && brew install azure-cli 
 az login
 ```
 
 ## Pull the AI Library core container image. 
 
-Note: You will need access to the ailibrary registry to pull the image.
+{/* Note: You will need access to the ailibrary registry to pull the image. */}
 
-```bash
+{/* ```bash
 az acr login --name ailibrary
 docker pull ailibrary.azurecr.io/core:latest
+``` */}
+
+```bash
+docker pull araniail/backend:latest
 ```
 
 ## Create a container registry in Azure. 
