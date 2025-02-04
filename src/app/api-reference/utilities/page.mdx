@@ -136,3 +136,46 @@ Functions to support your AI Agents. {{ className: 'lead' }}
   </Col>
 </Row>
 
+---
+
+## Document Parser {{ tag: 'POST', label: '/v1/utilities/docparser' }}
+
+<Row>
+  <Col>
+
+    Parses a document for content
+
+    ### Request body
+
+    <Properties>
+      <Property name="urls" type="array" required="true">
+        List of urls
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/docparser">
+
+    ```json {{'title': 'Body'}}
+    {
+      "urls": ["https://iontrap.umd.edu/wp-content/uploads/2016/01/WudkaGR-7.pdf"]
+    }
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    [
+        {
+            "url": "https://iontrap.umd.edu/wp-content/uploads/2016/01/WudkaGR-7.pdf",
+            "title": "WudkaGR-7.pdf",
+            "body": "Chapter 7\nThe General Theory of\nRelativity\nThe qeneral Theory of Relativity...",
+        },
+        ///...
+    ]
+    ```
+
+  </Col>
+</Row>
