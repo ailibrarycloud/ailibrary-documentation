@@ -33,14 +33,25 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
   </Col>
   <Col sticky>
-  ```json {{'title': 'Body'}}
+    <CodeGroup title="Request" tag="POST" label="/v1/agent/knowledgebase">
+    ```json {{'title': 'Body'}}
     {
         "name": "my first knowledge base"  
     }
     ```
+    ```python
+    kb = client.knowledge_base.create(
+        name="Product Documentation",
+    )
+    ```
+    </CodeGroup>
+
+  
     ```json {{ title: 'Response' }}
     {
-      "knowledgeId": "myfirstkno_1716198026361802"
+        "status": "success", 
+        "knowledgeId": "kb_abc123",
+        "meta": {"type": "documentation"}
     }
     ```
 

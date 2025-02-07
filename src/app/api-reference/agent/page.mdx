@@ -90,22 +90,11 @@ Agents have three main components {{ className: 'lead' }}
     }
     ```
     ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/agent/create"
-
-    payload = {
-        "type": "chat"
-    }
-
-    headers = {
-        "X-Library-Key": "<your-api-key>",
-        "Content-Type": "application/json"
-    }
-
-    response = requests.request("POST", url, headers=headers, json=payload)
-    
-    
+    agent = client.agent.create(
+        title="Sales Assistant",
+        instructions="You are a helpful sales assistant...",
+        description="An AI assistant for sales inquiries"
+    )
     ```
     
 
@@ -114,15 +103,13 @@ Agents have three main components {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "namespace": "myfirstaiagent_1733206677149149",
-        "type": "chat",
-        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-        "title": "My First AI Agent",
-        "description": "Ask me anything",
-        "intromessage": "How can I help you today?",
-        "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
-        "knowledge_search": true,
-        "knowledge_id": "myfirstaiagent_1733206677149149"
+        "coverimage": "https://www.ailibrary.ai/ailibrary.svg", 
+        "description": "An AI assistant for sales inquiries", 
+        "intromessage": "How can I help you today?", 
+        "namespace": "Sales Assistant", 
+        "title": "test_agent_kushagra", 
+        "type": "chat", 
+        "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only."
     }
     ```
 
@@ -135,7 +122,7 @@ Agents have three main components {{ className: 'lead' }}
 
 <Row>
   <Col>
-    Return information about an agent.
+    Return information about an agent, if found.
 
     ### Path parameters
     
@@ -149,18 +136,28 @@ Agents have three main components {{ className: 'lead' }}
 
   </Col>
   <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/{namespace}">
 
+    ```python
+    agent = client.agent.get(namespace="sales-assistant-abc123")
+    ```
+    
+    </CodeGroup>
+  
     ```json {{ title: 'Response' }}
     {
-        "namespace": "myfirstaiagent_1733206677149149",
-        "type": "chat",
-        "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-        "title": "My First AI Agent",
-        "description": "Ask me anything",
-        "intromessage": "How can I help you today?",
+        "coverimage": "https://www.ailibrary.ai/ailibrary.svg",
+        "created_timestamp": "2025-02-07 01:11:16", 
+        "description": "An AI assistant for sales inquiries", 
+        "intromessage": "How can I help you today?", 
+        "namespace": "Sales Assistant",
+        "response_schema": null,
+        "showcase": null, 
+        "status": null, 
+        "title": "test_agent_kushagra", 
+        "type": "chat", 
         "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
-        "knowledge_search": true,
-        "knowledge_id": "myfirstaiagent_1733206677149149"
+        "meta": {"type": "support"}
     }
     ```
     </Col>
@@ -178,27 +175,26 @@ Agents have three main components {{ className: 'lead' }}
 
   </Col>
   <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/">
+
+    ```python
+    agents = client.agent.list_agents()
+    ```
+    
+    </CodeGroup>
 
     ```json {{ title: 'Response' }}
     {
-      
-      "agents": [
-        {
-          "namespace": "myfirstaiagent_1733206677149149",
-          "type": "chat",
-          "coverimage": "https://www.burgersinghonline.com/wp-content/themes/burger-singh/front/images/logo-v=0.1.png",
-          "title": "My First AI Agent",
-          "description": "Ask me anything",
-          "intromessage": "How can I help you today?",
-          "instructions": "You are a helpful assistant. Answer the questions based on the information you are given. If answer is not available in the context, try to navigate the conversation smartly. Answer in English only.",
-          "knowledge_search": true,
-          "knowledge_id": "myfirstaiagent_1733206677149149"
-        },
-        ///...
-      ],
-      "meta": {
-          "total_items": 14
-      }
+        "agents": [
+            {
+                "namespace": "agent-abc123",
+                "title": "Sales Assistant",
+                "description": "Sales inquiry assistant",
+                "meta": {"type": "support"}
+            },
+            // ... other agent objects
+        ],
+        "meta": {"page": 1}
     }
     ```
     </Col>
@@ -228,7 +224,7 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="title" type="string">
         Give your agent a user friendly name. This information is not used for training the agent and is only for display purposes.
       </Property>
-      <Property name="type" type="integer">
+      <Property name="type" type="string">
         Specify the type of agent you want to create.
 
         Options - `notebook`, `chat`, `voice`
@@ -290,7 +286,14 @@ Agents have three main components {{ className: 'lead' }}
         "knowledge_id": "myfirstaiagent_1733206677149149"
     }
     ```
+    ```python
+    updated_agent = client.agent.update(
+        namespace="sales-assistant-abc123",
+        title="Updated Sales Assistant",
+        instructions="New instructions..."
+    )
 
+    ```
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
@@ -327,10 +330,17 @@ Agents have three main components {{ className: 'lead' }}
 
   </Col>
   <Col sticky>
+    <CodeGroup title="Request" tag="DELETE" label="/v1/agent/{namespace}">
+
+    ```python
+    response = client.agent.delete(namespace="sales-assistant-abc123")
+    ```
+    </CodeGroup>
 
     ```json {{ title: 'Response' }}
     {
-        "response": "successfully deleted"
+        "statusCode": 200,
+        "message": "Agent deleted successfully"
     }
     ```
     </Col>
@@ -356,9 +366,6 @@ Agents have three main components {{ className: 'lead' }}
     ### Request body
     
     <Properties>
-        <Property name="session_id" type="string" required="true">
-            A unique session id.
-        </Property>
         <Property name="messages" type="array" required="true">
             A list of messages comprising the conversation so far. 
         </Property>
@@ -369,7 +376,9 @@ Agents have three main components {{ className: 'lead' }}
         <Property name="messages > content" type="string" required="true">
             The message content.
         </Property>
-    
+        <Property name="session_id" type="string">
+            A unique session id.
+        </Property>
     </Properties>
 
     ### Response 
@@ -402,7 +411,29 @@ Agents have three main components {{ className: 'lead' }}
         ]
     }
     ```
-
+    ```python
+    response = client.agent.chat(
+        namespace="sales-assistant-abc123",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful sales assistant.",
+                "meta": {"type": "instruction"}
+            },
+            {
+                "role": "user",
+                "content": "What are your prices?",
+                "meta": {"type": "query"}
+            },
+            {
+                "role": "assistant",
+                "content": "I'd be happy to help you with pricing information.",
+                "meta": {"type": "response"}
+            }
+        ],
+        session_id="session_xyz789"  # Optional
+    )
+    ```
     </CodeGroup>
 
     {/* ```json {{ title: 'Response' }}
