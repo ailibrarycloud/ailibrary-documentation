@@ -160,7 +160,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{'title': 'Body'}}
     {
-      "urls": ["https://iontrap.umd.edu/wp-content/uploads/2016/01/WudkaGR-7.pdf"]
+      "urls": [
+        "https://domain.com/mydoc1.pdf", 
+        ///...
+      ]
     }
     ```
 
@@ -169,12 +172,59 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ```json {{ title: 'Response' }}
     [
         {
-            "url": "https://iontrap.umd.edu/wp-content/uploads/2016/01/WudkaGR-7.pdf",
-            "title": "WudkaGR-7.pdf",
-            "body": "Chapter 7\nThe General Theory of\nRelativity\nThe qeneral Theory of Relativity...",
+            "url": "https://domain.com/mydoc1.pdf",
+            "title": "mydoc1.pdf",
+            "body": "lorem ipsum dolor...",
         },
         ///...
     ]
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Document Thumbnail {{ tag: 'POST', label: '/v1/utilities/thumbnail' }}
+
+<Row>
+  <Col>
+
+    Generates a thumbnail for a document
+
+    ### Request body
+
+    <Properties>
+      <Property name="urls" type="array" required="true">
+        List of urls
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/thumbnail">
+
+    ```json {{'title': 'Body'}}
+   {
+      "urls": [
+        "https://domain.com/mydoc1.pdf", 
+        ///...
+      ]
+    }
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    [
+      {
+          "url": "https://domain.com/mydoc1.pdf",
+          "thumbnail": "https://myfilestorage.com/mydoc1.jpg"
+      },
+    ///...
+    
+]
     ```
 
   </Col>
