@@ -10,6 +10,17 @@ You'll need to authenticate your requests to access any of the endpoints in the 
 
 **Always keep your token safe and reset it if you suspect it has been compromised.** Always use environment variables to store your token, and never hardcode it into your application. {{ className: 'lead' }}
 
+Authenticate in the ailibrary python package: 
+<CodeGroup title="Python code">
+```python {{ title: 'Python' }}
+import ailibrary as ai
+
+client = ai.AILibrary(
+    api_key="your-api-key"
+)
+``` 
+
+</CodeGroup>
 {/* ## OAuth2 with bearer token */}
 
 All API requests should include your API key in an ``X-Library-Key`` HTTP header as follows:
