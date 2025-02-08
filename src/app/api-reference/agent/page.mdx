@@ -90,7 +90,7 @@ Agents have three main components {{ className: 'lead' }}
     }
     ```
     ```python
-    agent = client.agent.create(
+    my_agent = client.agent.create(
         title="Sales Assistant",
         instructions="You are a helpful sales assistant...",
         description="An AI assistant for sales inquiries"
@@ -139,7 +139,7 @@ Agents have three main components {{ className: 'lead' }}
     <CodeGroup title="Request" tag="GET" label="/v1/agent/{namespace}">
 
     ```python
-    agent = client.agent.get(namespace="sales-assistant-abc123")
+    my_agent = client.agent.get(namespace="sales-assistant-abc123")
     ```
     
     </CodeGroup>
