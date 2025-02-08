@@ -6,7 +6,7 @@ export const metadata = {
 
 # Files
 
-Functions to support your AI Agents. {{ className: 'lead' }}
+The Files API allows you to upload and manage files that can be processed by knowledge bases. {{ className: 'lead' }}
 
 ---
 
@@ -15,7 +15,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 <Row>
   <Col>
 
-    Searches the web for search terms
+    Upload files so they can be accessed later.
 
     ### form-data
 
@@ -34,20 +34,23 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     <CodeGroup title="Request" tag="POST" label="/v1/files">
 
     ```python 
-    files=[
-        ('files',('file1.pdf',open('/path/to/file1.pdf','rb'),'application/pdf')),
-        ('files',('files2.pdf',open('/path/to/file2.pdf','rb'),'application/pdf'))
+    file_paths=[
+        "path/to/file1.txt",
+        # ... other file paths
     ]
 
-    response = requests.request("POST", url, headers=headers, files=files)
+    uploaded_files = client.files.upload(
+        files=file_paths,
+        knowledgeId="kb_abc123"  # Optional
+    )
     ```
     ```javascript
     const myHeaders = new Headers();
-    myHeaders.append("X-Library-Key", "d4qgdcs2lgUBvwWDFjC6NeOIrLS87cpoDHlwPL5a");
+    myHeaders.append("X-Library-Key", "API_KEY");
 
     const formdata = new FormData();
     formdata.append("files", fileInput.files[0], "gridcare-logo-v23jpg.jpg");
-    formdata.append("knowledgeId", "MyFirstAIA_1733490311594739");
+    formdata.append("knowledgeId", "kb_abc123");
 
     const requestOptions = {
       method: "POST",
@@ -67,9 +70,13 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ```json {{ title: 'Response' }}
     [
         {
-            "url": "https://ailib-public.s3-us-west-2.amazonaws.com/corbett/arani@ailibrary.ai/file1.pdf",
-            "id": 2345
-        }
+            "url": "https://domain/corbett/email/file1.txt",
+            "id": 1232,
+            "bytes": 17,
+            "name": "file1.txt",
+            "meta": {"type": "document"}
+        },
+        // ... info objects on other files
     ]
     ```
 
@@ -88,10 +95,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ### Request parameters
 
     <Properties>
-      <Property name="page" type="string">
+      <Property name="page" type="integer">
         Page number
       </Property>
-      <Property name="limit" type="string">
+      <Property name="limit" type="integer">
         Number of items per page
         </Property>
     </Properties>
@@ -102,14 +109,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     <CodeGroup title="Request" tag="GET" label="/v1/files">
 
     ```python 
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/files?page=1"
-    headers = {
-        'X-Library-Key': '••••••'
-    }
-
-    response = requests.request("GET", url, headers=headers)
+    client.files.list_files(
+        page=1,
+        limit=10
+    )
     ```
     ```javascript
     const axios = require('axios');
@@ -128,29 +131,16 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-      "files": [
-          {
-              "bytes": 9505,
-              "created_timestamp": "2024-12-10 05:18:49",
-              "id": 2573,
-              "name": "file_1.csv",
-              "url": "https://ailib-public.s3-us-west-2.amazonaws.com/you@domain.ai/file_1.csv"
-          },
-          {
-              "bytes": 9505,
-              "created_timestamp": "2024-12-10 05:18:49",
-              "id": 2573,
-              "name": "file_2.csv",
-              "url": "https://ailib-public.s3-us-west-2.amazonaws.com/you@domain.ai/file_2.csv"
-          },
-          /// ...
-      ],
-      "meta": {
-          "limit": 10,
-          "next_page": 3,
-          "prev_page": 1,
-          "total_items": 1037
-      }
+        "files": [
+            {
+                "bytes": 17,
+                "created_timestamp": "YYYY-MM-DD hh:mm:ss",
+                "id": 1232,
+                "name": "file1.txt",
+                "url": "https://domain/corbett/email/file1.txt"
+            }
+        ],
+        "meta": {"prev_page": "", "next_page": "2"}
     }
     ```
 
@@ -159,7 +149,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
 ---
 
-## Retrieve a file {{ tag: 'GET', label: '/v1/files/{fileId}' }}
+## Retrieve a file {{ tag: 'GET', label: '/v1/files/{file_id}' }}
 
 <Row>
   <Col>
@@ -169,7 +159,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ### Request parameters
 
     <Properties>
-      <Property name="fileId" type="string"  required="true">
+      <Property name="file_id" type="integer"  required="true">
         ID of the file
       </Property>
     </Properties>
@@ -178,17 +168,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/files/{fileId}">
+    <CodeGroup title="Request" tag="GET" label="/v1/files/{file_id}">
 
     ```python 
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/files/{fileId}"
-    headers = {
-        'X-Library-Key': '••••••'
-    }
-
-    response = requests.request("GET", url, headers=headers)
+    file = client.files.get(file_id="file_abc123")
     ```
     ```javascript
     const axios = require('axios');
@@ -207,11 +190,11 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "bytes": 9505,
-        "created_timestamp": "2024-12-10 05:18:49",
-        "id": 2573,
-        "name": "file_1.csv",
-        "url": "https://ailib-public.s3-us-west-2.amazonaws.com/you@domain.ai/file_1.csv"
+        "bytes": 17,
+        "created_timestamp": "YYYY-MM-DD hh:mm:ss",
+        "id": 1232,
+        "name": "file1.txt",
+        "url": "https://domain/corbett/email/file1.txt"
     }
     ```
 
@@ -220,7 +203,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
 ---
 
-## Delete a file {{ tag: 'DELETE', label: '/v1/files/{fileId}' }}
+## Delete a file {{ tag: 'DELETE', label: '/v1/files/{file_id}' }}
 
 <Row>
   <Col>
@@ -232,7 +215,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ### Request parameters
 
     <Properties>
-      <Property name="fileId" type="string" required="true">
+      <Property name="file_id" type="integer" required="true">
         ID of the file
       </Property>
     </Properties>
@@ -240,17 +223,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="DELETE" label="/v1/files/{fileId}">
+    <CodeGroup title="Request" tag="DELETE" label="/v1/files/{file_id}">
 
     ```python 
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/files/{fileId}"
-    headers = {
-        'X-Library-Key': '••••••'
-    }
-
-    response = requests.request("DELETE", url, headers=headers)
+    client.files.delete(file_id="file_abc123")
     ```
     ```javascript
     const axios = require('axios');
