@@ -1,0 +1,302 @@
+export const metadata = {
+    title: 'Forms',
+    description: 'Manage forms within AI Library.',
+}
+
+# Forms
+
+Forms are useful in extracting structured information from documents or even guide conversations to fill a form. {{ className: 'lead' }}
+
+To use forms in AI Library, you need to 
+1. Create a form with a schema. The schema defines the structure of the form, including the fields and their types. {{ className: 'lead' }}
+2. Once you have created a form, you update your agent with `form_filling` and `form_id`. {{ className: 'lead' }}
+3. To generate a structured response, use the `chat` endpoint with `response_format` set to `json`. {{ className: 'lead' }}
+4. To extract information from a chat, use `chat` as is. Conversations will be guided to fill the form. {{ className: 'lead' }}
+
+There are three useful types of fields in a form:
+1. `string`: A text field.
+3. `boolean`: A true/false field.
+4. `string` with `enum`: A dropdown field.
+
+`enum` and `boolean` values are useful in taking actions based on the user's response. {{ className: 'lead' }}
+
+For example, if a boolean returns `true`, you can ask for more details. If an `enum` returns a specific value, you can take an action based (eg.  invoke another agent) on that value. {{ className: 'lead' }}
+
+---
+
+## List Forms {{ tag: 'GET', label: '/v1/form' }}
+
+<Row>
+  <Col>
+
+    List all forms.
+
+   
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Response" tag="GET" label="/v1/form">
+
+    ```json {{ title: 'Response' }}
+    {
+        "forms": [
+            {
+                "created_timestamp": "2025-02-08 07:00:42",
+                "title": "Test Form",
+                "updated_timestamp": "2025-02-10 05:02:38",
+                "userName": "John Doe",
+                "form_id": "test_form"
+            },
+            /// ...
+        ],
+        "meta": {
+            "current_page": 1,
+            "limit": 50,
+            "next_page": "",
+            "prev_page": "",
+            "total_items": 7,
+            "total_pages": 1
+        }
+    }
+    ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve Form {{ tag: 'GET', label: '/v1/form/{form_id}' }}
+
+<Row>
+  <Col>
+
+    Get details of a specific form.
+
+     ### Path parameters
+    
+    <Properties>
+      <Property name="form_id" type="string" required="true">
+          Form ID.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Response">
+
+    ```json {{ title: 'Response' }}
+    {
+        "title": "Sample Form",
+        "form_id": "sample_form",
+        "schema": {
+            "sample_string_field": {
+                "order": 1,
+                "type": "string",
+                "description": "Tell me a joke"
+            },
+            "sample_boolean_field": {
+                "order": 2,
+                "type": "boolean",
+                "description": "Do you like jokes?"
+            },
+            "sample_enum_field": {
+                "order": 3,
+                "type": "string",
+                "description": "Pick your favorite joke category",
+                "enum": [
+                    "",
+                    "Programming",
+                    "Miscellaneous",
+                    "Pun",
+                    "Spooky",
+                    "Christmas",
+                    "Science"
+                ]
+            }
+        }
+    }
+    ```
+ </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## Create Form {{ tag: 'POST', label: '/v1/form' }}
+
+<Row>
+  <Col>
+
+    Create a new form.
+
+    ### Request body
+
+    <Properties>
+      
+      <Property name="title" type="string" required="true">
+            Form title.
+      </Property>
+        <Property name="schema" type="object" required="true">
+            Form schema. The schema defines the structure of the form, including the fields and their types. Here's a sample object
+            ```
+            {
+                "field_name": { 
+                    "type": "string", //can be string, number, boolean
+                    "order": 1, 
+                    "description": "What's your name?"  //This is the prompt for the agent
+                    "enum": ["", "option1", "option2"] //Optional. If the field is an enum, you can provide the options here
+                },
+                /// ...
+            }
+            ```
+        </Property>
+    </Properties>
+
+
+
+   
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/form">
+     ```bash
+        curl --location 'https:/api.ailibrary.ai/v1/form' \
+        --header 'Content-Type: application/json' \
+        --header 'X-Library-Key: [[X-Library-Key-masked-secret]]' \
+        --data '{
+            "title": "Test Form",
+            "schema": {
+                "name": { "type": "string" },
+                "email": { "type": "email" },
+                "years_of_experience": { "type": "number" },
+                "years_experience_with_nextjs": { "type": "number" },
+                "AI_experience": { "type": "boolean" }
+            }
+        }'
+    ```
+        </CodeGroup>
+    <CodeGroup title="Response" tag="POST" label="/v1/form">
+
+    ```json {{ title: 'Response' }}
+    {
+        "form_id": "form_12345", //form_id
+        "title": "...",
+        "schema": "...",
+    }
+    ```
+ </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## Update Form {{ tag: 'PUT', label: '/v1/form/{form_id}' }}
+
+<Row>
+  <Col>
+
+    Update an existing form.
+
+    ### Request body
+
+     <Properties>
+      
+      <Property name="title" type="string">
+            Form title.
+      </Property>
+        <Property name="schema" type="object">
+            Form schema. The schema defines the structure of the form, including the fields and their types. Here's a sample object
+            ```
+            {
+                "field_name": { 
+                    "type": "string", //can be string, number, boolean
+                    "order": 1, 
+                    "description": "What's your name?"  //This is the prompt for the agent
+                    "enum": ["", "option1", "option2"] //Optional. If the field is an enum, you can provide the options here
+                },
+                /// ...
+            }
+            ```
+        </Property>
+    </Properties>
+
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PUT" label="/v1/form/{form_id}">
+    ```bash
+    curl --location --request PUT 'https://api.ailibrary.ai/v1/form/nextjs-dev_94745' \
+    --header 'Content-Type: application/json' \
+    --header 'X-Library-Key: [[X-Library-Key-masked-secret]]' \
+    --data '{
+        "title": "Nextjs Developer",
+        "schema": {
+            "name": { "order": 1, "description": "What's the candidate's name?", "type": "string" },
+            "email": { "order": 2, "description": "What's the candidate's email?", "type": "string" },
+            "phone": { "order": 3, "description": "What's the candidate's phone number?", "type": "string" },
+            "experience": { "order": 4, "description": "How many years of experience does the candidate have, overall?", "type": "number" },
+            "AI_experience": { "order": 5, "description": "Does the candidate have experience with AI", "type": "boolean" },
+            "AI_experience_details": { "order": 6, "description": "Explain the AI experience, only if the candidate has AI experience.", "type": "string" },
+            "good_fit": { "order": 7, "description": "Is the candidate a good fit for the job?", "type": "boolean" }
+        }
+    }'
+    ```
+    </CodeGroup>
+    <CodeGroup title="Response">
+
+    ```json {{ title: 'Response' }}
+    {
+        "form_id": "form_12345", //form_id
+        "title": "...",
+        "schema": "...",
+    }
+    ```
+ </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## Delete Form {{ tag: 'DELETE', label: '/v1/form/{form_id}' }}
+
+<Row>
+  <Col>
+
+    Delete a form by ID.
+
+    ### Path parameters
+
+    <Properties>
+      <Property name="form_id" type="string" required="true">
+          Form ID.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Response" tag="DELETE" label="/v1/form/{form_id}">
+    
+
+    ```bash
+    curl --location --request DELETE 'https://api.ailibrary.ai/v1/form/test-form_45160' \
+    --header 'X-Library-Key: [[X-Library-Key-masked-secret]]'
+    ```
+
+    </CodeGroup>
+    <CodeGroup title="Response" tag="DELETE" label="/v1/form/{form_id}">
+
+    ```json {{ title: 'Response' }}
+    {
+        "status": "success",
+        "message": "Form deleted successfully"
+    }
+    ```
+ </CodeGroup>
+  </Col>
+</Row>

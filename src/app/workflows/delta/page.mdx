@@ -1,0 +1,223 @@
+export const metadata = {
+    title: 'Agents',
+    description:
+        'Learn how to build and manage AI agents.',
+}
+
+# Delta Workflow
+
+Use the Delta Workflow API to generate structured JSON responses from an array of documents in bulk. {{ className: 'lead' }}
+
+Use cases include: {{ className: 'lead' }}
+1. Extracting structured information from a collection of documents. {{ className: 'lead' }}
+2. Generating structured responses from a collection of documents. {{ className: 'lead' }}
+3. Industry use cases like extracting structured information from invoices, receipts, resumes and more. {{ className: 'lead' }}
+
+To use the Delta Workflows API, you need to: {{ className: 'lead' }}
+1. Create an agent with a form. The form defines the structure of the response, including the fields and their types. {{ className: 'lead' }}
+2. Invoke the workflow with a series of documents as described below {{ className: 'lead' }}
+3. The responses are saved in agent memory and can be retrieved later {{ className: 'lead' }}
+
+Under the hood, the Delta Workflows API uses the `chat` endpoint with `response_format` set to `json` and `document parsing` endpoint. The function is parallelised to improve performance with managed memory. {{ className: 'lead' }}
+
+
+---
+
+## Run Workflow {{ tag: 'POST', label: '/v1/agent/{namespace}/workflow/delta' }}
+
+<Row>
+  <Col>
+    Creates an agent. You can simply create an agent with the type of agent you want to create and then update the agent with more details.
+
+    ### Request body
+    <Properties>
+      <Property name="files" type="array"  required="true">
+        An array of files to be processed. Here's a sample object. 
+        
+        Note: Folder and File are represented for better understanding. Do not include them in your code.
+        ```
+        [
+        {/* Folder 1 */}
+            [
+                {/* File 1 */}
+                {
+                    "description": "Description of the document",
+                    "url": "https://...pdf"
+                },
+                {/* File 2 */}
+                {
+                    "description": "Description of the document",
+                    "url": "https://...txt"
+                }
+            ],
+        {/* Folder 2 */}
+            [
+                {/* File 1 */}
+                {
+                    "description": "...",
+                    "url": "https://...docx"
+                },
+                {/* File 2 */}
+                {
+                    "description": "...",
+                    "url": "https://...pdf"
+                }
+            ]
+            /// ...
+        ]
+        ```
+        </Property>
+        </Properties>
+    </Col>
+    <Col sticky>
+
+        <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/workflow/delta">
+
+        ```bash 
+            curl --location 'https://api.ailibrary.ai/v1/agent/test-namespace/workflow/delta' \
+            --header 'Content-Type: application/json' \
+            --header 'X-Library-Key: [[X-Library-Key-masked-secret]]' \
+            --data-raw '[
+                [
+                    {
+                        "description": "Description of the document",
+                        "url": "https://...pdf"
+                    },
+                    {
+                        "description": "Description of the document",
+                        "url": "https://...txt"
+                    }
+                ],
+                [
+                    {
+                        "description": "...",
+                        "url": "https://...docx"
+                    },
+                    {
+                        "description": "...",
+                        "url": "https://...pdf"
+                    }
+                ]
+                /// ...
+            ]
+            '
+        ```
+        </CodeGroup>
+        <CodeGroup title="Response">
+        ```json 
+        {
+            "sid": 329381640675566435568818280347392619425,
+            "results": [
+                    {
+                        "field_1": false,
+                        "field_2": "john@email.com",
+                        "field_3": "John Doe",
+                        "phone": "+1 992 920 3522"
+                    },
+                    {
+                        "field_1": false,
+                        "field_2": "jane@email.com",
+                        "field_3": "Jane Smith",
+                        "phone": "+1 992 934 3547"
+                    },
+                    /// ...
+                ],
+            "failed": [
+                {
+                    "description": "Description of the document",
+                    "url": "https://...pdf"
+                },
+                {
+                    "description": "Description of the document",
+                    "url": "https://...txt"
+                }
+            ],
+            "meta": {
+                "total": 2,
+                "successful": 1,
+                "failed": 1,
+                "duration": 19.07
+            }
+        }
+
+
+
+        ```
+        </CodeGroup>
+
+     </Col>
+</Row>
+
+
+---
+
+## Retrieve Responses {{ tag: 'GET', label: '/v1/agent/{namespace}/workflow/delta' }}
+
+<Row>
+  <Col>
+    Retrieve the responses generated by the Delta Workflow API.
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          Agent namespace. Note: Agent must have a form.
+      </Property>
+    </Properties>
+
+    ## Query parameters
+    <Properties>
+        <Property name="context" type="boolean">
+            Include context in the response. This includes the parsed document.
+        </Property>
+        
+        <Property name="meta" type="boolean">
+            Include metadata like file name, latency, and more.
+        </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+        <CodeGroup title="Response">
+        ```json 
+        [
+            {
+                "field_1": false,
+                "field_2": "",
+                "field_3": "John Doe",
+                "phone": "+1 992 920 3522",
+                "context": "Invoice number 2043...",
+                "meta": {
+                    "files": ["sample.pdf", "sample.txt"],
+                    "generation_duration": 28.23,
+                    "scraping_duration": 0.64,
+                    "total_duration": 28.87
+                },
+                "gid": "...", // Unique identifier for the response
+                "sid": "..." // Unique identifier for the session
+            },
+            {
+                "field_1": false,
+                "field_2": "",
+                "field_3": "Jane Smith",
+                "phone": "+1 992 934 3547",
+                "context": "Invoice number 2044....",
+                "meta": {
+                    "files": ["sample.pdf", "sample.txt"],
+                    "generation_duration": 28.23,
+                    "scraping_duration": 0.64,
+                    "total_duration": 28.87
+                },
+                "gid": "...", // Unique identifier for the response
+                "sid": "..." // Unique identifier for the session
+            },
+            /// ...
+        ]
+        ```
+        </CodeGroup>
+        </Col>
+</Row>
+
+
+

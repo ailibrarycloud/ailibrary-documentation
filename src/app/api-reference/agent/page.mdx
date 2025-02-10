@@ -58,13 +58,13 @@ Agents have three main components {{ className: 'lead' }}
 
         Leave this blank if you want to create a new knowledge base.
       </Property>
-      {/* <Property name="form_filling" type="boolean">
+      <Property name="form_filling*" type="boolean">
         Enable form filling.
       </Property>
-      <Property name="form_id" type="string">
-        Form ID to be used by the agent for collecting structured information.
+      <Property name="form_id*" type="string">
+        Form ID to be used by the agent for collecting structured information. Leave this blank if you want to create a new form with a default schema.
       </Property>
-      <Property name="languages" type="string">
+      {/* <Property name="languages" type="string">
         Set the default language for the agent. This is used for voice agents.
         
         Options - `en-US`, `hi-IN`, `es-ES`, `fr-FR`, `de-DE`, `it-IT`, `ja-JP`, `ko-KR`, `pt-BR`, `zh-CN`
@@ -249,12 +249,13 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="knowledge_id" type="string">
         Knowledge Base ID to be used by the agent for answering queries.
       </Property>
-      {/* <Property name="form_filling" type="boolean">
+      <Property name="form_filling" type="boolean">
         Enable form filling.
       </Property>
       <Property name="form_id" type="string">
         Form ID to be used by the agent for collecting structured information.
       </Property>
+      {/* 
       <Property name="languages" type="string">
         Set the default language for the agent. This is used for voice agents.
         
@@ -366,6 +367,12 @@ Agents have three main components {{ className: 'lead' }}
     ### Request body
     
     <Properties>
+        <Property name="session_id" type="string">
+            A unique session id. Highly recommended, this is useful for maintaining the context of the conversation.
+        </Property>
+        <Property name="response_format*" type="string">
+            Options - `text` (default), `json`
+        </Property>
         <Property name="messages" type="array" required="true">
             A list of messages comprising the conversation so far. 
         </Property>
@@ -376,9 +383,7 @@ Agents have three main components {{ className: 'lead' }}
         <Property name="messages > content" type="string" required="true">
             The message content.
         </Property>
-        <Property name="session_id" type="string">
-            A unique session id.
-        </Property>
+        
     </Properties>
 
     ### Response 

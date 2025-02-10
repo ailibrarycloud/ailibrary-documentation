@@ -207,6 +207,13 @@ export const navigation = [
       { title: 'Files', href: '/api-reference/files' },
       { title: 'Utilities', href: '/api-reference/utilities' },
       { title: 'Notes', href: '/api-reference/notes' },
+      { title: 'Forms', href: '/api-reference/forms' },
+    ],
+  },
+  {
+    title: 'WORKFLOWS',
+    links: [
+      { title: 'Delta', href: '/workflows/delta' },
     ],
   },
   {
