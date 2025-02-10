@@ -20,6 +20,23 @@ Possible use cases: {{ className: 'lead' }}
 - Save a generation as an article with a json containing meta data about the article like title, seo description, etc. This can then be used to display the article in a blog or website on your website {{ className: 'lead' }}
 - Add a note to a knowledgebase or file to provide context or additional information {{ className: 'lead' }}
 
+Below are some common parameters used by many functions in this section.
+### Common Parameters
+<Properties>
+  <Property name="role" type="string">
+    Role of the note. Can be `assistant`, `user`, or `system`
+  </Property>
+  <Property name="resource" type="string">
+    Resource of the note. Can be `agent`, `knowledgebase` or `file`
+  </Property>
+  <Property name="resource_id" type="string">
+    ID of the resource.
+    If `resource=agent`, resource_id is the namespace of the agent
+    If `resource=knowledgebase`, resource_id is the knowledgeId of the agent
+    If `resource=file`, resource_id is the file_id of the agent
+  </Property>
+</Properties>
+
 
 ---
 
@@ -34,20 +51,17 @@ Possible use cases: {{ className: 'lead' }}
     ### Request body
 
     <Properties>
-      <Property name="content" type="string"  required="true">
+      <Property name="content" type="string" required="true">
         Content of the note
       </Property>
-      <Property name="role" type="string"  required="true">
-        Role of the note. Can be `assistant`, `user` or `system`.
+      <Property name="role" type="string" required="true">
+        See "Common Parameters" at the start of this section.
       </Property>
       <Property name="resource" type="string"  required="true">
-        Resource of the note. Can be `agent`, `knowledgebase` or `file`
+        See "Common Parameters" at the start of this section.
       </Property>
       <Property name="resource_id" type="string"  required="true">
-        ID of the resource
-        - For agent, it is `namespace`
-        - For knowledgebase, it is `knowledgeId`
-        - For file, it is `id`
+        See "Common Parameters" at the start of this section.
       </Property>
       <Property name="meta" type="string">
         Custom json value
@@ -70,45 +84,26 @@ Possible use cases: {{ className: 'lead' }}
     ```
     
     ```python
-
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes"
-
-    payload = {
-        "content": "hello",
-        "role": "assistant",
-        "resource": "agent",
-        "resource_id": "my-agent-namespace",
-        "meta": "{'id':'1'}" // custom json value
-    }
-
-    headers = {
-        "X-Library-Key": "<your-api-key>",
-        "Content-Type": "application/json"
-    }
-
-    response = requests.request("POST", url, headers=headers, json=payload)
-    
+    note = client.notes.add(
+        content="Important information about this agent",
+        role="user",
+        resource="agent",
+        resource_id="agent_abc123",
+        meta={"priority": "high", "type": "internal"}
+    )
     ```
 
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
-    {
-        "content": "hello",
-        "role": "assistant",
-        "resource": "agent",
-        "resource_id": "my-agent-namespace",
-        "meta": "{'id':'1'}" // custom json value
-    }
+    {"status": "success", "noteId": "note_xyz789"}
     ```
     </Col>
 </Row>
 
 ---
 
-## Get Notes {{ tag: 'GET', label: '/v1/notes/{resource}/{resource_id}' }}
+## Get Notes From Resource {{ tag: 'GET', label: '/v1/notes/{resource}/{resource_id}' }}
 
 <Row>
   <Col>
@@ -119,13 +114,10 @@ Possible use cases: {{ className: 'lead' }}
 
     <Properties>
       <Property name="resource" type="string"  required="true">
-        Resource of the note. Can be `agent`, `knowledgebase` or `file`
+        See "Common Parameters" at the start of this section.
       </Property>
       <Property name="resource_id" type="string"  required="true">
-        ID of the resource
-        For agent, it is the `namespace`
-        For knowledgebase, it is the `knowledgeId`
-        For file, it is the `fileId`
+        See "Common Parameters" at the start of this section.
       </Property>
     </Properties>
 
@@ -135,15 +127,10 @@ Possible use cases: {{ className: 'lead' }}
     <CodeGroup title="Request" tag="GET" label="/v1/notes/{resource}/{resource_id}">
 
     ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes/agent/my-agent-namespace"
-
-    headers = {
-        "X-Library-Key": "<your-api-key>"
-    }
-
-    response = requests.request("GET", url, headers=headers)
+    notes = client.notes.get_resource_notes(
+        resource="agent",
+        resource_id="agent_abc123"
+    )
     ```
 
     ```javascript
@@ -162,32 +149,17 @@ Possible use cases: {{ className: 'lead' }}
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
-    [
-        {
-            "notes": [
-                {
-                    "content": "hello",
-                    "created_timestamp": "2025-01-09 13:05:03",
-                    "noteId": "fcaca8a1-049c-4441-b69a-326ef221b9dd",
-                    "resource": "agent",
-                    "resource_id": "my-agent-namespace",
-                    "role": "assistant",
-                    "updated_timestamp": "2025-01-09 13:05:03",
-                    "userEmail": "arani@ailibrary.ai",
-                    "userName": "Arani Chaudhuri"
-                },
-                //...
-            ],
-            "meta": {
-                "current_page": 1,
-                "limit": 50,
-                "next_page": "",
-                "prev_page": "",
-                "total_items": 1,
-                "total_pages": 1
+    {
+        "notes": [
+            {
+                "content": "note content",
+                "created_timestamp": "YYYY-MM-DD hh:mm:ss",
+                "meta": {"type": "internal"},
+                "role": "user"
             }
-        }
-    ]
+        ],
+        "meta": {"page": 1, "limit": 10}
+    }
     ```
 
   </Col>
@@ -195,7 +167,7 @@ Possible use cases: {{ className: 'lead' }}
 
 ---
 
-## Update a Note {{ tag: 'PUT', label: '/v1/notes/{noteId}' }}
+## Update a Note {{ tag: 'PUT', label: '/v1/notes/{note_id}' }}
 
 <Row>
   <Col>
@@ -205,7 +177,7 @@ Possible use cases: {{ className: 'lead' }}
     ### Request parameters
 
     <Properties>
-      <Property name="noteId" type="string"  required="true">
+      <Property name="note_id" type="integer"  required="true">
         ID of the note
       </Property>
     </Properties>
@@ -214,10 +186,10 @@ Possible use cases: {{ className: 'lead' }}
 
     <Properties>
       <Property name="content" type="string"  required="true">
-        Content of the note
+        New content of the note
       </Property>
       <Property name="role" type="string"  required="true">
-        Role of the note. Can be `assistant`, `user` or `system`.
+        See "Common Parameters" at the start of this section.
       </Property>
       <Property name="meta" type="string">
         Custom json value
@@ -227,7 +199,7 @@ Possible use cases: {{ className: 'lead' }}
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="PUT" label="/v1/notes/{noteId}">
+    <CodeGroup title="Request" tag="PUT" label="/v1/notes/{note_id}">
 
     ```json {{'title': 'Body'}}
     {
@@ -238,24 +210,12 @@ Possible use cases: {{ className: 'lead' }}
     ```
 
     ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes/my-agent-namespace"
-
-    payload = {
-        "content": "hello",
-        "role": "assistant",
-        "resource": "agent",
-        "resource_id": "my-agent-namespace",
-        "meta": ""
-    }
-
-    headers = {
-        "X-Library-Key": "<your-api-key>",
-        "Content-Type": "application/json"
-    }
-
-    response = requests.request("PUT", url, headers=headers, json=payload)
+    updated_note = client.notes.update(
+        note_id="note_xyz789",
+        content="Updated information",
+        role="user",
+        meta={"priority": "low", "type": "update"}
+    )
     ```
 
     </CodeGroup>
@@ -263,7 +223,8 @@ Possible use cases: {{ className: 'lead' }}
     ```json {{ title: 'Response' }}
     {
         "status": "success",
-        "message": "Note updated successfully"
+        "message": "Note updated successfully",
+        "meta": {"type": "update"}
     }
     ```
     </Col>
@@ -271,7 +232,7 @@ Possible use cases: {{ className: 'lead' }}
 
 ---
 
-## Get a Note {{ tag: 'GET', label: '/v1/notes/{noteId}' }}
+## Get a Note {{ tag: 'GET', label: '/v1/notes/{note_id}' }}
 
 <Row>
   <Col>
@@ -281,7 +242,7 @@ Possible use cases: {{ className: 'lead' }}
     ### Request parameters
 
     <Properties>
-      <Property name="noteId" type="string"  required="true">
+      <Property name="note_id" type="integer"  required="true">
         ID of the note
       </Property>
     </Properties>
@@ -289,18 +250,10 @@ Possible use cases: {{ className: 'lead' }}
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/notes/{noteId}">
+    <CodeGroup title="Request" tag="GET" label="/v1/notes/{note_id}">
 
     ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes/my-agent-namespace"
-
-    headers = {
-        "X-Library-Key": "<your-api-key>"
-    }
-
-    response = requests.request("GET", url, headers=headers)
+    note = client.notes.get(note_id="note_xyz789")
     ```
 
     ```javascript
@@ -320,18 +273,16 @@ Possible use cases: {{ className: 'lead' }}
 
     ```json {{ title: 'Response' }}
     {
-        "content": "hello",
-        "created_timestamp": "2025-01-09 13:05:03",
-        "meta": {
-            "id": "1"
-        },
-        "noteId": "fcaca8a1-049c-4441-b69a-326ef221b9dd",
+        "content": "note content",
+        "created_timestamp": "YYYY-MM-DD hh:mm:ss",
+        "noteId": "note_xyz789",
         "resource": "agent",
-        "resource_id": "my-agent-namespace",
-        "role": "assistant",
-        "updated_timestamp": "2025-01-09 13:05:03",
-        "userEmail": "arani@ailibrary.ai",
-        "userName": "Arani Chaudhuri"
+        "resource_id": "agent_name",
+        "role": "user",
+        "updated_timestamp": "YYYY-MM-DD hh:mm:ss",
+        "userEmail": "username@email.com",
+        "userName": "FirstName LastName",
+        "meta": {"type": "internal"}
     }
     ```
 
@@ -351,13 +302,10 @@ Possible use cases: {{ className: 'lead' }}
 
     <Properties>
       <Property name="resource" type="string"  required="true">
-        Resource of the note. Can be `agent`, `knowledgebase` or `file`
+        See "Common Parameters" at the start of this section.
       </Property>
       <Property name="resourceId" type="string"  required="true">
-        ID of the resource
-        For agent, it is the `namespace`
-        For knowledgebase, it is the `knowledgeId`
-        For file, it is the `fileId`
+        See "Common Parameters" at the start of this section.
       </Property>
     </Properties>
 
@@ -365,10 +313,10 @@ Possible use cases: {{ className: 'lead' }}
 
     <Properties>
       <Property name="values" type="array">
-          List of `noteIds` to delete corresponding to the resource and resourceId
+          List of `note_ids` to delete corresponding to the resource and resourceId. If `values` is not specified then `delete_all=True` must be specified. If both are specified then `delete_all` takes precedence.
       </Property>
       <Property name="delete_all" type="boolean">
-          `true` to delete all sources.
+          Deletes all source if `delete_all=True`. If `delete_all` is not specified then values must be specified. If both are specified then `delete_all` takes precedence.
       </Property>
     </Properties>
 
@@ -378,23 +326,11 @@ Possible use cases: {{ className: 'lead' }}
     <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{resource}/{resourceId}">
 
     ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes/agent/my-agent-namespace"
-
-    body = {
-        "delete_all": true,
-        "values": [
-            "fcaca8a1-049c-4441-b69a-326ef221b9dd",
-            //...
-        ]
-    }
-
-    headers = {
-        "X-Library-Key": "<your-api-key>"
-    }
-
-    response = requests.request("DELETE", url, headers=headers)
+    response = client.notes.delete_notes(
+        resource="agent",
+        resource_id="agent_abc123",
+        values=["note_xyz789"],  # or use delete_all=True
+    )
     ```
 
     ```javascript
@@ -430,66 +366,6 @@ Possible use cases: {{ className: 'lead' }}
     {
         "status": "success",
         "message": "Notes deleted successfully"
-    }
-    ```
-
-  </Col>
-</Row>
-
----
-
-## Delete a Note {{ tag: 'DELETE', label: '/v1/notes/{noteId}' }}
-
-<Row>
-  <Col>
-    <i>deprecated</i>
-    
-    Delete a note.
-
-
-    ### Request parameters
-
-    <Properties>
-      <Property name="noteId" type="string"  required="true">
-        ID of the note
-      </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-
-    <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{noteId}">
-
-    ```python
-    import requests
-
-    url = "https://api.ailibrary.ai/v1/notes/my-agent-namespace"
-
-    headers = {
-        "X-Library-Key": "<your-api-key>"
-    }
-
-    response = requests.request("DELETE", url, headers=headers)
-    ```
-
-    ```javascript
-    const axios = require('axios');
-
-    let config = {
-        method: 'delete',
-        maxBodyLength: Infinity,
-        url: 'https://api.ailibrary.ai/v1/notes/my-agent-namespace',
-        headers: { 
-            'X-Library-Key': '<your-api-key>'
-        }
-    };
-    ```
-
-    </CodeGroup>
-
-    ```json {{ title: 'Response' }}
-    {
-        "message": "Note deleted successfully"
     }
     ```
 

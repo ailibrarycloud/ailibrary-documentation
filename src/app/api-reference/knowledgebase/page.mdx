@@ -15,7 +15,7 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 <Row>
   <Col>
 
-    Retrieves a list of all knowledge bases.
+    Creates a new knowledge base.
 
     ### Request body
       <Properties>
@@ -33,14 +33,25 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
   </Col>
   <Col sticky>
-  ```json {{'title': 'Body'}}
+    <CodeGroup title="Request" tag="POST" label="/v1/agent/knowledgebase">
+    ```json {{'title': 'Body'}}
     {
         "name": "my first knowledge base"  
     }
     ```
+    ```python
+    kb = client.knowledge_base.create(
+        name="Product Documentation",
+    )
+    ```
+    </CodeGroup>
+
+  
     ```json {{ title: 'Response' }}
     {
-      "knowledgeId": "myfirstkno_1716198026361802"
+        "status": "success", 
+        "knowledgeId": "kb_abc123",
+        "meta": {"type": "documentation"}
     }
     ```
 
@@ -58,39 +69,26 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
     Retrieves a list of all knowledge bases. 
 
     ### Response
-    Returns a list of knowledge bases and pagination information.
-
+    Returns the JSON response containing list of knolwedge bases and meta info.
   </Col>
   <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase">
+    ```python
+    knowledge_bases = client.knowledge_base.list_knowledge_bases()
+    ```
+    </CodeGroup>
 
     ```json {{ title: 'Response' }}
-{
-  "knowledgebases": [
-      {
-          "title": "my first knowledge base",
-          "knowledgeId": "myfirstkno_1716198026361802",
-          "status": "available",
-          "userName": "John Doe",
-          "visibility": "private",
-          "star": true,
-          "meta": {
-              "description": "Create from Google Colab notebook",
-          },
-          "created_timestamp": "2024-05-20 09:40:26",
-          "updated_timestamp": "2024-05-20 09:40:28"
-      },
-      // ...
-  ],
-  "meta": {
-      "page": 1,
-      "total": 66,
-      "next_page": 2,
-      "prev_page": 0,
-      "total_pages": 3,
-      "next": "/v1/knowledgebase?page=2&collection=&status=&limit=25",
-      "prev": ""
-  }
-}
+    {
+        "knowledgebases": [
+            {
+                "knowledgeId": "kb_abc123",
+                // ... other knolwedge base info
+            },
+            // ... more knowledge bases
+        ],
+        "meta": {"total": 10, "page": 1}
+    }
     ```
 
   </Col>
@@ -103,7 +101,7 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 <Row>
   <Col>
 
-    Retrieves a knowledge base by its ID.
+    Retrieves a knowledge base by its ID, if found.
 
     ### Path parameters
     <Properties>
@@ -115,21 +113,29 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
   </Col>
   <Col sticky>
-
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase">
+    ```python
+    kb = client.knowledge_base.get(knowledgeId="kb_abc123")
+    ```
+    </CodeGroup>
     ```json {{ title: 'Response' }}
-{
-    "title": "my first knowledge base",
-    "knowledgeId": "myfirstkno_1716198026361802",
-    "status": "available",
-    "userName": "John Doe",
-    "visibility": "private",
-    "star": true,
-    "meta": {
-        "description": "Create from Google Colab notebook",
-    },
-    "created_timestamp": "2024-05-20 09:40:26",
-    "updated_timestamp": "2024-05-20 09:40:28"
-},
+    {
+        "title": "Title of Knowledge Base",
+        "knowledgeId": "kb_abc123",
+        "status": "processing",
+        "sources": 0,
+        "generations": 0,
+        "addhistory": 1,
+        "visibility": "private",
+        "default_prompts": null,
+        "default_model": null,
+        "default_urls": null,
+        "userName": "FirstName LastName",
+        "userEmail": "username@email.com",
+        "special_event": null,
+        "star": null,
+        "meta": null
+    }
     ```
 
   </Col>
@@ -170,7 +176,8 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
   </Col>
   <Col sticky>
-  ```json {{'title': 'Body'}}
+    <CodeGroup title="Request" tag="POST" label="/v1/agent/knowledgebase/{knowledgeId}">
+    ```json {{'title': 'Body'}}
     {
         "type": "docs",
         "options": {
@@ -183,6 +190,16 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
         }
     }
     ```
+    ```python
+    source = client.knowledge_base.add_source(
+        knowledge_id="kb_abc123",
+        type="docs",
+        urls=["https://example.com/docs.pdf"],
+        meta={"category": "documentation"}
+    )
+    ```
+    </CodeGroup>
+  
     ```json {{ title: 'Response' }}
     {
       "knowledgeId": "myfirstkno_1716198026361802"
@@ -211,11 +228,13 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
   </Col>
   <Col sticky>
-
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/status">
+    ```python
+    status = client.knowledge_base.get_status(knowledgeId="kb_abc123")
+    ```
+    </CodeGroup>
     ```json {{ title: 'Response' }}
-    {
-      "status": "processing",
-    }
+    "available"
     ```
 
   </Col>
