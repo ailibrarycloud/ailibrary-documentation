@@ -7,20 +7,13 @@ export const metadata = {
 
 Forms are useful in extracting structured information from documents or even guide conversations to fill a form. {{ className: 'lead' }}
 
+Supports [JSON Schema](https://json-schema.org/understanding-json-schema/reference/const)
+
 To use forms in AI Library, you need to 
-1. Create a form with a schema. The schema defines the structure of the form, including the fields and their types. {{ className: 'lead' }}
-2. Once you have created a form, you update your agent with `form_filling` and `form_id`. {{ className: 'lead' }}
-3. To generate a structured response, use the `chat` endpoint with `response_format` set to `json`. {{ className: 'lead' }}
-4. To extract information from a chat, use `chat` as is. Conversations will be guided to fill the form. {{ className: 'lead' }}
+1. Create an agent with a form and provide a schema. The schema defines the structure of the form, including the fields and their types. {{ className: 'lead' }}
+2. To generate a structured response, use the `chat` endpoint with `response_format` set to `json`. {{ className: 'lead' }}
+3. To extract information from a conversation, use `chat` as is. Conversations will be guided to fill the form. {{ className: 'lead' }}
 
-There are three useful types of fields in a form:
-1. `string`: A text field.
-3. `boolean`: A true/false field.
-4. `string` with `enum`: A dropdown field.
-
-`enum` and `boolean` values are useful in taking actions based on the user's response. {{ className: 'lead' }}
-
-For example, if a boolean returns `true`, you can ask for more details. If an `enum` returns a specific value, you can take an action based (eg.  invoke another agent) on that value. {{ className: 'lead' }}
 
 ---
 

@@ -81,6 +81,77 @@ Functions to support your AI Agents. {{ className: 'lead' }}
   </Col>
 </Row>
 
+--- 
+## News Search {{ tag: 'POST', label: '/v1/utilities/news' }}
+
+<Row>
+  <Col>
+
+    Searches the web for news articles
+
+    ### Request body
+
+    <Properties>
+      <Property name="search_terms" type="array"  required="true">
+        List of search terms
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/news">
+
+    ```json {{'title': 'Body'}}
+    {
+      "search_terms": ["artificial intelligence", "retireval augmented generation"]
+    }
+    ```
+    ```python
+    results = client.utilities.news_search(
+        search_terms=["artificial intelligence", "retireval augmented generation"]
+    )
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    [
+        {
+          "search_term": "artificial intelligence",
+          "prompt_context": "...",
+          "sources": [
+            {
+                "title": "<b>AI agents</b> spark ...",
+                "description": "AI agents continue to ...",
+                "url": "https://www....",
+                "datePublished": "2025-02-10T22:18:00.0000000Z",
+                "provider": "Biometric Companies",
+                "full_text": "<b>AI agents</b> spark ..."
+            },
+            // ... more sources
+          ]
+        },
+        {
+          "search_term": "retireval augmented generation",
+          "prompt_context": "...",
+          "sources": [
+            {
+                "title": "<b>RAG</b> continue ...",
+                "description": "Taking the world by storm, AI Library ...",
+                "url": "https://www....",
+                "datePublished": "2025-02-10T22:18:00.0000000Z",
+                "provider": "MSNBC",
+                "full_text": "<b>RAG</b> continues ..."
+            },
+            // ... more sources
+          ]
+        }
+    ]
+    ```
+
+  </Col>
+</Row>
+
 ---
 
 ## Web Parser {{ tag: 'POST', label: '/v1/utilities/webparser' }}
@@ -234,6 +305,81 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ///...
     
 ]
+    ```
+
+  </Col>
+</Row>
+
+
+--- 
+
+## JSON Schema Generator {{ tag: 'POST', label: '/v1/utilities/schema_generator' }}
+
+<Row>
+  <Col>
+
+    Generates a JSON schema for forms. {{ className: 'lead' }}
+
+    ### Request body
+
+    <Properties>
+      <Property name="content" type="string" required="true">
+        Phrase explaining the schema. 
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/schema_generator">
+
+    ```json {{'title': 'Body'}}
+    {
+        "content": "Please generate a form with the following fields: \n name (string), email(string), phone(number), experience in years (number), ai experience in years (number), highest educational qualification (phd, bachelor's degree, high school, not mentioned)"
+    }
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "name": {
+            "order": 1,
+            "description": "What's the name?",
+            "type": "string"
+        },
+        "email": {
+            "order": 2,
+            "description": "What's the email?",
+            "type": "string"
+        },
+        "phone": {
+            "order": 3,
+            "description": "What's the phone number?",
+            "type": "number"
+        },
+        "experience_in_years": {
+            "order": 4,
+            "description": "How many years of experience does the candidate have?",
+            "type": "number"
+        },
+        "ai_experience_in_years": {
+            "order": 5,
+            "description": "How many years of experience with AI does the candidate have?",
+            "type": "number"
+        },
+        "highest_educational_qualification": {
+            "order": 6,
+            "type": "string",
+            "enum": [
+                "",
+                "PhD",
+                "Bachelor's Degree",
+                "High School",
+                "Not Mentioned"
+            ]
+        }
+    }
     ```
 
   </Col>
