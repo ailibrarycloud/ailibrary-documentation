@@ -350,3 +350,36 @@ List of all sources in the knowledge base.
     ```
   </Col>
 </Row>
+
+---
+
+## Delete Knowledge Base {{ tag: 'DELETE', label: '/v1/knowledgebase/{knowledgeId}' }}
+
+<Row>
+  <Col>
+    Delete a knowledge base. All sources in the knowledge base will be deleted.
+    <Properties>
+      <Property name="knowledgeId" type="string" required="true">
+          ID of the knowledge base.
+      </Property>
+    </Properties>
+  </Col>
+  <Col sticky>
+  <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/status">
+  ```json {{'title': 'Body'}}
+    {
+        "knowledgeId": "myfirstkno_1716198026361802"
+    }
+    ```
+    ```python
+    status = client.knowledge_base.delete(knowledgeId="kb_abc123")
+    ```
+    </CodeGroup>
+  
+    ```json {{ title: 'Response' }}
+    {
+        "message": "Deleted successfully"
+    }
+    ```
+  </Col>
+</Row>

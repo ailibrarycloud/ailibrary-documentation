@@ -323,12 +323,18 @@ Agents have three main components {{ className: 'lead' }}
 
     **What's not deleted?**
     Connected knowledge base, forms and contacts are not deleted. 
+    
+    **Deleting connected resources**:
+    To delete all connected resources like knowledge base and forms, set `delete_connected_resources` to `true`.  This action is irreversible. Other agents connected to the deleted resources will be affected.
 
     ### Path parameters
     
     <Properties>
       <Property name="namespace" type="string" required="true">
           The namespace of the agent.
+      </Property>
+      <Property name="delete_connected_resources" type="boolean" required="true">
+          Set to `true` to delete connected resources like knowledge base and forms.
       </Property>
     </Properties>
 
