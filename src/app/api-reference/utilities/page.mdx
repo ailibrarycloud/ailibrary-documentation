@@ -384,3 +384,82 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
   </Col>
 </Row>
+--- 
+
+## JSON Schema Validator {{ tag: 'POST', label: '/v1/utilities/schema_validator' }}
+
+<Row>
+  <Col>
+
+    Validates JSON schema. {{ className: 'lead' }}
+
+    ### Request body
+
+    <Properties>
+      <Property name="" type="json" required="true">
+        JSON Schema 
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/utilities/schema_validator">
+
+    ```json {{ title: 'Response' }}
+    {
+        "name": {
+            "order": 1,
+            "description": "What's the name?",
+            "type": "string"
+        },
+        "email": {
+            "order": 2,
+            "description": "What's the email?",
+            "type": "string"
+        },
+        "phone": {
+            "order": 3,
+            "description": "What's the phone number?",
+            "type": "number"
+        },
+        "experience_in_years": {
+            "order": 4,
+            "description": "How many years of experience does the candidate have?",
+            "type": "number"
+        },
+        "ai_experience_in_years": {
+            "order": 5,
+            "description": "How many years of experience with AI does the candidate have?",
+            "type": "number"
+        },
+        "highest_educational_qualification": {
+            "order": 6,
+            "type": "string",
+            "enum": [
+                "",
+                "PhD",
+                "Bachelor's Degree",
+                "High School",
+                "Not Mentioned"
+            ]
+        }
+    }
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response', label: 200 }}
+    true
+    ```
+    ```json {{ title: 'Response', label: 400 }}
+    {
+    "status": "failure",
+    "message": "Form schema validation error: 'type' is a required property"
+}
+    ```
+
+    
+
+  </Col>
+</Row>
