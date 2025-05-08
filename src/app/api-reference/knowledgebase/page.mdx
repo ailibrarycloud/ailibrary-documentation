@@ -143,7 +143,71 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
-## Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/{knowledgeId}' }}
+## Knowledge Base Status {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/status' }}
+
+<Row>
+  <Col>
+
+    Get the knowledge base status to check if all sources are processed.
+
+    ### Path parameters
+    <Properties>
+     <Property name="knowledgeId" type="string" required="true">
+        ID of the knowledge base.
+      </Property>
+    </Properties>
+
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/status">
+    ```python
+    status = client.knowledge_base.get_status(knowledgeId="kb_abc123")
+    ```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    "available"
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete Knowledge Base {{ tag: 'DELETE', label: '/v1/knowledgebase/{knowledgeId}' }}
+
+<Row>
+  <Col>
+    Delete a knowledge base. All sources in the knowledge base will be deleted.
+    <Properties>
+      <Property name="knowledgeId" type="string" required="true">
+          ID of the knowledge base.
+      </Property>
+    </Properties>
+  </Col>
+  <Col sticky>
+  <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/status">
+  ```json {{'title': 'Body'}}
+    {
+        "knowledgeId": "myfirstkno_1716198026361802"
+    }
+    ```
+    ```python
+    status = client.knowledge_base.delete(knowledgeId="kb_abc123")
+    ```
+    </CodeGroup>
+  
+    ```json {{ title: 'Response' }}
+    {
+        "message": "Deleted successfully"
+    }
+    ```
+  </Col>
+</Row>
+
+---
+
+## COMING SOON: Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/{knowledgeId}' }}
 
 <Row>
   <Col>
@@ -190,14 +254,14 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
         }
     }
     ```
-    ```python
+    {/* ```python
     source = client.knowledge_base.add_source(
         knowledge_id="kb_abc123",
         type="docs",
         urls=["https://example.com/docs.pdf"],
         meta={"category": "documentation"}
     )
-    ```
+    ``` */}
     </CodeGroup>
   
     ```json {{ title: 'Response' }}
@@ -211,38 +275,7 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
-## Knowledge Base Status {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/status' }}
-
-<Row>
-  <Col>
-
-    Get the knowledge base status to check if all sources are processed.
-
-    ### Path parameters
-    <Properties>
-     <Property name="knowledgeId" type="string" required="true">
-        ID of the knowledge base.
-      </Property>
-    </Properties>
-
-
-  </Col>
-  <Col sticky>
-    <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/status">
-    ```python
-    status = client.knowledge_base.get_status(knowledgeId="kb_abc123")
-    ```
-    </CodeGroup>
-    ```json {{ title: 'Response' }}
-    "available"
-    ```
-
-  </Col>
-</Row>
-
----
-
-## Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{sourceId}' }}
+## COMING SOON: Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{sourceId}' }}
 
 <Row>
   <Col>
@@ -274,10 +307,9 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
   </Col>
 </Row>
 
-
 ---
 
-## List Sources {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/sources' }}
+## COMING SOON: List Sources {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/sources' }}
 
 <Row>
   <Col>
@@ -319,7 +351,7 @@ List of all sources in the knowledge base.
 
 ---
 
-## Delete Sources {{ tag: 'DELETE', label: '/v1/knowledgebase/{knowledgeId}/source' }}
+## COMING SOON: Delete Sources {{ tag: 'DELETE', label: '/v1/knowledgebase/{knowledgeId}/source' }}
 
 <Row>
   <Col>
@@ -343,39 +375,6 @@ List of all sources in the knowledge base.
         ]
     }
     ```
-    ```json {{ title: 'Response' }}
-    {
-        "message": "Deleted successfully"
-    }
-    ```
-  </Col>
-</Row>
-
----
-
-## Delete Knowledge Base {{ tag: 'DELETE', label: '/v1/knowledgebase/{knowledgeId}' }}
-
-<Row>
-  <Col>
-    Delete a knowledge base. All sources in the knowledge base will be deleted.
-    <Properties>
-      <Property name="knowledgeId" type="string" required="true">
-          ID of the knowledge base.
-      </Property>
-    </Properties>
-  </Col>
-  <Col sticky>
-  <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/status">
-  ```json {{'title': 'Body'}}
-    {
-        "knowledgeId": "myfirstkno_1716198026361802"
-    }
-    ```
-    ```python
-    status = client.knowledge_base.delete(knowledgeId="kb_abc123")
-    ```
-    </CodeGroup>
-  
     ```json {{ title: 'Response' }}
     {
         "message": "Deleted successfully"
