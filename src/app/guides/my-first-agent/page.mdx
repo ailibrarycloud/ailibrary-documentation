@@ -36,15 +36,13 @@ You can write to hello@ailibrary.ai */}
 <CodeGroup title="Set up Environment">
 
 ```python
-import requests
-import json
+import ailibrary as ai
 
-key = "your-key-here"
-domain = "https://api.ailibrary.ai"
-headers = {
-    'Content-Type': 'application/json',
-    'X-Library-Key': key
-}
+client = ai.AILibrary(
+    api_key="your-api-key",
+    domain="https://api.ailibrary.ai"
+)
+
 ```
 
 ```javascript
@@ -62,22 +60,17 @@ const headers = {
 
 ### Step 2: Create Agent
 
-<CodeGroup title="Set up Environment">
+<CodeGroup title="Create agent">
 
 ```python
-
-url = f"{domain}/v1/agent/create"
-payload = json.dumps({
-  "title": "My First AI Agent",
-  "knowledge_search": "true"
-})
-response = requests.request("POST", url, headers=headers, data=payload)
-knowledge_id = json.loads(response.text)["knowledge_id"]
-namespace = json.loads(response.text)["namespace"]
+response = client.agent.create(
+    title="My First AI Agent",
+    knowledge_search="true"
+)
+namespace = response["namespace"]
+knowledge_id = response["knowledgeId"]
 print("namespace", namespace)
 print("knowledge_id", knowledge_id)
-print(json.dumps(json.loads(response.text), indent=4))
-
 
 ```
 ```javascript
@@ -96,7 +89,7 @@ Add text or PDF files to share knowledge with your agent. You can use any public
 
 <CodeGroup title="Add files">
 ```python
-
+#################### ?????????????
 url = f"{domain}/v1/knowledgebase/{knowledgeId}"
 payload = json.dumps({
   "type": "docs",
@@ -152,10 +145,8 @@ Once the file is processed, this will return `available`
 
 <CodeGroup title="Check Status">
 ```python
-
-url = f"{domain}/v1/knowledgebase/{knowledgeId}/status"
-response = requests.request("GET", url, headers=headers)
-print(json.dumps(json.loads(response.text), indent=4))
+status = client.knowledge_base.get_status(knowledgeId)
+print(status)
 
 ```
 
@@ -189,6 +180,7 @@ Chat responses are streaming by default. Three types of objects are returned for
 <CodeGroup title="Chat">
 
 ```python
+############ ?????????????????????
 url = f"{domain}/v1/agent/{namespace}/chat"
 payload = json.dumps({
   "session_id": "niusjndckj23",
