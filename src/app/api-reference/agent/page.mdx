@@ -379,9 +379,9 @@ Agents have three main components {{ className: 'lead' }}
         <Property name="session_id" type="string">
             A unique session id. Highly recommended, this is useful for maintaining the context of the conversation.
         </Property>
-        <Property name="response_format*" type="string">
-            Options - `text` (default), `json`
-        </Property>
+        {/* <Property name="response_format*" type="string">
+            Options - `json` (default), `text`
+        </Property> */}
         <Property name="messages" type="array" required="true">
             A list of messages comprising the conversation so far. 
         </Property>
@@ -396,14 +396,14 @@ Agents have three main components {{ className: 'lead' }}
     </Properties>
 
     ### Response 
-
-    Chat responses are streaming by default. Three types of objects are returned for each query
+    {/* Chat responses are streaming by default. Three types of objects are returned for each query
 
     |Object|Description|Type|
     |---|---|---|
     |chat.completion.knowledge|this contains the details of source|array|
     |chat.completion.latency|latency of response|string|
-    |chat.completion.chunk|response chunk|string|
+    |chat.completion.chunk|response chunk|string| */}
+    Only JSON responses are currently supported.
 
   </Col>
   <Col sticky>

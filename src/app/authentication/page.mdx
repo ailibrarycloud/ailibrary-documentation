@@ -10,7 +10,7 @@ You'll need to authenticate your requests to access any of the endpoints in the 
 
 **Always keep your token safe and reset it if you suspect it has been compromised.** Always use environment variables to store your token, and never hardcode it into your application. {{ className: 'lead' }}
 
-Authenticate in the ailibrary python package: 
+Authentication in the ailibrary python package: 
 <CodeGroup title="Python code">
 ```python {{ title: 'Python' }}
 import ailibrary as ai
@@ -18,24 +18,19 @@ import ailibrary as ai
 client = ai.AILibrary(
     api_key="your-api-key"
 )
+# Now you can access all APIs using the client object
+agent_response = client.agent.create(title="Hello World")
 ``` 
 
 </CodeGroup>
 {/* ## OAuth2 with bearer token */}
 
-All API requests should include your API key in an ``X-Library-Key`` HTTP header as follows:
+All other API requests should include your API key in an ``X-Library-Key`` HTTP header as follows:
 
 <CodeGroup title="Example Requests">
 ```bash {{ title: 'cURL' }}
 curl https://api.ailibrary.ai/v1/generations/771 \
   -H "X-Library-Key: $AILIBRARY_API_KEY"
-```
-```python {{ title: 'Python' }}
-import requests
-
-headers = {
-    "X-Library-Key": os.environ["AILIBRARY_API_KEY"]
-}
 ``` 
 ```javascript {{ title: 'Node.js' }}
 const axios = require('axios');
@@ -44,7 +39,6 @@ const headers = {
   "X-Library-Key": process.env.AILIBRARY_API_KEY
 }
 ```
-
 
 </CodeGroup>
 
