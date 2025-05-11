@@ -207,7 +207,7 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
-## COMING SOON: Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/{knowledgeId}' }}
+## Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/{knowledgeId}' }}
 
 <Row>
   <Col>
@@ -235,7 +235,9 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
       </Properties> 
 
     ### Response
-    Returns the knowledgeId of the created knowledge base.
+    Returns the status of the request.
+    
+    NOTE: The id returned in the response is NOT the id of the source itself. For information about this source, please use "List Sources".
 
 
   </Col>
@@ -254,19 +256,21 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
         }
     }
     ```
-    {/* ```python
+    ```python
+    urls=["https://example.com/docs.pdf"]
+    options = {"urls": urls}
     source = client.knowledge_base.add_source(
         knowledge_id="kb_abc123",
         type="docs",
-        urls=["https://example.com/docs.pdf"],
+        options=options,
         meta={"category": "documentation"}
     )
-    ``` */}
+    ```
     </CodeGroup>
   
     ```json {{ title: 'Response' }}
     {
-      "knowledgeId": "myfirstkno_1716198026361802"
+      "status": "processing", "id": 2036
     }
     ```
 
@@ -275,41 +279,7 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
-## COMING SOON: Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{sourceId}' }}
-
-<Row>
-  <Col>
-
-  Use this to retrieve the details of a source file including the contents.
-
-  ### Path parameters
-  <Properties>
-  <Property name="knowledgeId" type="string" required="true">
-      ID of the knowledge base.
-    </Property>
-    <Property name="sourceId" type="string" required="true">
-      ID of the source file.
-    </Property>
-  </Properties>
-  </Col>
-    <Col sticky>
-    ```json {{'title': 'Response'}}
-
-    {
-        "knowledgeId": "myfirstkno_1716198026361802",
-        "text": "Hello world... ",
-        "source": "my first knowledge Source.pdf",
-        "userName": "John Doe",
-        "created_date": "2024-12-03"
-    }
-    
-    ```
-  </Col>
-</Row>
-
----
-
-## COMING SOON: List Sources {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/sources' }}
+## List Sources {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/sources' }}
 
 <Row>
   <Col>
@@ -348,6 +318,39 @@ List of all sources in the knowledge base.
 </Col>
 </Row>
 
+---
+
+## Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{source}' }}
+
+<Row>
+  <Col>
+
+  Use this to retrieve the details of a source file including the contents.
+
+  ### Path parameters
+  <Properties>
+  <Property name="knowledgeId" type="string" required="true">
+      ID of the knowledge base.
+    </Property>
+    <Property name="source" type="string" required="true">
+      Name of the source object.
+    </Property>
+  </Properties>
+  </Col>
+    <Col sticky>
+    ```json {{'title': 'Response'}}
+
+    {
+        "knowledgeId": "myfirstkno_1716198026361802",
+        "text": "Hello world... ",
+        "source": "my first knowledge Source.pdf",
+        "userName": "John Doe",
+        "created_date": "2024-12-03"
+    }
+    
+    ```
+  </Col>
+</Row>
 
 ---
 
