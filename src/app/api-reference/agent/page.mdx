@@ -363,7 +363,7 @@ Agents have three main components {{ className: 'lead' }}
   <Col>
     Chat with the agent. 
 
-    This is a streaming API. Responses are sent as they are generated.
+    This is not a streaming API. Responses are sent once everything has been generated. For a streaming version of this API, please see "Chat Stream".
 
     ### Path parameters
     
@@ -379,9 +379,11 @@ Agents have three main components {{ className: 'lead' }}
         <Property name="session_id" type="string">
             A unique session id. Highly recommended, this is useful for maintaining the context of the conversation.
         </Property>
-        {/* <Property name="response_format*" type="string">
-            Options - `json` (default), `text`
-        </Property> */}
+        <Property name="response_format" type="string">
+            Options - `text` (default), `json`
+
+            Note: Agent must have an attached form if using response_format="json"
+        </Property>
         <Property name="messages" type="array" required="true">
             A list of messages comprising the conversation so far. 
         </Property>
@@ -395,22 +397,13 @@ Agents have three main components {{ className: 'lead' }}
         
     </Properties>
 
-    ### Response 
-    {/* Chat responses are streaming by default. Three types of objects are returned for each query
-
-    |Object|Description|Type|
-    |---|---|---|
-    |chat.completion.knowledge|this contains the details of source|array|
-    |chat.completion.latency|latency of response|string|
-    |chat.completion.chunk|response chunk|string| */}
-    Only JSON responses are currently supported.
 
   </Col>
   <Col sticky>
 
   <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/chat">
 
-  ```json {{'title': 'Body'}}
+  {/* ```json {{'title': 'Body'}}
     {
         "session_id": "niusjndckj23",
         "messages": [
@@ -424,7 +417,7 @@ Agents have three main components {{ className: 'lead' }}
             }
         ]
     }
-    ```
+    ``` */}
     ```python
     response = client.agent.chat(
         namespace="sales-assistant-abc123",
@@ -447,6 +440,99 @@ Agents have three main components {{ className: 'lead' }}
         ],
         session_id="session_xyz789"  # Optional
     )
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+        "response": "Our pricing starts at $10/month for the basic plan...",
+        "session_id": "session_xyz789",
+        "conversation_id": "conv_abc123",
+        "meta": {"type": "pricing"}
+    }
+    ```
+    </Col>
+</Row>
+
+---
+
+## Chat Stream {{ tag: 'POST', label: '/v1/agent/{namespace}/chat' }}
+<Row>
+  <Col>
+    Chat with the agent. 
+
+    This is a streaming API. Text responses are sent as they are generated.
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
+
+    ### Request body
+    
+    <Properties>
+        <Property name="session_id" type="string">
+            A unique session id. Highly recommended, this is useful for maintaining the context of the conversation.
+        </Property>
+        <Property name="messages" type="array" required="true">
+            A list of messages comprising the conversation so far. 
+        </Property>
+        
+        <Property name="messages > role" type="string" required="true">
+            Options - `assistant`, `user`, `system`
+        </Property>
+        <Property name="messages > content" type="string" required="true">
+            The message content.
+        </Property>
+        
+    </Properties>
+
+    ### Response 
+    Chat responses are streamed. Three types of objects are returned for each query.
+
+    |Object|Description|Type|
+    |---|---|---|
+    |chat.completion.knowledge|this contains the details of source|array|
+    |chat.completion.latency|latency of response|string|
+    |chat.completion.chunk|response chunk|string|
+
+  </Col>
+  <Col sticky>
+
+  <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/chat">
+
+  ```json {{'title': 'Body'}}
+    {
+        "session_id": "niusjndckj23",
+        "messages": [
+            {
+                "role": "assistant",
+                "content": "how are you?"
+            },
+            {
+                "role": "user",
+                "content": "doing good. thank you."
+            }
+        ]
+    }
+    ```
+    ```python
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful sales assistant.",
+            "meta": {"type": "instruction"}
+        },
+        # ...
+    ]
+    session_id = "session_xyz789"  # Optional
+    name = "sales-assistant-abc123"
+    for chunk in client.agent.chat_stream(namespace=name, messages=messages, session_id=session_id):
+        print(chunk)
+
     ```
     </CodeGroup>
 
