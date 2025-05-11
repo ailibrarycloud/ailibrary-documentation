@@ -32,13 +32,13 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{'title': 'Body'}}
     {
-      "search_terms": ["artificial intelligence", "retireval augmented generation"]
+      "search_terms": ["artificial intelligence", "retrieval augmented generation"]
     }
     ```
     ```python
     results = client.utilities.web_search(
         search_terms=["artificial intelligence", 
-        "retireval augmented generation"]
+        "retrieval augmented generation"]
     )
     ```
     </CodeGroup>
@@ -61,7 +61,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
             ]
         },
         {
-            "term": "retireval augmented generation",
+            "term": "retrieval augmented generation",
             "prompt_context": "What is Retrieval-Augmented Generation (RAG) - GeeksforGeeks<b>Retrieval</b>-<b>augmented</b>...",
             "sources": [
                 {
@@ -104,12 +104,12 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 
     ```json {{'title': 'Body'}}
     {
-      "search_terms": ["artificial intelligence", "retireval augmented generation"]
+      "search_terms": ["artificial intelligence", "retrieval augmented generation"]
     }
     ```
     ```python
     results = client.utilities.news_search(
-        search_terms=["artificial intelligence", "retireval augmented generation"]
+        search_terms=["artificial intelligence", "retrieval augmented generation"]
     )
     ```
     </CodeGroup>
@@ -132,7 +132,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
           ]
         },
         {
-          "search_term": "retireval augmented generation",
+          "search_term": "retrieval augmented generation",
           "prompt_context": "...",
           "sources": [
             {
@@ -246,7 +246,13 @@ Functions to support your AI Agents. {{ className: 'lead' }}
       ]
     }
     ```
-
+    ```python
+    docs_links = [
+        "https://domain.com/mydoc1.pdf", 
+        # ...
+    ]
+    parsed_docs = client.utilities.document_parser(urls=docs_links)
+    ```
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
@@ -293,7 +299,13 @@ Functions to support your AI Agents. {{ className: 'lead' }}
       ]
     }
     ```
-
+    ```python
+    docs_links = [
+        "https://domain.com/mydoc1.pdf", 
+        # ...
+    ]
+    results = client.utilities.document_thumbnail(urls=docs_links)
+    ```
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
@@ -338,7 +350,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
         "content": "Please generate a form with the following fields: \n name (string), email(string), phone(number), experience in years (number), ai experience in years (number), highest educational qualification (phd, bachelor's degree, high school, not mentioned)"
     }
     ```
-
+    ```python
+    instructions = "Please generate a form with the following fields: \n name (string), email(string), phone(number), experience in years (number), ai experience in years (number), highest educational qualification (phd, bachelor's degree, high school, not mentioned)"
+    results = client.utilities.json_schema_generator(content=instructions)
+    ```
     </CodeGroup>
 
     ```json {{ title: 'Response' }}

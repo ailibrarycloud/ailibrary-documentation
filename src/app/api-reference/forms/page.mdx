@@ -28,7 +28,12 @@ To use forms in AI Library, you need to
 
   </Col>
   <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/form">
 
+    ```python
+    forms_response = client.forms.list_forms()
+    ```
+    </CodeGroup>
     <CodeGroup title="Response" tag="GET" label="/v1/form">
 
     ```json {{ title: 'Response' }}
@@ -77,7 +82,11 @@ To use forms in AI Library, you need to
 
   </Col>
   <Col sticky>
-
+    <CodeGroup title="Request" tag="GET" label="/v1/form/{form_id}">
+    ```python
+    form_info = client.forms.get(form_id="my-form-id")
+    ```
+    </CodeGroup>
     <CodeGroup title="Response">
 
     ```json {{ title: 'Response' }}
@@ -149,9 +158,6 @@ To use forms in AI Library, you need to
     </Properties>
 
 
-
-   
-
   </Col>
   <Col sticky>
 
@@ -171,7 +177,20 @@ To use forms in AI Library, you need to
             }
         }'
     ```
-        </CodeGroup>
+    ```python
+    schema = {
+        "field_name": { 
+            "type": "string", 
+            "order": 1, 
+            "description": "What's your name?" ,
+            "enum": ["", "option1", "option2"]
+        },
+        # ...
+    }
+
+    response = client.forms.create(title="My Title", schema=schema)
+    ```
+    </CodeGroup>
     <CodeGroup title="Response" tag="POST" label="/v1/form">
 
     ```json {{ title: 'Response' }}
@@ -181,7 +200,7 @@ To use forms in AI Library, you need to
         "schema": "...",
     }
     ```
- </CodeGroup>
+  </CodeGroup>
   </Col>
 </Row>
 
@@ -239,6 +258,12 @@ To use forms in AI Library, you need to
         }
     }'
     ```
+    ```python
+    new_schema = {
+      # ...
+    }
+    response = client.forms.update(title="New title", schema=new_schema)
+    ```
     </CodeGroup>
     <CodeGroup title="Response">
 
@@ -272,15 +297,14 @@ To use forms in AI Library, you need to
 
   </Col>
   <Col sticky>
-
-    <CodeGroup title="Response" tag="DELETE" label="/v1/form/{form_id}">
-    
-
+    <CodeGroup title="Request" tag="DELETE" label="/v1/form/{form_id}">
     ```bash
     curl --location --request DELETE 'https://api.ailibrary.ai/v1/form/test-form_45160' \
     --header 'X-Library-Key: [[X-Library-Key-masked-secret]]'
     ```
-
+    ```python
+    response = client.forms.delete(form_id="my-form-id")
+    ```
     </CodeGroup>
     <CodeGroup title="Response" tag="DELETE" label="/v1/form/{form_id}">
 
