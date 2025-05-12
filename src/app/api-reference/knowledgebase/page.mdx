@@ -226,8 +226,8 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
     ```python
     urls = ["https://example.com/docs.pdf"]
     options = {"urls": urls}
-    source = client.knowledge_base.add_source(
-        knowledge_id="kb_abc123",
+    response = client.knowledge_base.add_source(
+        knowledgeId="kb_abc123",
         type="docs",
         options=options,
         meta={"category": "documentation"}
