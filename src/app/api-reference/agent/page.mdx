@@ -508,15 +508,19 @@ Agents have three main components {{ className: 'lead' }}
     {
         "session_id": "niusjndckj23",
         "messages": [
-            {
-                "role": "assistant",
-                "content": "how are you?"
-            },
-            {
-                "role": "user",
-                "content": "doing good. thank you."
-            }
-        ]
+              {
+                  "role": "system",
+                  "content": "You are a helpful sales assistant."
+              },
+              {
+                  "role": "user",
+                  "content": "What are your prices?"
+              },
+              {
+                  "role": "assistant",
+                  "content": "I'd be happy to help you with pricing information."
+              }
+          ]
     }
     ```
     ```python
@@ -535,14 +539,15 @@ Agents have three main components {{ className: 'lead' }}
 
     ```
     </CodeGroup>
-
-    ```json {{ title: 'Response' }}
-    {
-        "response": "Our pricing starts at $10/month for the basic plan...",
-        "session_id": "session_xyz789",
-        "conversation_id": "conv_abc123",
-        "meta": {"type": "pricing"}
-    }
+    
+    ``` {{ title: 'Response' }}
+    {"content": {"form_key1": "form_value1", ...}, "object": "chat.completion.form", "id": "niusjndckj23", ...}
+    {"content": "[0.94s]", "object": "chat.completion.latency", "id": "niusjndckj23"}
+    {"content": "Our", "object": "chat.completion.chunk", "id": "niusjndckj23"}
+    {"content": " pricing", "object": "chat.completion.chunk", "id": "niusjndckj23"}
+    # ...
+    {"content": " plan.", "object": "chat.completion.chunk", "id": "niusjndckj23"}
+    # Full String: Our pricing starts at $10/month for the basic plan.
     ```
     </Col>
 </Row>
