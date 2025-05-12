@@ -53,7 +53,7 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="knowledge_search" type="boolean">
         Enable knowledge base search.
       </Property>
-      <Property name="knowledge_id" type="string">
+      <Property name="knowledgeId" type="string">
         Knowledge Base ID to be used by the agent for answering queries.
 
         Leave this blank if you want to create a new knowledge base.
@@ -249,7 +249,7 @@ Agents have three main components {{ className: 'lead' }}
       <Property name="knowledge_search" type="boolean">
         Enable knowledge base search.
       </Property>
-      <Property name="knowledge_id" type="string">
+      <Property name="knowledgeId" type="string">
         Knowledge Base ID to be used by the agent for answering queries.
       </Property>
       <Property name="form_filling" type="boolean">
@@ -363,7 +363,7 @@ Agents have three main components {{ className: 'lead' }}
   <Col>
     Chat with the agent. 
 
-    This is a streaming API. Responses are sent as they are generated.
+    This is not a streaming API. Responses are sent once everything has been generated. For a streaming version of this API, please see "Chat Stream".
 
     ### Path parameters
     
@@ -379,8 +379,10 @@ Agents have three main components {{ className: 'lead' }}
         <Property name="session_id" type="string">
             A unique session id. Highly recommended, this is useful for maintaining the context of the conversation.
         </Property>
-        <Property name="response_format*" type="string">
+        <Property name="response_format" type="string">
             Options - `text` (default), `json`
+
+            Note: Agent must have an attached form if using response_format="json"
         </Property>
         <Property name="messages" type="array" required="true">
             A list of messages comprising the conversation so far. 
@@ -395,22 +397,13 @@ Agents have three main components {{ className: 'lead' }}
         
     </Properties>
 
-    ### Response 
-
-    Chat responses are streaming by default. Three types of objects are returned for each query
-
-    |Object|Description|Type|
-    |---|---|---|
-    |chat.completion.knowledge|this contains the details of source|array|
-    |chat.completion.latency|latency of response|string|
-    |chat.completion.chunk|response chunk|string|
 
   </Col>
   <Col sticky>
 
   <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/chat">
 
-  ```json {{'title': 'Body'}}
+  {/* ```json {{'title': 'Body'}}
     {
         "session_id": "niusjndckj23",
         "messages": [
@@ -424,7 +417,7 @@ Agents have three main components {{ className: 'lead' }}
             }
         ]
     }
-    ```
+    ``` */}
     ```python
     response = client.agent.chat(
         namespace="sales-assistant-abc123",
@@ -457,6 +450,105 @@ Agents have three main components {{ className: 'lead' }}
         "conversation_id": "conv_abc123",
         "meta": {"type": "pricing"}
     }
+    ```
+    </Col>
+</Row>
+
+---
+
+## Chat Stream {{ tag: 'POST', label: '/v1/agent/{namespace}/chat' }}
+<Row>
+  <Col>
+    Chat with the agent. 
+
+    This is a streaming API; responses are sent as they are generated.
+
+    ### Path parameters
+    
+    <Properties>
+      <Property name="namespace" type="string" required="true">
+          The namespace of the agent.
+      </Property>
+    </Properties>
+
+    ### Request body
+    
+    <Properties>
+        <Property name="session_id" type="string">
+            A unique session id. Highly recommended, this is useful for maintaining the context of the conversation.
+        </Property>
+        <Property name="messages" type="array" required="true">
+            A list of messages comprising the conversation so far. 
+        </Property>
+        
+        <Property name="messages > role" type="string" required="true">
+            Options - `assistant`, `user`, `system`
+        </Property>
+        <Property name="messages > content" type="string" required="true">
+            The message content.
+        </Property>
+        
+    </Properties>
+
+    ### Response 
+    Chat responses are streamed. There are four different types of objects; "chunk" and "latency" are returned for each query.
+    {/* Three types of objects are returned for each query. */}
+
+    |Object|Description|Type|
+    |---|---|---|
+    |chat.completion.form|this contains the form schema|dict|
+    |chat.completion.knowledge|this contains the details of source|array|
+    |chat.completion.latency|latency of response|string|
+    |chat.completion.chunk|response chunk|string|
+
+  </Col>
+  <Col sticky>
+
+  <CodeGroup title="Request" tag="POST" label="/v1/agent/{namespace}/chat">
+
+  ```json {{'title': 'Body'}}
+    {
+        "session_id": "niusjndckj23",
+        "messages": [
+              {
+                  "role": "system",
+                  "content": "You are a helpful sales assistant."
+              },
+              {
+                  "role": "user",
+                  "content": "What are your prices?"
+              },
+              {
+                  "role": "assistant",
+                  "content": "I'd be happy to help you with pricing information."
+              }
+          ]
+    }
+    ```
+    ```python
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful sales assistant.",
+            "meta": {"type": "instruction"}
+        },
+        # ...
+    ]
+    session_id = "session_xyz789"  # Optional
+    name = "sales-assistant-abc123"
+    for json_object in client.agent.chat_stream(namespace=name, messages=messages, session_id=session_id):
+        content = json_object["content"]
+        print(content)
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {"content": "[0.94s]", "object": "chat.completion.latency", "id": "niusjndckj23"}
+    {"content": "Our", "object": "chat.completion.chunk", "id": "niusjndckj23"}
+    {"content": " pricing", "object": "chat.completion.chunk", "id": "niusjndckj23"}
+    // ...
+    {"content": " plan.", "object": "chat.completion.chunk", "id": "niusjndckj23"}
+    // Full content string: [0.94s]Our pricing starts at $10/month for the basic plan.
     ```
     </Col>
 </Row>

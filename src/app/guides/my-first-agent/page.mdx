@@ -36,15 +36,13 @@ You can write to hello@ailibrary.ai */}
 <CodeGroup title="Set up Environment">
 
 ```python
-import requests
-import json
+import ailibrary as ai
 
-key = "your-key-here"
-domain = "https://api.ailibrary.ai"
-headers = {
-    'Content-Type': 'application/json',
-    'X-Library-Key': key
-}
+client = ai.AILibrary(
+    api_key="your-api-key",
+    domain="https://api.ailibrary.ai"
+)
+
 ```
 
 ```javascript
@@ -62,22 +60,17 @@ const headers = {
 
 ### Step 2: Create Agent
 
-<CodeGroup title="Set up Environment">
+<CodeGroup title="Create agent">
 
 ```python
-
-url = f"{domain}/v1/agent/create"
-payload = json.dumps({
-  "title": "My First AI Agent",
-  "knowledge_search": "true"
-})
-response = requests.request("POST", url, headers=headers, data=payload)
-knowledge_id = json.loads(response.text)["knowledge_id"]
-namespace = json.loads(response.text)["namespace"]
+response = client.agent.create(
+    title="My First AI Agent",
+    knowledge_search="true"
+)
+namespace = response["namespace"]
+knowledgeId = response["knowledgeId"]
 print("namespace", namespace)
-print("knowledge_id", knowledge_id)
-print(json.dumps(json.loads(response.text), indent=4))
-
+print("knowledgeId", knowledgeId)
 
 ```
 ```javascript
@@ -96,21 +89,19 @@ Add text or PDF files to share knowledge with your agent. You can use any public
 
 <CodeGroup title="Add files">
 ```python
-
-url = f"{domain}/v1/knowledgebase/{knowledgeId}"
-payload = json.dumps({
-  "type": "docs",
-  "options": {
-    "urls": [
-      "https://assets.ctfassets.net/416ywc1laqmd/7oJfDqN7x2Bjj3bXiP3WHR/5866c87cd89c15987bbb7211bfc3f3cc/Update_11_17_23.pdf"
-    ]
-  },
-  "meta": {
-    "folder": "home"
-  }
-})
-response = requests.request("PUT", url, headers=headers, data=payload)
-print(json.dumps(json.loads(response.text), indent=4))
+options = {
+  "urls": [
+    "https://example.com/doc1.pdf", 
+    "https://example.com/doc2.pdf"
+  ]
+}
+response = client.knowledge_base.add_source(
+    knowledgeId="kb_abc123",
+    type="docs",
+    options=options,
+    meta={"folder": "home"}
+)
+print(response)
 ```
 
 ```javascript
@@ -152,10 +143,8 @@ Once the file is processed, this will return `available`
 
 <CodeGroup title="Check Status">
 ```python
-
-url = f"{domain}/v1/knowledgebase/{knowledgeId}/status"
-response = requests.request("GET", url, headers=headers)
-print(json.dumps(json.loads(response.text), indent=4))
+status = client.knowledge_base.get_status(knowledgeId)
+print(status)
 
 ```
 
@@ -178,29 +167,38 @@ axios.get(url, { headers })
 
 ### Step 5: Chat
 
-Chat responses are streaming by default. Three types of objects are returned for each query
-
-|Object|Description|Type|
-|---|---|---|
-|chat.completion.knowledge|this contains the details of source|array|
-|chat.completion.latency|latency of response|string|
-|chat.completion.chunk|response chunk|string|
+The agent chat endpoint either streams text responses (default behaviour) or returns a json response (please see the Agent section for details). The ailibrary Python package provides client.agent.chat() (for either json or text response format) and client.agent.chat_stream() so you can interact with the agent however you prefer.
 
 <CodeGroup title="Chat">
 
 ```python
-url = f"{domain}/v1/agent/{namespace}/chat"
-payload = json.dumps({
-  "session_id": "niusjndckj23",
-  "messages": [
+namespace = "sales-assistant-abc123"
+session_id = "niusjndckj23"
+messages = [
     { "role": "assistant", "content": "how are you?" },
     { "role": "user", "content": "doing good. thank you." }
-  ]
-})
+]
 
-response = requests.request("POST", url, headers=headers, data=payload)
+# ================== NON STREAMING OPTION ==================
+response = client.agent.chat(
+    namespace=namespace,
+    messages=messages,
+    session_id=session_id
+    response_format="text" # or "json"
+)
+print(response)
 
-print(response.text)
+# ==================== STREAMING OPTION ====================
+result = ""
+stream = client.agent.chat_stream(
+    namespace=name, 
+    messages=messages, 
+    session_id=session_id
+)
+for json_object in stream:
+    if json_object["object"] == "chat.completion.chunk":
+        result += json_object["content"]
+print(result)
 
 ```
 

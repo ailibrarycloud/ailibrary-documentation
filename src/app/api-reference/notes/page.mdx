@@ -291,7 +291,7 @@ Below are some common parameters used by many functions in this section.
 
 ---
 
-## Delete Notes {{ tag: 'DELETE', label: '/v1/notes/{resource}/{resourceId}' }}
+## Delete Notes {{ tag: 'DELETE', label: '/v1/notes/{resource}/{resource_id}' }}
 
 <Row>
   <Col>
@@ -304,7 +304,7 @@ Below are some common parameters used by many functions in this section.
       <Property name="resource" type="string"  required="true">
         See "Common Parameters" at the start of this section.
       </Property>
-      <Property name="resourceId" type="string"  required="true">
+      <Property name="resource_id" type="string"  required="true">
         See "Common Parameters" at the start of this section.
       </Property>
     </Properties>
@@ -313,7 +313,7 @@ Below are some common parameters used by many functions in this section.
 
     <Properties>
       <Property name="values" type="array">
-          List of `note_ids` to delete corresponding to the resource and resourceId. If `values` is not specified then `delete_all=True` must be specified. If both are specified then `delete_all` takes precedence.
+          List of `note_ids` to delete corresponding to the resource and resource_id. If `values` is not specified then `delete_all=True` must be specified. If both are specified then `delete_all` takes precedence.
       </Property>
       <Property name="delete_all" type="boolean">
           Deletes all source if `delete_all=True`. If `delete_all` is not specified then values must be specified. If both are specified then `delete_all` takes precedence.
@@ -323,7 +323,7 @@ Below are some common parameters used by many functions in this section.
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{resource}/{resourceId}">
+    <CodeGroup title="Request" tag="DELETE" label="/v1/notes/{resource}/{resource_id}">
 
     ```python
     response = client.notes.delete_notes(

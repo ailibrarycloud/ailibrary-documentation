@@ -143,74 +143,6 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
-## Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/{knowledgeId}' }}
-
-<Row>
-  <Col>
-
-    Add a list of files to a knowledge base.
-
-    ### Request body
-      <Properties>
-      <Property name="type" type="string" required="true">
-          Options - `docs`
-        </Property>
-        <Property name="meta" type="json">
-          Meta data of the knowledge base.
-        </Property>
-        <Property name="options" type="object">
-          Meta data of the knowledge base.
-        </Property>
-        <Property name="options > urls" type="array">
-          List of URLs to add to the knowledge base.
-
-          Accepted file types are PDF, DOCX, PPTX, XLSX, CSV, TXT. 
-          
-          Processing PDF and TXT files are faster than other file types.
-        </Property>
-      </Properties> 
-
-    ### Response
-    Returns the knowledgeId of the created knowledge base.
-
-
-  </Col>
-  <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="/v1/agent/knowledgebase/{knowledgeId}">
-    ```json {{'title': 'Body'}}
-    {
-        "type": "docs",
-        "options": {
-            "urls": [
-                "https://assets.ctfassets.net/416ywc1laqmd/7oJfDqN7x2Bjj3bXiP3WHR/5866c87cd89c15987bbb7211bfc3f3cc/Update_11_17_23.pdf"
-            ]
-        },
-        "meta": {
-            "folder": "home"
-        }
-    }
-    ```
-    ```python
-    source = client.knowledge_base.add_source(
-        knowledge_id="kb_abc123",
-        type="docs",
-        urls=["https://example.com/docs.pdf"],
-        meta={"category": "documentation"}
-    )
-    ```
-    </CodeGroup>
-  
-    ```json {{ title: 'Response' }}
-    {
-      "knowledgeId": "myfirstkno_1716198026361802"
-    }
-    ```
-
-  </Col>
-</Row>
-
----
-
 ## Knowledge Base Status {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/status' }}
 
 <Row>
@@ -242,38 +174,75 @@ Knowledge Base is used to ground generations by agents using Retrieval Augmented
 
 ---
 
-## Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{sourceId}' }}
+## Add Source to Knowledge Base  {{ tag: 'PUT', label: '/v1/knowledgebase/{knowledgeId}' }}
 
 <Row>
   <Col>
 
-  Use this to retrieve the details of a source file including the contents.
+    Add a list of files to a knowledge base.
 
-  ### Path parameters
-  <Properties>
-  <Property name="knowledgeId" type="string" required="true">
-      ID of the knowledge base.
-    </Property>
-    <Property name="sourceId" type="string" required="true">
-      ID of the source file.
-    </Property>
-  </Properties>
-  </Col>
-    <Col sticky>
-    ```json {{'title': 'Response'}}
+    ### Request body
+      <Properties>
+      <Property name="type" type="string" required="true">
+          Options - `docs`
+        </Property>
+        <Property name="meta" type="json">
+          Meta data of the knowledge base.
+        </Property>
+        <Property name="options" type="object">
+          Meta data of the knowledge base.
+        </Property>
+        <Property name="options > urls" type="array">
+          List of URLs to add to the knowledge base.
 
-    {
-        "knowledgeId": "myfirstkno_1716198026361802",
-        "text": "Hello world... ",
-        "source": "my first knowledge Source.pdf",
-        "userName": "John Doe",
-        "created_date": "2024-12-03"
-    }
+          Accepted file types are PDF, DOCX, PPTX, XLSX, CSV, TXT. 
+          
+          Processing PDF and TXT files are faster than other file types.
+        </Property>
+      </Properties> 
+
+    ### Response
+    Returns the status of the request.
     
+    NOTE: The id returned in the response is NOT the id of the source itself. For information about this source, please use "List Sources".
+
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="/v1/agent/knowledgebase/{knowledgeId}">
+    ```json {{'title': 'Body'}}
+    {
+        "type": "docs",
+        "options": {
+            "urls": [
+                "https://assets.ctfassets.net/416ywc1laqmd/7oJfDqN7x2Bjj3bXiP3WHR/5866c87cd89c15987bbb7211bfc3f3cc/Update_11_17_23.pdf"
+            ]
+        },
+        "meta": {
+            "folder": "home"
+        }
+    }
     ```
+    ```python
+    urls = ["https://example.com/docs.pdf"]
+    options = {"urls": urls}
+    response = client.knowledge_base.add_source(
+        knowledgeId="kb_abc123",
+        type="docs",
+        options=options,
+        meta={"category": "documentation"}
+    )
+    ```
+    </CodeGroup>
+  
+    ```json {{ title: 'Response' }}
+    {
+      "status": "processing", "id": 2036
+    }
+    ```
+
   </Col>
 </Row>
-
 
 ---
 
@@ -296,26 +265,72 @@ List of all sources in the knowledge base.
 
 </Col>
   <Col sticky>
-```json {{'title': 'Response'}}
-[
-    {
-        "created_timestamp": "2024-12-03 06:40:04",
-        "id": 3318,
-        "meta": {
-            "folder": "home",
-            "source_type": "docs"
+    <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/sources">
+    ```python
+    sources = knowledge_base.list_sources(knowledgeId="kb_abc123")
+    ```
+    </CodeGroup>
+    ```json {{'title': 'Response'}}
+    [
+        {
+            "created_timestamp": "2024-12-03 06:40:04",
+            "id": 3318,
+            "meta": {
+                "folder": "home",
+                "source_type": "docs"
+            },
+            "source": "my first knowledge Source.pdf",
+            "source_type": "docs",
+            "status": "completed",
+            "userName": "John Doe"
         },
-        "source": "my first knowledge Source.pdf",
-        "source_type": "docs",
-        "status": "completed",
-        "userName": "John Doe"
-    },
-    //...
-]
-```
+        //...
+    ]
+    ```
 </Col>
 </Row>
 
+---
+
+## Retrieve Source Details {{ tag: 'GET', label: '/v1/knowledgebase/{knowledgeId}/{source}' }}
+
+<Row>
+  <Col>
+
+  Use this to retrieve the details of a source file including the contents.
+
+  ### Path parameters
+  <Properties>
+  <Property name="knowledgeId" type="string" required="true">
+      ID of the knowledge base.
+    </Property>
+    <Property name="source" type="string" required="true">
+      Name of the source object.
+    </Property>
+  </Properties>
+  </Col>
+    <Col sticky>
+      <CodeGroup title="Request" tag="GET" label="/v1/agent/knowledgebase/{knowledgeId}/{source}">
+      ```python
+      source_info = knowledge_base.get_source(
+            knowledgeId="kb_abc123",
+            source_name="my first knowledge Source.pdf"
+      )
+      ```
+      </CodeGroup>
+      ```json {{'title': 'Response'}}
+
+      {
+          "knowledgeId": "kb_abc123",
+          "text": "Hello world... ",
+          "source": "my first knowledge Source.pdf",
+          "userName": "John Doe",
+          "created_date": "2024-12-03"
+      }
+      
+      ```
+  </Col>
+</Row>
 
 ---
 
@@ -334,7 +349,8 @@ List of all sources in the knowledge base.
     </Properties>
   </Col>
   <Col sticky>
-  ```json {{'title': 'Body'}}
+    <CodeGroup title="Request" tag="DELETE" label="/v1/knowledgebase/{knowledgeId}/source">
+    ```json {{'title': 'Body'}}
     {
         "delete_all": false,
         "values": [
@@ -343,6 +359,17 @@ List of all sources in the knowledge base.
         ]
     }
     ```
+    ```python
+    source_names = [
+      "my first knowledge Source.pdf",
+      # ...
+    ]
+    response = knowledge_base.delete_sources(
+          knowledgeId="kb_abc123",
+          values=source_names
+    )
+    ```
+    </CodeGroup>
     ```json {{ title: 'Response' }}
     {
         "message": "Deleted successfully"
@@ -383,3 +410,4 @@ List of all sources in the knowledge base.
     ```
   </Col>
 </Row>
+
