@@ -537,7 +537,8 @@ Agents have three main components {{ className: 'lead' }}
     name = "sales-assistant-abc123"
     result = ""
     for obj in client.agent.chat_stream(namespace=name, messages=messages, session_id=session_id):
-        result += obj["content"]
+        if obj["object"] == "chat.completion.chunk":
+            result += obj["content"]
     ```
     </CodeGroup>
 
