@@ -461,7 +461,7 @@ Agents have three main components {{ className: 'lead' }}
   <Col>
     Chat with the agent. 
 
-    This is a streaming API. Text responses are sent as they are generated.
+    This is a streaming API; responses are sent as they are generated.
 
     ### Path parameters
     
@@ -491,7 +491,8 @@ Agents have three main components {{ className: 'lead' }}
     </Properties>
 
     ### Response 
-    Chat responses are streamed. Three types of objects are returned for each query.
+    Chat responses are streamed. There are four different types of objects; "chunk" and "latency" are returned for each query.
+    {/* Three types of objects are returned for each query. */}
 
     |Object|Description|Type|
     |---|---|---|
@@ -535,10 +536,9 @@ Agents have three main components {{ className: 'lead' }}
     ]
     session_id = "session_xyz789"  # Optional
     name = "sales-assistant-abc123"
-    result = ""
-    for obj in client.agent.chat_stream(namespace=name, messages=messages, session_id=session_id):
-        if obj["object"] == "chat.completion.chunk":
-            result += obj["content"]
+    for json_object in client.agent.chat_stream(namespace=name, messages=messages, session_id=session_id):
+        content = json_object["content"]
+        print(content)
     ```
     </CodeGroup>
 
