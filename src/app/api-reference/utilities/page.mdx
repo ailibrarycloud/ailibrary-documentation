@@ -401,7 +401,7 @@ Functions to support your AI Agents. {{ className: 'lead' }}
 </Row>
 --- 
 
-## COMING SOON: JSON Schema Validator {{ tag: 'POST', label: '/v1/utilities/schema_validator' }}
+## JSON Schema Validator {{ tag: 'POST', label: '/v1/utilities/schema_validator' }}
 
 <Row>
   <Col>
@@ -461,7 +461,10 @@ Functions to support your AI Agents. {{ className: 'lead' }}
         }
     }
     ```
-
+    ```python
+    schema = {...}
+    validator_response = utilities.json_schema_validator(schema)
+    ```
     </CodeGroup>
 
     ```json {{ title: 'Response', label: 200 }}
@@ -469,9 +472,9 @@ Functions to support your AI Agents. {{ className: 'lead' }}
     ```
     ```json {{ title: 'Response', label: 400 }}
     {
-    "status": "failure",
-    "message": "Form schema validation error: 'type' is a required property"
-}
+      "status": "failure",
+      "message": "Form schema validation error: 'type' is a required property"
+    }
     ```
 
     

@@ -172,17 +172,34 @@ The agent chat endpoint either streams text responses (default behaviour) or ret
 <CodeGroup title="Chat">
 
 ```python
+namespace = "sales-assistant-abc123"
+session_id = "niusjndckj23"
+messages = [
+    { "role": "assistant", "content": "how are you?" },
+    { "role": "user", "content": "doing good. thank you." }
+]
+
+# ================== NON STREAMING OPTION ==================
 response = client.agent.chat(
-    namespace="sales-assistant-abc123",
-    messages=[
-      { "role": "assistant", "content": "how are you?" },
-      { "role": "user", "content": "doing good. thank you." }
-    ],
-    session_id="niusjndckj23"
+    namespace=namespace,
+    messages=messages,
+    session_id=session_id
     response_format="text" # or "json"
 )
-
 print(response)
+
+# ==================== STREAMING OPTION ====================
+result = ""
+stream = client.agent.chat_stream(
+    namespace=name, 
+    messages=messages, 
+    session_id=session_id
+)
+for json_object in stream:
+    if json_object["object"] == "chat.completion.chunk":
+        result += json_object["content"]
+print(result)
+
 ```
 
 ```javascript
